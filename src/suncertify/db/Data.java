@@ -5,12 +5,12 @@ import datasource.DataSourceFactory;
 
 public class Data implements DB {
 
-	private static DataSourceAccessLocker dataSourceAccessLocker;
+	private static DataAccessLocker dataAccessLocker;
 	private static RecordLocker recordLocker;
 	private DataAccessWrapper dataAccessWrapper;
 
 	static {
-		dataSourceAccessLocker = new DataSourceAccessLocker();
+		dataAccessLocker = new DataAccessLocker();
 		recordLocker = new RecordLocker();
 	}
 
@@ -21,10 +21,10 @@ public class Data implements DB {
 	@Override
 	public String[] read(int recNo) throws RecordNotFoundException {
 		try {
-			dataSourceAccessLocker.getReadLock();
+			dataAccessLocker.getReadLock();
 			return dataAccessWrapper.read(recNo);
 		} finally {
-			dataSourceAccessLocker.returnReadLock();
+			dataAccessLocker.returnReadLock();
 		}
 	}
 
@@ -33,30 +33,30 @@ public class Data implements DB {
 		verifyRecordExist(recNo);
 		recordLocker.verifyRecordIsLockedWithLockCookie(recNo, lockCookie);
 		try {
-			dataSourceAccessLocker.getWriteLock();
+			dataAccessLocker.getWriteLock();
 			dataAccessWrapper.update(recNo, data);
 		} finally {
-			dataSourceAccessLocker.returnWriteLock();
+			dataAccessLocker.returnWriteLock();
 		}
 	}
 
 	@Override
 	public int[] find(String[] data) {
 		try {
-			dataSourceAccessLocker.getReadLock();
+			dataAccessLocker.getReadLock();
 			return dataAccessWrapper.find(data);
 		} finally {
-			dataSourceAccessLocker.returnReadLock();
+			dataAccessLocker.returnReadLock();
 		}
 	}
 
 	@Override
 	public int create(String[] data) {
 		try {
-			dataSourceAccessLocker.getWriteLock();
+			dataAccessLocker.getWriteLock();
 			return dataAccessWrapper.create(data);
 		} finally {
-			dataSourceAccessLocker.returnWriteLock();
+			dataAccessLocker.returnWriteLock();
 		}
 	}
 
@@ -82,10 +82,10 @@ public class Data implements DB {
 
 	private void verifyRecordExist(int recNo) throws RecordNotFoundException {
 		try {
-			dataSourceAccessLocker.getReadLock();
+			dataAccessLocker.getReadLock();
 			dataAccessWrapper.verifyRecordExist(recNo);
 		} finally {
-			dataSourceAccessLocker.returnReadLock();
+			dataAccessLocker.returnReadLock();
 		}
 	}
 }

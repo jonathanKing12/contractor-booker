@@ -3,11 +3,11 @@ package suncertify.db;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class DataSourceAccessLocker {
+public class DataAccessLocker {
 
 	private ReadWriteLock lock;
 
-	DataSourceAccessLocker() {
+	DataAccessLocker() {
 		lock = new ReentrantReadWriteLock();
 	}
 
