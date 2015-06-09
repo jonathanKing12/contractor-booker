@@ -30,6 +30,7 @@ public class Data implements DB {
 
 	@Override
 	public void update(int recNo, String[] data, long lockCookie) throws RecordNotFoundException, SecurityException {
+		verifyRecordExist(recNo);
 		recordLocker.verifyRecordIsLockedWithLockCookie(recNo, lockCookie);
 		try {
 			dataSourceAccessLocker.getWriteLock();
@@ -63,25 +64,28 @@ public class Data implements DB {
 	public long lock(int recNo) throws RecordNotFoundException {
 		long lockCookie = recordLocker.lockRecord(recNo);
 		try {
-			dataSourceAccessLocker.getReadLock();
-			dataAccessWrapper.verifyRecordExist(recNo);
+			verifyRecordExist(recNo);
 			return lockCookie;
-		} catch (Exception e) {
+		} catch (RecordNotFoundException e) {
+			// If same request happens again (request2) and the record still does not exist, request2
+			// won't be informed that the record doesn't exist and hang because record is locked
 			unlock(recNo, lockCookie);
 			throw e;
-		} finally {
-			dataSourceAccessLocker.returnReadLock();
 		}
 	}
 
 	@Override
 	public void unlock(int recNo, long lockCookie) throws RecordNotFoundException, SecurityException {
+		verifyRecordExist(recNo);
+		recordLocker.unlockRecord(recNo, lockCookie);
+	}
+
+	private void verifyRecordExist(int recNo) throws RecordNotFoundException {
 		try {
 			dataSourceAccessLocker.getReadLock();
 			dataAccessWrapper.verifyRecordExist(recNo);
 		} finally {
 			dataSourceAccessLocker.returnReadLock();
 		}
-		recordLocker.unlockRecord(recNo, lockCookie);
 	}
 }
