@@ -1,0 +1,9 @@
+package datasource;
+
+public interface DataSourceFactory {
+
+	DataSourceReader getDatoSourceReader();
+
+	DataSourceWriter getDatoSourceWritter();
+
+}
