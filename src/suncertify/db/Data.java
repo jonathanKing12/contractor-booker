@@ -67,8 +67,8 @@ public class Data implements DB {
 			verifyRecordExist(recNo);
 			return lockCookie;
 		} catch (RecordNotFoundException e) {
-			// If same request happens again (request2) and the record still does not exist, request2
-			// won't be informed that the record doesn't exist and hang because record is locked
+			// If same request happens again (request2), and the record still doesn't exist and
+			// isn't unlocked, then request2 won't be informed that it doesn't exist and hang
 			unlock(recNo, lockCookie);
 			throw e;
 		}

@@ -6,15 +6,17 @@ import datasource.DataSourceFactory;
 
 public class DataAccessWrapper {
 
-	private DataAccess dataAccess;
+	private DataReader dataReader;
+	private DataWriter dataWriter;
 
 	DataAccessWrapper(DataSourceFactory factory) {
-		dataAccess = new DataAccess(factory);
+		dataReader = new DataReader(factory);
+		dataWriter = new DataWriter(factory);
 	}
 
 	String[] read(int recNo) throws RecordNotFoundException {
 		try {
-			return dataAccess.read(recNo);
+			return dataReader.read(recNo);
 		} catch (DataSourceException e) {
 			throw new RuntimeException("");
 		}
@@ -22,16 +24,15 @@ public class DataAccessWrapper {
 
 	void update(int recNo, String[] data) throws RecordNotFoundException {
 		try {
-			dataAccess.update(recNo, data);
+			dataWriter.write(recNo, data);
 		} catch (DataSourceException e) {
-			System.out.println(e.getMessage());
 			throw new RuntimeException(e.getMessage());
 		}
 	}
 
 	int[] find(String[] data) {
 		try {
-			return dataAccess.find(data);
+			return dataReader.find(data);
 		} catch (DataSourceException e) {
 			throw new RuntimeException("");
 		}
@@ -39,7 +40,9 @@ public class DataAccessWrapper {
 
 	public int create(String[] data) {
 		try {
-			return dataAccess.create(data);
+			int recNo = dataReader.getNextAvailableRecordNumber();
+			dataWriter.write(recNo, data);
+			return recNo;
 		} catch (DataSourceException e) {
 			throw new RuntimeException("");
 		}
@@ -47,7 +50,7 @@ public class DataAccessWrapper {
 
 	public void verifyRecordExist(int recordNumber) throws RecordNotFoundException {
 		try {
-			dataAccess.verifyRecordExist(recordNumber);
+			dataReader.verifyRecordExist(recordNumber);
 		} catch (DataSourceException e) {
 			throw new RuntimeException("");
 		}
