@@ -7,7 +7,7 @@ public class Data implements DB {
 
 	private static DataAccessLocker dataAccessLocker;
 	private static RecordLocker recordLocker;
-	private DataAccessWrapper dataAccessWrapper;
+	private DataAccess dataAccess;
 
 	static {
 		dataAccessLocker = new DataAccessLocker();
@@ -15,14 +15,14 @@ public class Data implements DB {
 	}
 
 	public Data(DataSourceFactory factory) {
-		dataAccessWrapper = new DataAccessWrapper(factory);
+		dataAccess = new DataAccess(factory);
 	}
 
 	@Override
 	public String[] read(int recNo) throws RecordNotFoundException {
 		try {
 			dataAccessLocker.getReadLock();
-			return dataAccessWrapper.read(recNo);
+			return dataAccess.read(recNo);
 		} finally {
 			dataAccessLocker.returnReadLock();
 		}
@@ -34,7 +34,7 @@ public class Data implements DB {
 		recordLocker.verifyRecordIsLockedWithLockCookie(recNo, lockCookie);
 		try {
 			dataAccessLocker.getWriteLock();
-			dataAccessWrapper.update(recNo, data);
+			dataAccess.update(recNo, data);
 		} finally {
 			dataAccessLocker.returnWriteLock();
 		}
@@ -44,7 +44,7 @@ public class Data implements DB {
 	public int[] find(String[] data) {
 		try {
 			dataAccessLocker.getReadLock();
-			return dataAccessWrapper.find(data);
+			return dataAccess.find(data);
 		} finally {
 			dataAccessLocker.returnReadLock();
 		}
@@ -54,7 +54,7 @@ public class Data implements DB {
 	public int create(String[] data) {
 		try {
 			dataAccessLocker.getWriteLock();
-			return dataAccessWrapper.create(data);
+			return dataAccess.create(data);
 		} finally {
 			dataAccessLocker.returnWriteLock();
 		}
@@ -83,7 +83,7 @@ public class Data implements DB {
 	private void verifyRecordExist(int recNo) throws RecordNotFoundException {
 		try {
 			dataAccessLocker.getReadLock();
-			dataAccessWrapper.verifyRecordExist(recNo);
+			dataAccess.verifyRecordExist(recNo);
 		} finally {
 			dataAccessLocker.returnReadLock();
 		}

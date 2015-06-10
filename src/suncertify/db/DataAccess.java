@@ -4,12 +4,12 @@ import suncertify.db.record.RecordNotFoundException;
 import datasource.DataSourceException;
 import datasource.DataSourceFactory;
 
-public class DataAccessWrapper {
+public class DataAccess {
 
 	private DataReader dataReader;
 	private DataWriter dataWriter;
 
-	DataAccessWrapper(DataSourceFactory factory) {
+	DataAccess(DataSourceFactory factory) {
 		dataReader = new DataReader(factory);
 		dataWriter = new DataWriter(factory);
 	}
