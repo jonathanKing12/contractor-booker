@@ -7,7 +7,7 @@ public class RecordBuilder {
 	private String size;
 	private String rate;
 	private String owner;
-	private String deletedFlag;
+	private boolean deletedFlag;
 	private int recordNumber;
 
 	public RecordBuilder addName(String name) {
@@ -45,7 +45,7 @@ public class RecordBuilder {
 		return this;
 	}
 
-	public RecordBuilder addDeletedFlag(String deletedFlag) {
+	public RecordBuilder addDeletedFlag(boolean deletedFlag) {
 		this.deletedFlag = deletedFlag;
 		return this;
 	}
@@ -82,7 +82,7 @@ public class RecordBuilder {
 		return recordNumber;
 	}
 
-	public String getDeletedFlag() {
+	public boolean getDeletedFlag() {
 		return deletedFlag;
 	}
 }

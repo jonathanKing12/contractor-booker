@@ -45,12 +45,13 @@ class TableDataCounter {
 	}
 
 	private boolean isThereEnoughtAvailableDataForRowToExist(int rowNumber) throws DataSourceException {
-		int dataSize = getSizeOfDataBetweenCurrentPositionAndStartOfRow(rowNumber);
+		int dataSize = getSizeOfDataBetweenCurrentPositionAndStartOfNextRow(rowNumber);
 		return reader.available() >= (dataSize + header.getRowSize());
 	}
 
-	int getSizeOfDataBetweenCurrentPositionAndStartOfRow(int rowNumber) {
+	int getSizeOfDataBetweenCurrentPositionAndStartOfNextRow(int rowNumber) {
 		int rowPosition = header.getRowStartingPosition(rowNumber);
+		System.out.println("calculate " + rowPosition + " " + totalAmountOfDataRead);
 		return rowPosition - totalAmountOfDataRead;
 	}
 }

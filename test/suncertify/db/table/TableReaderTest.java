@@ -57,7 +57,7 @@ public class TableReaderTest {
 	@Test
 	public void shouldReadFirstRow() throws DataSourceException {
 		tableReader.moveToRow(0);
-		assertEquals("0", tableReader.readNextColumn());
+		assertEquals("00", tableReader.readNextColumn());
 		assertEquals("$10.20", tableReader.readNextColumn());
 		assertEquals("jack", tableReader.readNextColumn());
 		assertEquals("my location", tableReader.readNextColumn());
@@ -141,7 +141,7 @@ public class TableReaderTest {
 		for (int i = 0; i < 5; i++) {
 			System.out.println(tableReader.readNextColumn());
 		}
-		assertEquals("0", tableReader.readNextColumn());
+		assertEquals("00", tableReader.readNextColumn());
 	}
 
 	private String readThirdColumn() throws DataSourceException {

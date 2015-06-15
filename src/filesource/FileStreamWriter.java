@@ -2,7 +2,9 @@ package filesource;
 
 import static java.lang.System.arraycopy;
 
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
@@ -42,7 +44,7 @@ public class FileStreamWriter implements DataSourceWriter {
 	}
 
 	@Override
-	public void write(String value, int size) throws DataSourceException {
+	public void writeString(String value, int size) throws DataSourceException {
 		try {
 			byte[] valueBytes = value.getBytes();
 			byte[] bytes = new byte[size];
@@ -78,5 +80,51 @@ public class FileStreamWriter implements DataSourceWriter {
 		} catch (IOException e) {
 			throw new DataSourceException(e.getMessage());
 		}
+	}
+
+	public static void main(String[] args) {
+
+		String start = "8000";
+		int next = Integer.parseInt(start, 16);
+		short deleted = (short) next;
+
+		File databaseFile = new File("C:/db/deleteFile.db");
+		try (RandomAccessFile randomAccessFile = new RandomAccessFile(databaseFile, "rw")) {
+			randomAccessFile.writeShort(deleted);
+		} catch (IOException e) {
+			System.out.println(e.getSuppressed());
+			System.out.println(e.getMessage());
+		}
+
+		short isDeleted = -1;
+		String third = "-1";
+		File databaseFile2 = new File("C:/db/deleteFile.db");
+		try (DataInputStream randomAccessFile2 = new DataInputStream(new FileInputStream(databaseFile2))) {
+
+			isDeleted = randomAccessFile2.readShort();
+			third = String.format("%04X", isDeleted);
+
+		} catch (IOException e) {
+			System.out.println(e.getSuppressed());
+			System.out.println(e.getMessage());
+		}
+
+		System.out.println("next " + next);
+		System.out.println("deleted " + deleted);
+		System.out.println("isDeleted " + isDeleted);
+		System.out.println("third " + third);
+
+		// System.out.println(Integer.toBinaryString(Integer.parseInt(s)));
+		// System.out.println(Integer.toHexString(randomAccessFile2.readShort()));
+	}
+
+	@Override
+	public void writeShort(short value) throws DataSourceException {
+		try {
+			randomAccessFile.writeShort(value);
+		} catch (IOException e) {
+			throw new DataSourceException(e.getMessage());
+		}
+
 	}
 }

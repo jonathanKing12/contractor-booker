@@ -8,8 +8,9 @@ public interface DataSourceWriter {
 
 	void moveForward(int distance) throws DataSourceException;
 
-	void write(String columnValue, int columnSize) throws DataSourceException;
+	void writeString(String columnValue, int columnSize) throws DataSourceException;
 
 	void close() throws DataSourceException;
 
+	void writeShort(short value) throws DataSourceException;
 }

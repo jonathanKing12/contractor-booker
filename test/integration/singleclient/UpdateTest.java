@@ -1,28 +1,25 @@
 package integration.singleclient;
 
 import static org.junit.Assert.assertEquals;
+import integration.helper.TestDataUtil;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import suncertify.db.DB;
-import suncertify.db.Data;
 import suncertify.db.record.RecordNotFoundException;
-import datasource.DataSourceFactory;
-import filesource.FileStreamFactory;
 
-public class UpdateTest {
+public class UpdateTest extends BaseTest {
 
-	private DB db;
-	private DataSourceFactory factory;
+	private static final String FILE_NAME = "update";
 
-	@Before
-	public void setup() {
-		factory = new FileStreamFactory();
-		db = new Data(factory);
+	@BeforeClass
+	public static void backupFile() throws IOException {
+		TestDataUtil.backupFile(FILE_NAME);
 	}
 
 	@Test
@@ -31,7 +28,6 @@ public class UpdateTest {
 
 		String[] rowBeforeUpdated = db.read(0);
 		rowBeforeUpdated[5] = "1234";
-		// char isdeleted = 0x8000;
 		long lockCookie = db.lock(0);
 		db.update(0, rowBeforeUpdated, lockCookie);
 		db.unlock(0, lockCookie);
@@ -59,9 +55,19 @@ public class UpdateTest {
 		db.update(-1, new String[] {}, 0);
 	}
 
+	@AfterClass
+	public static void restorFile() throws IOException {
+		TestDataUtil.restorFile(FILE_NAME);
+	}
+
 	private void assertRowsEqual(String[] expectedRowArray, String[] actualRowArray) {
 		List<String> expectedRowList = Arrays.<String> asList(expectedRowArray);
 		List<String> actualRowList = Arrays.<String> asList(actualRowArray);
 		assertEquals(expectedRowList, actualRowList);
+	}
+
+	@Override
+	protected String getFileName() {
+		return FILE_NAME;
 	}
 }

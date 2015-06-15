@@ -1,33 +1,30 @@
 package integration.singleclient;
 
 import static org.junit.Assert.assertEquals;
+import integration.helper.TestDataUtil;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import suncertify.db.DB;
-import suncertify.db.Data;
 import suncertify.db.record.RecordNotFoundException;
-import datasource.DataSourceFactory;
-import filesource.FileStreamFactory;
 
-public class ReadTest {
+public class ReadTest extends BaseTest {
 
-	private DB db;
-	private DataSourceFactory factory;
+	private static final String FILE_NAME = "read";
 
-	@Before
-	public void setup() {
-		factory = new FileStreamFactory();
-		db = new Data(factory);
+	@BeforeClass
+	public static void backupFile() throws IOException {
+		TestDataUtil.backupFile(FILE_NAME);
 	}
 
 	@Test
 	public void readFirstRecord() throws RecordNotFoundException {
-		String[] expectedRow1 = { "Dogs With Tools", "Smallville", "Roofing", "7", "$35.00", "1234" };
+		String[] expectedRow1 = { "Dogs With Tools", "Smallville", "Roofing", "7", "$35.00", "" };
 		String[] row = db.read(0);
 		assertRowsEqual(expectedRow1, row);
 	}
@@ -72,5 +69,15 @@ public class ReadTest {
 		List<String> expectedRowList = Arrays.<String> asList(expectedRowArray);
 		List<String> actualRowList = Arrays.<String> asList(actualRowArray);
 		assertEquals(expectedRowList, actualRowList);
+	}
+
+	@AfterClass
+	public static void restorFile() throws IOException {
+		TestDataUtil.restorFile(FILE_NAME);
+	}
+
+	@Override
+	protected String getFileName() {
+		return FILE_NAME;
 	}
 }

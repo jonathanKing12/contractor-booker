@@ -6,7 +6,9 @@ public interface DB {
 
 	String[] read(int recordNumber) throws RecordNotFoundException;
 
-	void update(int recNo, String[] data, long lockC) throws RecordNotFoundException, SecurityException;
+	void update(int recNo, String[] data, long lockCookie) throws RecordNotFoundException, SecurityException;
+
+	void delete(int recNo, long lockCookie) throws RecordNotFoundException, SecurityException;
 
 	int[] find(String[] data);
 

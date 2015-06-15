@@ -20,7 +20,7 @@ public class RecordUtils {
 		return array;
 	}
 
-	public static Record toRecord(int recordNo, String[] recordDetails) {
+	public static Record createRecord(int recordNo, String[] recordDetails) {
 		RecordBuilder builder = getRecordBuilder(recordDetails);
 		return builder.addRecordNumber(recordNo).build();
 	}

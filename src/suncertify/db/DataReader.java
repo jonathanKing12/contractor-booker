@@ -58,11 +58,11 @@ public class DataReader {
 	int getNextAvailableRecordNumber() throws DataSourceException {
 		recordReader.open();
 		int recordNumber = 0;
-
 		while (recordReader.hasRecord(recordNumber)) {
 			Record record = recordReader.readRecord(recordNumber);
 			if (record.isDeleted()) {
-				return recordNumber;
+				// return recordNumber;
+				break;
 			}
 			recordNumber++;
 		}

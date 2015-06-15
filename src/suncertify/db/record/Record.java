@@ -1,7 +1,5 @@
 package suncertify.db.record;
 
-import static java.lang.Boolean.FALSE;
-
 public class Record {
 
 	private String name;
@@ -11,7 +9,7 @@ public class Record {
 	private String rate;
 	private String owner;
 	private int recordNumber;
-	private String deletedFlag = "  ";
+	private boolean isDeleted;
 
 	public Record(RecordBuilder builder) {
 		name = builder.getName();
@@ -21,7 +19,7 @@ public class Record {
 		rate = builder.getRate();
 		owner = builder.getOwner();
 		recordNumber = builder.getRecordNumber();
-		deletedFlag = builder.getDeletedFlag();
+		isDeleted = builder.getDeletedFlag();
 	}
 
 	@Override
@@ -34,7 +32,7 @@ public class Record {
 	}
 
 	public boolean isDeleted() {
-		return FALSE;
+		return isDeleted;
 	}
 
 	public String getName() {
@@ -49,8 +47,8 @@ public class Record {
 		return location;
 	}
 
-	public String getDeletedFlag() {
-		return "  ";// deletedFlag;
+	public boolean getDeletedFlag() {
+		return isDeleted;// deletedFlag;
 	}
 
 	public String getSpecialties() {
@@ -71,5 +69,9 @@ public class Record {
 
 	public void setRecordNumber(int recordNumber) {
 		this.recordNumber = recordNumber;
+	}
+
+	public void setDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 }

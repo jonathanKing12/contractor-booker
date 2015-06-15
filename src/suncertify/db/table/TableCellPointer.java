@@ -3,11 +3,11 @@ package suncertify.db.table;
 class TableCellPointer {
 
 	protected int columnNumber;
-	protected TableHeader header;
+	protected int numberOfColumns;
 	private int rowNumber;
 
-	TableCellPointer(TableHeader header) {
-		this.header = header;
+	TableCellPointer(int numberOfColumns) {
+		this.numberOfColumns = numberOfColumns;
 	}
 
 	void moveToStartOfRow(int rowNumber) {
@@ -18,7 +18,7 @@ class TableCellPointer {
 	void moveToNextColumn() {
 		columnNumber++;
 
-		if (columnNumber >= header.getNumberOfColumns()) {
+		if (columnNumber >= numberOfColumns) {
 			moveToStartOfNextRow();
 		}
 	}

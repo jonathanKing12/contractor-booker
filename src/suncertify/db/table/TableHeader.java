@@ -49,7 +49,6 @@ class TableHeader {
 			startingPositionOfFirstCell = dataInputStream.readInt();
 			columns = readColumnHeaders(dataInputStream);
 			startingPositionOfFirstCell = getRowStartingPosition(0);
-			System.out.println("starting position of first cell is " + startingPositionOfFirstCell);
 			dataInputStream.close();
 			alreadyBeenRead = TRUE;
 		} catch (DataSourceException e) {

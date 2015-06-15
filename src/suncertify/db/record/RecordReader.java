@@ -25,6 +25,7 @@ public class RecordReader {
 		tableReader.moveToRow(recordNumber);
 
 		String deletedFlag = tableReader.readNextColumn();
+		boolean isDeleted = deletedFlag.equals("8000");
 		String name = tableReader.readNextColumn();
 		String location = tableReader.readNextColumn();
 		String specialties = tableReader.readNextColumn();
@@ -34,7 +35,7 @@ public class RecordReader {
 
 		RecordBuilder builder = new RecordBuilder();
 		return builder.addName(name).addLocation(location).addSpecialties(specialties).addSize(size).addRate(rate).addOwner(owner)
-				.addRecordNumber(recordNumber).addDeletedFlag(deletedFlag).build();
+				.addRecordNumber(recordNumber).addDeletedFlag(isDeleted).build();
 	}
 
 	public void close() throws DataSourceException {

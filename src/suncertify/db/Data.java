@@ -19,6 +19,18 @@ public class Data implements DB {
 	}
 
 	@Override
+	public void delete(int recNo, long lockCookie) throws RecordNotFoundException, SecurityException {
+		verifyRecordExistsAndIsLockedWithLockCookie(recNo, lockCookie);
+		try {
+			dataAccessLocker.getWriteLock();
+			dataAccess.deleteRecord(recNo);
+			recordLocker.unlockRecord(recNo, lockCookie);
+		} finally {
+			dataAccessLocker.returnWriteLock();
+		}
+	}
+
+	@Override
 	public String[] read(int recNo) throws RecordNotFoundException {
 		try {
 			dataAccessLocker.getReadLock();
@@ -30,8 +42,8 @@ public class Data implements DB {
 
 	@Override
 	public void update(int recNo, String[] data, long lockCookie) throws RecordNotFoundException, SecurityException {
-		verifyRecordExist(recNo);
-		recordLocker.verifyRecordIsLockedWithLockCookie(recNo, lockCookie);
+
+		verifyRecordExistsAndIsLockedWithLockCookie(recNo, lockCookie);
 		try {
 			dataAccessLocker.getWriteLock();
 			dataAccess.update(recNo, data);
@@ -55,7 +67,11 @@ public class Data implements DB {
 		try {
 			dataAccessLocker.getWriteLock();
 			return dataAccess.create(data);
+		} catch (Exception e) {
+			System.out.println("error " + e.getMessage());
+			throw e;
 		} finally {
+
 			dataAccessLocker.returnWriteLock();
 		}
 	}
@@ -80,12 +96,25 @@ public class Data implements DB {
 		recordLocker.unlockRecord(recNo, lockCookie);
 	}
 
+	private void verifyRecordExistsAndIsLockedWithLockCookie(int recNo, long lockCookie) throws RecordNotFoundException {
+		verifyRecordExist(recNo);
+		recordLocker.verifyRecordIsLockedWithLockCookie(recNo, lockCookie);
+	}
+
 	private void verifyRecordExist(int recNo) throws RecordNotFoundException {
 		try {
 			dataAccessLocker.getReadLock();
 			dataAccess.verifyRecordExist(recNo);
 		} finally {
 			dataAccessLocker.returnReadLock();
+		}
+	}
+
+	private static void printByteArray(byte[] bArray) {
+		int i = 1;
+		System.out.println("printing byte array");
+		for (byte b : bArray) {
+			System.out.println((i++) + ": " + b);
 		}
 	}
 }

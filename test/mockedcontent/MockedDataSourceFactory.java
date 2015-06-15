@@ -6,16 +6,20 @@ import datasource.DataSourceWriter;
 
 public class MockedDataSourceFactory implements DataSourceFactory {
 
+	private String fileName;
+
+	public MockedDataSourceFactory(String fileName) {
+		this.fileName = fileName;
+	}
+
 	@Override
 	public DataSourceReader getDatoSourceReader() {
-		// TODO Auto-generated method stub
-		return null;
+		return new MockedDataSourcceReader(fileName);
 	}
 
 	@Override
 	public DataSourceWriter getDatoSourceWritter() {
-		// TODO Auto-generated method stub
-		return null;
+		return new MockedDataSourceWriter(fileName);
 	}
 
 }

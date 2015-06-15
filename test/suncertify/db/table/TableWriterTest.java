@@ -53,10 +53,10 @@ public class TableWriterTest {
 		tableWriter.writeNextColumn(name);
 		tableWriter.writeNextColumn(location);
 		tableWriter.writeNextColumn(size);
-		verify(writer, times(1)).write(deleted, 2);
-		verify(writer, times(1)).write(rate, 6);
-		verify(writer, times(1)).write(name, 32);
-		verify(writer, times(1)).write(location, 64);
-		verify(writer, times(1)).write(size, 8);
+		verify(writer, times(1)).writeString(deleted, 2);
+		verify(writer, times(1)).writeString(rate, 6);
+		verify(writer, times(1)).writeString(name, 32);
+		verify(writer, times(1)).writeString(location, 64);
+		verify(writer, times(1)).writeString(size, 8);
 	}
 }

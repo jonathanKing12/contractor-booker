@@ -44,7 +44,7 @@ public class DataAccess {
 			dataWriter.write(recNo, data);
 			return recNo;
 		} catch (DataSourceException e) {
-			throw new RuntimeException("");
+			throw new RuntimeException("data access error " + e.getMessage());
 		}
 	}
 
@@ -54,5 +54,16 @@ public class DataAccess {
 		} catch (DataSourceException e) {
 			throw new RuntimeException("");
 		}
+	}
+
+	public void deleteRecord(int recordNumber) throws RecordNotFoundException {
+		try {
+			String[] data = dataReader.read(recordNumber);
+			dataWriter.deleteRecord(recordNumber, data);
+		} catch (DataSourceException e) {
+			System.out.println("error " + e.getMessage());
+			throw new RuntimeException("error 1 when deleting " + recordNumber);
+		}
+
 	}
 }
