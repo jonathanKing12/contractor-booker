@@ -6,7 +6,7 @@ class TableCellPointer {
 	protected int numberOfColumns;
 	private int rowNumber;
 
-	TableCellPointer(int numberOfColumns) {
+	void setNumberOfColumns(int numberOfColumns) {
 		this.numberOfColumns = numberOfColumns;
 	}
 
@@ -17,7 +17,7 @@ class TableCellPointer {
 
 	void moveToNextColumn() {
 		columnNumber++;
-
+		System.out.println("number of columns " + numberOfColumns);
 		if (columnNumber >= numberOfColumns) {
 			moveToStartOfNextRow();
 		}
@@ -35,5 +35,10 @@ class TableCellPointer {
 
 	int getRowNumber() {
 		return rowNumber;
+	}
+
+	public static void main(String[] args) {
+		short s = 0x0;
+		System.out.println(String.format("%04X", s));
 	}
 }

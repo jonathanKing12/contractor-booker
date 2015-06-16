@@ -22,6 +22,7 @@ class TableHeader {
 	}
 
 	int getRowStartingPosition(int recordNumber) {
+		System.out.println("startingPositionOfFirstCell " + startingPositionOfFirstCell);
 		return rowSize * recordNumber + startingPositionOfFirstCell;
 	}
 
@@ -66,6 +67,7 @@ class TableHeader {
 
 	private List<TableColumn> readColumnHeaders(DataSourceReader dataInputStream) throws DataSourceException {
 		int totalNumberofColumns = dataInputStream.readShort();
+		System.out.println("totalNumberofColumns " + totalNumberofColumns);
 		final List<TableColumn> columns = new ArrayList<>(totalNumberofColumns);
 
 		columns.add(new TableColumn(2, 0));

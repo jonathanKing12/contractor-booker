@@ -20,8 +20,8 @@ class TableDataCounter {
 		totalAmountOfDataRead = amount;
 	}
 
-	void incrementBy(int data) {
-		totalAmountOfDataRead += data;
+	void incrementBy(int amount) {
+		totalAmountOfDataRead += amount;
 	}
 
 	boolean doesRowExists(int rowNumber) throws DataSourceException {
@@ -46,12 +46,14 @@ class TableDataCounter {
 
 	private boolean isThereEnoughtAvailableDataForRowToExist(int rowNumber) throws DataSourceException {
 		int dataSize = getSizeOfDataBetweenCurrentPositionAndStartOfNextRow(rowNumber);
-		return reader.available() >= (dataSize + header.getRowSize());
+		int available = reader.available();
+		int rowsize = header.getRowSize();
+		int tem = dataSize + rowsize;
+		return available >= (tem);
 	}
 
 	int getSizeOfDataBetweenCurrentPositionAndStartOfNextRow(int rowNumber) {
 		int rowPosition = header.getRowStartingPosition(rowNumber);
-		System.out.println("calculate " + rowPosition + " " + totalAmountOfDataRead);
 		return rowPosition - totalAmountOfDataRead;
 	}
 }

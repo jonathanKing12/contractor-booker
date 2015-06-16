@@ -11,6 +11,8 @@ import static suncertify.db.table.SetUpHeaderMock.setUpMockedheader;
 
 import java.util.List;
 
+import mockedcontent.MockedUtil;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,10 +36,16 @@ public class TableHeaderTest {
 
 	@Before
 	public void setUp() throws DataSourceException {
+
+		List<Short> mockedShorts = getShorts();
+
+		MockedUtil.mockShorts(reader, mockedShorts);
 		setUpMockedheader(reader);
+
 		when(factory.getDatoSourceReader()).thenReturn(reader);
 		header = new TableHeader(factory);
 		header.readTableHeader();
+
 	}
 
 	@Test

@@ -15,7 +15,7 @@ public class TableReader {
 
 	public TableReader(DataSourceFactory factory) {
 		header = new TableHeader(factory);
-		tableCellPointer = new TableCellPointer(header.getNumberOfColumns());
+		tableCellPointer = new TableCellPointer();
 		// this.factory = factory;
 		dataSourceReader = factory.getDatoSourceReader();
 		// dataCounter = new TableDataCounter(header, dataSourceReader);
@@ -24,6 +24,8 @@ public class TableReader {
 	public void open() throws DataSourceException {
 		header.readTableHeader();
 		tableCellPointer.moveToStartOfRow(0);
+		System.out.println("in table reader " + header.getNumberOfColumns());
+		tableCellPointer.setNumberOfColumns(header.getNumberOfColumns());
 		// dataCounter.setAmountOfDataRead(header.getRowStartingPosition(0));
 		dataCounter = new TableDataCounter(header, dataSourceReader);
 		dataSourceReader.open();
@@ -32,13 +34,13 @@ public class TableReader {
 	public String readNextColumn() throws DataSourceException {
 		int columnNumber = tableCellPointer.getColumnNumber();
 		int columnSize = header.getColumnSize(columnNumber);
-
 		String columnValue;
 		if (columnNumber == 0) {
 			columnValue = readShort();
 		} else {
 			columnValue = readString(columnSize);
 		}
+		System.out.println(columnNumber + " " + columnSize + " " + columnValue);
 		dataCounter.incrementBy(columnSize);
 		tableCellPointer.moveToNextColumn();
 		return columnValue.trim();

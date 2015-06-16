@@ -1,7 +1,6 @@
 package suncertify.db.table;
 
 import static mockedcontent.TableHeaderContent.getInts;
-import static mockedcontent.TableHeaderContent.getShorts;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
@@ -15,13 +14,14 @@ public class SetUpHeaderMock {
 
 	public static void setUpMockedheader(DataSourceReader reader) throws DataSourceException {
 		List<Integer> mockedInts = getInts();
-		List<Short> mockedShorts = getShorts();
+		// List<Short> mockedShorts = getShorts();
+		// System.out.println("mocked shorts " + mockedShorts);
 
 		OngoingStubbing<Integer> stubReadInt = when(reader.readInt());
 		mockReturnedData(mockedInts, stubReadInt);
 
-		OngoingStubbing<Short> stubReadShort = when(reader.readShort());
-		mockReturnedData(mockedShorts, stubReadShort);
+		// OngoingStubbing<Short> stubReadShort = when(reader.readShort());
+		// mockReturnedData(mockedShorts, stubReadShort);
 	}
 
 	private static <T> void mockReturnedData(List<T> items, OngoingStubbing<T> ongoingStub) {
@@ -29,5 +29,4 @@ public class SetUpHeaderMock {
 			ongoingStub = ongoingStub.thenReturn(mockedInt);
 		}
 	}
-
 }

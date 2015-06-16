@@ -17,11 +17,12 @@ public class TableRowsContent {
 
 	private static List<String> createRow(String rate, String name, String location, String size) {
 		List<String> row = new ArrayList<String>();
-		row.add("0");
-		row.add(rate);
+		// row.add("0");
+
 		row.add(name);
 		row.add(location);
 		row.add(size);
+		row.add(rate);
 		return row;
 	}
 
