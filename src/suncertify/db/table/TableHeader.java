@@ -15,14 +15,13 @@ class TableHeader {
 	private List<TableColumn> columns;
 	private int rowSize;
 	private boolean alreadyBeenRead;
-	private DataSourceFactory factory;
+	private DataSourceReader dataSourceReader;
 
 	TableHeader(DataSourceFactory factory) {
-		this.factory = factory;
+		dataSourceReader=factory.getDatoSourceReader();
 	}
 
 	int getRowStartingPosition(int recordNumber) {
-		System.out.println("startingPositionOfFirstCell " + startingPositionOfFirstCell);
 		return rowSize * recordNumber + startingPositionOfFirstCell;
 	}
 
@@ -42,19 +41,22 @@ class TableHeader {
 			return;
 		}
 
-		try {
-			DataSourceReader dataInputStream = factory.getDatoSourceReader();
-			dataInputStream.open();
-			int isDataFile = dataInputStream.readInt();
-			rowSize = 0;
-			startingPositionOfFirstCell = dataInputStream.readInt();
-			columns = readColumnHeaders(dataInputStream);
-			startingPositionOfFirstCell = getRowStartingPosition(0);
-			dataInputStream.close();
-			alreadyBeenRead = TRUE;
+		try {		
+			readTableHeaderContents();			
 		} catch (DataSourceException e) {
 			throw new RuntimeException(e.getMessage());
 		}
+		
+		alreadyBeenRead = TRUE;
+	}
+
+	private void readTableHeaderContents() throws DataSourceException {
+		dataSourceReader.open();
+		int isDataFile = dataSourceReader.readInt();
+		startingPositionOfFirstCell = dataSourceReader.readInt();
+		columns = readColumnHeaders(dataSourceReader);
+		startingPositionOfFirstCell = getRowStartingPosition(0);
+		dataSourceReader.close();
 	}
 
 	int getRowSize() {
@@ -67,11 +69,10 @@ class TableHeader {
 
 	private List<TableColumn> readColumnHeaders(DataSourceReader dataInputStream) throws DataSourceException {
 		int totalNumberofColumns = dataInputStream.readShort();
-		System.out.println("totalNumberofColumns " + totalNumberofColumns);
 		final List<TableColumn> columns = new ArrayList<>(totalNumberofColumns);
 
 		columns.add(new TableColumn(2, 0));
-		rowSize += 2;
+		rowSize = 2;
 		for (int columnIndex = 0; columnIndex < totalNumberofColumns; columnIndex++) {
 			final TableColumn column = readColumnHeader((columnIndex + 1), dataInputStream);
 			columns.add(column);

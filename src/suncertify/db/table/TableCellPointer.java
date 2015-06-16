@@ -17,16 +17,14 @@ class TableCellPointer {
 
 	void moveToNextColumn() {
 		columnNumber++;
-		System.out.println("number of columns " + numberOfColumns);
 		if (columnNumber >= numberOfColumns) {
 			moveToStartOfNextRow();
 		}
 	}
 
 	private void moveToStartOfNextRow() {
-		int rowNumber = getRowNumber();
-		rowNumber++;
-		moveToStartOfRow(rowNumber);
+		int nextRowNumber = rowNumber+1;
+		moveToStartOfRow(nextRowNumber);
 	}
 
 	int getColumnNumber() {
@@ -35,10 +33,5 @@ class TableCellPointer {
 
 	int getRowNumber() {
 		return rowNumber;
-	}
-
-	public static void main(String[] args) {
-		short s = 0x0;
-		System.out.println(String.format("%04X", s));
 	}
 }
