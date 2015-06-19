@@ -59,7 +59,7 @@ public class Record {
 		return size;
 	}
 
-	public String getRate() {
+	public String getHourlyRate() {
 		return rate;
 	}
 

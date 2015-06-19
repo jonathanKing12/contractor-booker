@@ -3,7 +3,7 @@ package suncertify.db;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
-public class Lock {
+public class Lock implements Comparable<Lock> {
 
 	private int recordNumber;
 	private long lockCookie;
@@ -23,7 +23,7 @@ public class Lock {
 
 	synchronized void lock() {
 		while (isLocked) {
-			waitUntillLockIsUnlocked();
+			waitUntillIsUnlocked();
 		}
 		isLocked = TRUE;
 		lockCookie = System.currentTimeMillis();
@@ -31,7 +31,7 @@ public class Lock {
 
 	synchronized void unlock() {
 		isLocked = FALSE;
-		sendNotificationThatLockIsUnlocked();
+		notifyAll();
 	}
 
 	synchronized boolean isLockedAndHasLockCookie(long lockCookie) {
@@ -42,14 +42,25 @@ public class Lock {
 		return this.lockCookie == lockCookie;
 	}
 
-	private void waitUntillLockIsUnlocked() {
+	private void waitUntillIsUnlocked() {
 		try {
 			wait();
 		} catch (InterruptedException e) {
+			String message = createInterrupedErrorMessage(e);
+			throw new LockInterruptException(message);
 		}
 	}
 
-	private void sendNotificationThatLockIsUnlocked() {
-		notifyAll();
+	@Override
+	public int compareTo(Lock lock) {
+		if (lock == null) {
+			return -1;
+		}
+		return Integer.compare(recordNumber, lock.recordNumber);
+	}
+
+	private String createInterrupedErrorMessage(InterruptedException e) {
+		String message = " Thread interuped when waiting to lock record %d \n %s";
+		return String.format(message, recordNumber, e.getMessage());
 	}
 }

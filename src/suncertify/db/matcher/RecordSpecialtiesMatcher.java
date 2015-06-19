@@ -7,21 +7,21 @@ import suncertify.db.record.Record;
 
 public class RecordSpecialtiesMatcher extends RecordMatcher {
 
-	public RecordSpecialtiesMatcher(String specialtiesPrefix) {
-		super(specialtiesPrefix);
+	public RecordSpecialtiesMatcher(String critia) {
+		super(critia);
 	}
 
-	public RecordSpecialtiesMatcher(String sizePrefix, RecordMatcher recordMatcher) {
-		super(sizePrefix, recordMatcher);
+	public RecordSpecialtiesMatcher(String critea, RecordMatcher recordMatcher) {
+		super(critea, recordMatcher);
 	}
 
 	@Override
-	boolean isRecordFieldBeginningWithPrefix(Record record, String specialtyPrefix) {
+	boolean isRecordFieldMatchingCritea(Record record, String critea) {
 		String[] specialties = getSpecialites(record);
 
 		boolean found = FALSE;
 		for (String specialty : specialties) {
-			if (specialty.toLowerCase().startsWith(specialtyPrefix.toLowerCase())) {
+			if (specialty.toLowerCase().startsWith(critea.toLowerCase())) {
 				found = TRUE;
 				break;
 			}

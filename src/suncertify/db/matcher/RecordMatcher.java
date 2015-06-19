@@ -6,14 +6,14 @@ import suncertify.db.record.Record;
 public abstract class RecordMatcher {
 
 	private RecordMatcher recordMatcher;
-	private String prefix;
+	private String critea;
 
-	public RecordMatcher(String prefix) {
-		this.prefix = prefix;
+	public RecordMatcher(String critea) {
+		this.critea = critea;
 	}
 
-	public RecordMatcher(String prefix, RecordMatcher recordMatcher) {
-		this(prefix);
+	public RecordMatcher(String critea, RecordMatcher recordMatcher) {
+		this(critea);
 		this.recordMatcher = recordMatcher;
 	}
 
@@ -24,12 +24,12 @@ public abstract class RecordMatcher {
 			isMatching = recordMatcher.matches(record);
 		}
 
-		if (isMatching && prefix != null) {
-			isMatching = isRecordFieldBeginningWithPrefix(record, prefix.toLowerCase());
+		if (isMatching && critea != null) {
+			isMatching = isRecordFieldMatchingCritea(record, critea.toLowerCase());
 		}
 		return isMatching;
 	}
 
-	abstract boolean isRecordFieldBeginningWithPrefix(Record record, String prefix);
+	abstract boolean isRecordFieldMatchingCritea(Record record, String critea);
 
 }

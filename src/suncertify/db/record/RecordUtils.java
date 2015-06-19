@@ -15,7 +15,7 @@ public class RecordUtils {
 		array[LOCATION_INDEX] = record.getLocation();
 		array[SPECIALTIES_INDEX] = record.getSpecialties();
 		array[SIZE_INDEX] = record.getSize();
-		array[RATE_INDEX] = record.getRate();
+		array[RATE_INDEX] = record.getHourlyRate();
 		array[OWNER_INDEX] = record.getOwner();
 		return array;
 	}

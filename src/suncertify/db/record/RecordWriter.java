@@ -35,7 +35,7 @@ public class RecordWriter {
 		tableWriter.writeNextColumn(record.getLocation());
 		tableWriter.writeNextColumn(record.getSpecialties());
 		tableWriter.writeNextColumn(record.getSize());
-		tableWriter.writeNextColumn(record.getRate());
+		tableWriter.writeNextColumn(record.getHourlyRate());
 		tableWriter.writeNextColumn(record.getOwner());
 	}
 

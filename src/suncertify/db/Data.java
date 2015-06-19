@@ -83,7 +83,7 @@ public class Data implements DB {
 			verifyRecordExist(recNo);
 			return lockCookie;
 		} catch (RecordNotFoundException e) {
-			// If same request happens again (request2), and the record still doesn't exist and
+			// If this request happens again (request2), and the record still doesn't exist and
 			// isn't unlocked, then request2 won't be informed that it doesn't exist and hang
 			unlock(recNo, lockCookie);
 			throw e;
@@ -107,14 +107,6 @@ public class Data implements DB {
 			dataAccess.verifyRecordExist(recNo);
 		} finally {
 			dataAccessLocker.returnReadLock();
-		}
-	}
-
-	private static void printByteArray(byte[] bArray) {
-		int i = 1;
-		System.out.println("printing byte array");
-		for (byte b : bArray) {
-			System.out.println((i++) + ": " + b);
 		}
 	}
 }

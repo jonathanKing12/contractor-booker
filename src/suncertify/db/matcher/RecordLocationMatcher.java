@@ -4,17 +4,17 @@ import suncertify.db.record.Record;
 
 public class RecordLocationMatcher extends RecordMatcher {
 
-	public RecordLocationMatcher(String locationPrefix) {
-		super(locationPrefix);
+	public RecordLocationMatcher(String critea) {
+		super(critea);
 	}
 
-	public RecordLocationMatcher(String locationPrefix, RecordMatcher recordMatcher) {
-		super(locationPrefix, recordMatcher);
+	public RecordLocationMatcher(String critea, RecordMatcher recordMatcher) {
+		super(critea, recordMatcher);
 	}
 
 	@Override
-	boolean isRecordFieldBeginningWithPrefix(Record record, String namePrefix) {
+	boolean isRecordFieldMatchingCritea(Record record, String critea) {
 		String name = record.getLocation();
-		return name.toLowerCase().startsWith(namePrefix);
+		return name.toLowerCase().startsWith(critea);
 	}
 }

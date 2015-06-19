@@ -57,4 +57,8 @@ public class Contractor implements Serializable {
 	public void setOwner(String owner) {
 		this.owner = owner;
 	}
+
+	public boolean isBooked() {
+		return !owner.isEmpty();
+	}
 }

@@ -22,8 +22,15 @@ public class RecordLocker {
 
 	void verifyRecordIsLockedWithLockCookie(int recordNumber, long lockCookie) throws SecurityException {
 		Lock lock = lockCabnit.getOrCreateLock(recordNumber);
+
 		if (!lock.isLockedAndHasLockCookie(lockCookie)) {
-			throw new SecurityException("the record " + recordNumber + " is not locked by " + lockCookie);
+			String message = createInvalidLockCookieMessage(recordNumber, lockCookie);
+			throw new InvalidLockCookieException(message);
 		}
+	}
+
+	private String createInvalidLockCookieMessage(int recordNumber, long lockCookie) {
+		String message = "the record %d is not locked by %d";
+		return String.format(message, recordNumber, lockCookie);
 	}
 }

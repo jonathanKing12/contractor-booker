@@ -1,5 +1,7 @@
 package suncertify.db;
 
+import java.util.Arrays;
+
 import suncertify.db.record.RecordNotFoundException;
 import datasource.DataSourceException;
 import datasource.DataSourceFactory;
@@ -14,19 +16,21 @@ public class DataAccess {
 		dataWriter = new DataWriter(factory);
 	}
 
-	String[] read(int recNo) throws RecordNotFoundException {
+	String[] read(int recordNumber) throws RecordNotFoundException {
 		try {
-			return dataReader.read(recNo);
+			return dataReader.read(recordNumber);
 		} catch (DataSourceException e) {
-			throw new RuntimeException("");
+			String message = createReadErrorMessage(recordNumber, e);
+			throw new DataAccessException(message);
 		}
 	}
 
-	void update(int recNo, String[] data) throws RecordNotFoundException {
+	void update(int recordNumber, String[] data) throws RecordNotFoundException {
 		try {
-			dataWriter.write(recNo, data);
+			dataWriter.write(recordNumber, data);
 		} catch (DataSourceException e) {
-			throw new RuntimeException(e.getMessage());
+			String message = createUpdateErrorMessage(recordNumber, data, e);
+			throw new DataAccessException(message);
 		}
 	}
 
@@ -34,7 +38,8 @@ public class DataAccess {
 		try {
 			return dataReader.find(data);
 		} catch (DataSourceException e) {
-			throw new RuntimeException("");
+			String message = createFindErrorMessage(data, e);
+			throw new DataAccessException(message);
 		}
 	}
 
@@ -44,7 +49,8 @@ public class DataAccess {
 			dataWriter.write(recNo, data);
 			return recNo;
 		} catch (DataSourceException e) {
-			throw new RuntimeException("data access error " + e.getMessage());
+			String message = createCreateErrorMessage(data, e);
+			throw new DataAccessException(message);
 		}
 	}
 
@@ -52,7 +58,8 @@ public class DataAccess {
 		try {
 			dataReader.verifyRecordExist(recordNumber);
 		} catch (DataSourceException e) {
-			throw new RuntimeException("");
+			String message = createVerifyErrorMessage(recordNumber, e);
+			throw new DataAccessException(message);
 		}
 	}
 
@@ -61,9 +68,38 @@ public class DataAccess {
 			String[] data = dataReader.read(recordNumber);
 			dataWriter.deleteRecord(recordNumber, data);
 		} catch (DataSourceException e) {
-			System.out.println("error " + e.getMessage());
-			throw new RuntimeException("error 1 when deleting " + recordNumber);
+			String message = createDeleteErrorMessage(recordNumber, e);
+			throw new DataAccessException(message);
 		}
+	}
 
+	private String createReadErrorMessage(int recordNumber, DataSourceException e) {
+		return String.format(" A problem occured when reading record %d \n %s", recordNumber, e.getMessage());
+	}
+
+	private String createUpdateErrorMessage(int recordNumber, String[] dataArray, DataSourceException e) {
+		String dataString = Arrays.toString(dataArray);
+		String message = " A problem occured when updating record %d with \n %s \n %s";
+		return String.format(message, recordNumber, dataString, e.getMessage());
+	}
+
+	private String createFindErrorMessage(String[] dataArray, DataSourceException e) {
+		String dataString = Arrays.toString(dataArray);
+		String message = " A problem occured when finding records that meets the search critea \n %s \n %s";
+		return String.format(message, dataString, e.getMessage());
+	}
+
+	private String createCreateErrorMessage(String[] dataArray, DataSourceException e) {
+		String dataString = Arrays.toString(dataArray);
+		String message = " A problem occured when creating record \n %s \n %s";
+		return String.format(message, dataString, e.getMessage());
+	}
+
+	private String createVerifyErrorMessage(int recordNumber, DataSourceException e) {
+		return String.format(" A problem occured when verifying record %d exists \n %s", recordNumber, e.getMessage());
+	}
+
+	private String createDeleteErrorMessage(int recordNumber, DataSourceException e) {
+		return String.format(" A problem occured when deleting record %d \n %s", recordNumber, e.getMessage());
 	}
 }

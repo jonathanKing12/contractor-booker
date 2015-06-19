@@ -5,11 +5,11 @@ import java.util.List;
 
 import transport.contractor.Contractor;
 import transport.contractor.ContractorException;
-import transport.contractor.ContractorWrapper;
+import transport.contractor.ContractorFacadeWrapper;
 
 public class LocalDelegator implements Delegator, ConfigurableDelegator {
 
-	private ContractorWrapper contractorFacade;
+	private ContractorFacadeWrapper contractorFacade;
 
 	public LocalDelegator() throws IOException {
 		// contractorFacade = new ContractorWrapper(new ContractorFacade());
@@ -27,7 +27,7 @@ public class LocalDelegator implements Delegator, ConfigurableDelegator {
 
 	@Override
 	public void updateContractor(Contractor contractor) throws ContractorException {
-		contractorFacade.updateContractor(contractor);
+		contractorFacade.bookContractor(contractor);
 	}
 
 	@Override

@@ -2,14 +2,15 @@ package transport.contractor;
 
 import java.util.List;
 
+import suncertify.db.InvalidLockCookieException;
 import suncertify.db.record.RecordNotFoundException;
 import datasource.locator.DataSourceLocationException;
 
-public class ContractorWrapper {
+public class ContractorFacadeWrapper {
 
 	private ContractorFacade contractorDataAccessObject;
 
-	public ContractorWrapper(ContractorFacade contractorDataAccessObject) {
+	public ContractorFacadeWrapper(ContractorFacade contractorDataAccessObject) {
 		this.contractorDataAccessObject = contractorDataAccessObject;
 	}
 
@@ -24,14 +25,14 @@ public class ContractorWrapper {
 	public Contractor getContractor(int contractorId) throws ContractorException {
 		try {
 			return contractorDataAccessObject.getContractor(contractorId);
-		} catch (RecordNotFoundException e) {
+		} catch (RecordNotFoundException | InvalidLockCookieException e) {
 			throw new ContractorException(e.getMessage());
 		}
 	}
 
-	public void updateContractor(Contractor contractor) throws ContractorException {
+	public void bookContractor(Contractor contractor) throws ContractorException {
 		try {
-			contractorDataAccessObject.updateContractor(contractor);
+			contractorDataAccessObject.bookContractor(contractor);
 		} catch (RecordNotFoundException e) {
 			throw new ContractorException(e.getMessage());
 		}
