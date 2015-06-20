@@ -18,7 +18,7 @@ class TableHeader {
 	private DataSourceReader dataSourceReader;
 
 	TableHeader(DataSourceFactory factory) {
-		dataSourceReader=factory.getDatoSourceReader();
+		dataSourceReader = factory.getDatoSourceReader();
 	}
 
 	int getRowStartingPosition(int recordNumber) {
@@ -41,12 +41,12 @@ class TableHeader {
 			return;
 		}
 
-		try {		
-			readTableHeaderContents();			
+		try {
+			readTableHeaderContents();
 		} catch (DataSourceException e) {
 			throw new RuntimeException(e.getMessage());
 		}
-		
+
 		alreadyBeenRead = TRUE;
 	}
 
@@ -85,7 +85,6 @@ class TableHeader {
 		dataInputStream.moveForwardBy(sizeOfColumnName);
 		final int sizeOfColumnValue = dataInputStream.readShort();
 		rowSize += sizeOfColumnValue;
-		final TableColumn column = new TableColumn(sizeOfColumnValue, columnIndex);
-		return column;
+		return new TableColumn(sizeOfColumnValue, columnIndex);
 	}
 }

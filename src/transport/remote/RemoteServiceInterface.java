@@ -1,4 +1,4 @@
-package network;
+package transport.remote;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -8,9 +8,13 @@ import transport.contractor.Contractor;
 
 public interface RemoteServiceInterface extends Remote {
 
-	void updateContractor(Contractor contractor) throws RemoteException;
+	void bookContractor(Contractor contractor) throws RemoteException;
 
 	List<Contractor> getContractors(String name, String location) throws RemoteException;
 
 	Contractor getContractor(int contractorId) throws RemoteException;
+
+	void setLocation(String location) throws RemoteException;
+
+	String getLocation() throws RemoteException;
 }

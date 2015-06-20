@@ -1,44 +1,42 @@
 package client.controller;
 
 import java.io.IOException;
+import java.util.Map;
 
+import setting.SettingType;
 import transport.contractor.ContractorException;
 import client.model.ConfigurableModel;
 import client.model.ConfigurationModel;
 
-public class ConfigurationController implements ConfigurableController {
+public class ClientSettingsController implements SettingsController {
 
 	private ConfigurableModel model;
 
-	public ConfigurationController() {
+	public ClientSettingsController() {
 		try {
 			model = new ConfigurationModel();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public void setFileName(String fileName) {
+	public void saveSettings(Map<SettingType, String> settings) {
 		try {
 			model.setLocation(fileName);
 		} catch (ContractorException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public String getFileName() {
-		String location = null;
+	public Map<SettingType, String> getSettings() {
+		Map<SettingType, String> settings;
 		try {
 			location = model.getLocation();
-			System.out.println("getting file name in configuration controller " + location);
 		} catch (ContractorException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return location;
+		return settings;
 	}
 }

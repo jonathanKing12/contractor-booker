@@ -1,7 +1,5 @@
 package client.view;
 
-import static client.view.MessageBoxCreator.displayInputDialog;
-import static client.view.MessageBoxCreator.displayMessageBox;
 import static client.view.Validator.isCustomerIdValid;
 
 import java.awt.Color;
@@ -10,17 +8,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class ButtonPanel extends JPanel implements ActionListener {
 
 	private JButton bookContractor;
 	private ViewMerger merger;
-	private JFrame parentFrame;
 
-	public ButtonPanel(JFrame parentFrame) {
-		this.parentFrame = parentFrame;
+	public ButtonPanel() {
 		this.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		setUpMerger();
 		setpBookButton();
@@ -48,12 +43,12 @@ public class ButtonPanel extends JPanel implements ActionListener {
 		bookContractor.setEnabled(enabled);
 	}
 
-	private String displayMessageBoxToGetCustomerId() {
-		return displayInputDialog(parentFrame, "enter customer ID");
-	}
-
 	private boolean isOkayButtonSelected(String customerId) {
 		return customerId != null;
+	}
+
+	private String displayMessageBoxToGetCustomerId() {
+		return merger.displayInputDialogBox("enter customer ID");
 	}
 
 	private void proceedToBookContractor() {
@@ -73,7 +68,7 @@ public class ButtonPanel extends JPanel implements ActionListener {
 
 	private void informUserAndProceedToBookContractorAgain(String customerId) {
 		String errorMessage = getErrorMessage(customerId);
-		displayMessageBox(parentFrame, errorMessage);
+		merger.displayMessageBox(errorMessage, "Invalid customer ID");
 		proceedToBookContractor();
 	}
 
@@ -83,7 +78,7 @@ public class ButtonPanel extends JPanel implements ActionListener {
 		if (customerId.isEmpty()) {
 			builder.append("No customer ID has been entered");
 		} else {
-			builder.append("' ").append(customerId).append(" ' is not a valid customer's ID.");
+			builder.append("' ").append(customerId).append(" ' is not a valid customer ID.");
 		}
 
 		builder.append("\n A customer's ID has only eight digits.");

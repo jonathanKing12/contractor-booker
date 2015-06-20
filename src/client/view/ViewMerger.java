@@ -1,22 +1,26 @@
 package client.view;
 
-import java.io.IOException;
+import java.util.Map;
 
+import javax.swing.JFrame;
 import javax.swing.JTable;
 
+import setting.SettingType;
 import client.controller.BookableController;
-import client.controller.ConfigurableController;
 import client.controller.ControllerFactory;
+import client.controller.SettingsController;
 import client.view.settings.SettingsDialogBox;
 
 public class ViewMerger implements BookableView {
 
 	private static ViewMerger instance;
 
-	private ConfigurableController configurableController;
+	private SettingsController settingsController;
 	private BookableController bookableController;
+	private MessageBoxCreator messageBoxCreator;
 	private SettingsDialogBox settings;
 	private ButtonPanel buttonPanel;
+	private ControllerFactory controllerFactory;
 
 	static {
 		instance = new ViewMerger();
@@ -27,25 +31,19 @@ public class ViewMerger implements BookableView {
 	}
 
 	private ViewMerger() {
-		ControllerFactory factory = new ControllerFactory();
-		// configurableController = factory.getConfigurableController();
-		try {
-			bookableController = factory.getContractorController(this);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		controllerFactory = new ControllerFactory();
 	}
 
 	public void addSettingsDialogBox(SettingsDialogBox settings) {
 		this.settings = settings;
 	}
 
-	String getFileName() {
-		return configurableController.getFileName();
+	public Map<SettingType, String> getSettings() {
+		return settingsController.getSettings();
 	}
 
-	void setFileName(String fileName) {
-		configurableController.setFileName(fileName);
+	public void saveSettings(Map<SettingType, String> settings) {
+		settingsController.saveSettings(settings);
 	}
 
 	public void displaySettngsDialogBox() {
@@ -71,5 +69,19 @@ public class ViewMerger implements BookableView {
 
 	public void addButtonPanel(ButtonPanel buttonPanel) {
 		this.buttonPanel = buttonPanel;
+	}
+
+	public void setUpConnectionToClient(JFrame mainFrame) {
+		messageBoxCreator = new MessageBoxCreator(mainFrame);
+		bookableController = controllerFactory.getContractorController(this);
+		settingsController = controllerFactory.getClientSettingsController();
+	}
+
+	public String displayInputDialogBox(String request) {
+		return messageBoxCreator.displayInputDialog(request);
+	}
+
+	public void displayMessageBox(String errorMessage, String title) {
+		messageBoxCreator.displayErrorMessageBox(errorMessage, title);
 	}
 }

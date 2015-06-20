@@ -44,10 +44,11 @@ public class UpdateTest extends BaseTest {
 
 	@Test(expected = SecurityException.class)
 	public void shouldNotUpdateRecordWhenRecordIsNotLockedWithCookie() throws RecordNotFoundException {
-		String[] row = db.read(2);
+		DbWithReserveLocks dbWithReserveLocks = (DbWithReserveLocks) db;
+		String[] row = dbWithReserveLocks.read(2);
 		row[5] = "1212";
-		db.lock(2);
-		db.update(2, row, 0);
+		dbWithReserveLocks.lockRecord26();
+		dbWithReserveLocks.update(26, row, 0);
 	}
 
 	@Test(expected = RecordNotFoundException.class)

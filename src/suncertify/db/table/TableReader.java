@@ -11,21 +11,16 @@ public class TableReader {
 	private TableCellPointer tableCellPointer;
 	private TableDataCounter dataCounter;
 
-	// private DataSourceFactory factory;
-
 	public TableReader(DataSourceFactory factory) {
 		header = new TableHeader(factory);
 		tableCellPointer = new TableCellPointer();
-		// this.factory = factory;
 		dataSourceReader = factory.getDatoSourceReader();
-		// dataCounter = new TableDataCounter(header, dataSourceReader);
 	}
 
 	public void open() throws DataSourceException {
 		header.readTableHeader();
 		tableCellPointer.moveToStartOfRow(0);
 		tableCellPointer.setNumberOfColumns(header.getNumberOfColumns());
-		// dataCounter.setAmountOfDataRead(header.getRowStartingPosition(0));
 		dataCounter = new TableDataCounter(header, dataSourceReader);
 		dataSourceReader.open();
 	}

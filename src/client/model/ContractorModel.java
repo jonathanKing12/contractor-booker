@@ -5,7 +5,7 @@ import java.io.IOException;
 import javax.swing.table.TableModel;
 
 import transport.contractor.ContractorException;
-import transport.network.LocalDelegator;
+import transport.local.LocalDelegator;
 import client.controller.BookableController;
 
 public class ContractorModel implements BookableModel {
@@ -15,7 +15,7 @@ public class ContractorModel implements BookableModel {
 	private ContractorRowModelBooker booker;
 	private ContractorTableModel model;
 
-	public ContractorModel(BookableController controller) throws IOException {
+	public ContractorModel(BookableController controller) {
 		model = new ContractorTableModel();
 		LocalDelegator delegator = new LocalDelegator();
 

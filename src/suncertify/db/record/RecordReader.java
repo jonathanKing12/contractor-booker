@@ -3,7 +3,6 @@ package suncertify.db.record;
 import suncertify.db.table.TableReader;
 import datasource.DataSourceException;
 import datasource.DataSourceFactory;
-import filesource.FileStreamFactory;
 
 public class RecordReader {
 
@@ -40,13 +39,5 @@ public class RecordReader {
 
 	public void close() throws DataSourceException {
 		tableReader.close();
-	}
-
-	public static void main(String[] args) throws DataSourceException {
-		RecordReader reader = new RecordReader(new FileStreamFactory());
-		reader.open();
-		Record record = reader.readRecord(0);
-		System.out.println(record.getName());
-		reader.close();
 	}
 }

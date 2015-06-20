@@ -14,7 +14,7 @@ public class ContractorController implements BookableController {
 	private BookableModel model;
 	private BookableView view;
 
-	public ContractorController(BookableView view) throws IOException {
+	public ContractorController(BookableView view) {
 		this.view = view;
 		model = new ContractorModel(this);
 	}

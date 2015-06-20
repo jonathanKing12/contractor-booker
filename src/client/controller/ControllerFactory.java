@@ -1,21 +1,14 @@
 package client.controller;
 
-import java.io.IOException;
-
 import client.view.BookableView;
 
 public class ControllerFactory {
 
-	public ConfigurableController getConfigurableController() {
-		return new ConfigurationController();
+	public SettingsController getClientSettingsController() {
+		return new ClientSettingsController();
 	}
 
-	public BookableController getController(BookableView view) throws IOException {
+	public BookableController getContractorController(BookableView view) {
 		return new ContractorController(view);
 	}
-
-	public BookableController getContractorController(BookableView view) throws IOException {
-		return new ContractorController(view);
-	}
-
 }

@@ -17,7 +17,8 @@ public abstract class BaseTest {
 	public void setup() {
 		String fileName = getFileName();
 		factory = new MockedDataSourceFactory("C:/db/" + fileName + ".db");
-		db = new Data(factory);
+		db = new DbWithReserveLocks(new Data(factory));
+		System.out.println("setup " + fileName);
 	}
 
 	protected abstract String getFileName();

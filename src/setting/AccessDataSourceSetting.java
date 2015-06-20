@@ -1,46 +1,49 @@
-package datasource.locator;
+package setting;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-class ContractorDataSourceLocator implements DataSourceLocator {
+class AccessDataSourceSetting implements AccessSetting {
 
-	private static final ContractorDataSourceLocator locator;
+	private static final AccessDataSourceSetting locator;
 
 	private String propertiesFileName = "C:/db/suncertify.properties";
 	private String propertyNameAndDilimeter = "root location:";
 	private File propertiesFile;
 
 	static {
-		locator = new ContractorDataSourceLocator();
+		locator = new AccessDataSourceSetting();
 	}
 
-	public static ContractorDataSourceLocator getInstance() {
+	public static AccessDataSourceSetting getInstance() {
 		return locator;
 	}
 
-	private ContractorDataSourceLocator() {
+	private AccessDataSourceSetting() {
 		propertiesFile = new File(propertiesFileName);
 	}
 
 	@Override
-	public void setLocation(String location) throws DataSourceLocationException {
+	public void setLocation(String location) throws SettingException {
 		try (FileWriter writer = new FileWriter(propertiesFile)) {
 			write(writer, location);
 		} catch (IOException e) {
-			throw new DataSourceLocationException(e.getMessage());
+			throw new SettingException(e.getMessage());
 		}
 	}
 
 	@Override
-	public String getLocation() throws DataSourceLocationException {
+	public String getLocation() throws SettingException {
 		try (BufferedReader reader = new BufferedReader(new FileReader(propertiesFile))) {
 			return read(reader);
 		} catch (IOException e) {
-			throw new DataSourceLocationException(e.getMessage());
+			throw new SettingException(e.getMessage());
 		}
 	}
 
@@ -57,10 +60,17 @@ class ContractorDataSourceLocator implements DataSourceLocator {
 		writer.write(property);
 	}
 
-	public static void main(String[] args) throws DataSourceLocationException {
-		new ContractorDataSourceLocator().setLocation("c:/db/bin/:a");
-		System.out.println("done");
-		String location = new ContractorDataSourceLocator().getLocation();
-		System.out.println("the location is " + location);
+	private Map<SettingType, String> readSettings() throws SettingException {
+		List<String> lines = new ArrayList<>();
+
+		try (BufferedReader reader = new BufferedReader(new FileReader(propertiesFile))) {
+			String line;
+			while ((line = reader.readLine()) != null) {
+				lines.add(line);
+			}
+
+		} catch (IOException e) {
+			throw new SettingException(e.getMessage());
+		}
 	}
 }

@@ -6,7 +6,7 @@ import java.util.List;
 
 import transport.contractor.Contractor;
 import transport.contractor.ContractorException;
-import transport.network.LocalDelegator;
+import transport.local.LocalDelegator;
 
 public class ContractorRowModelSearcher {
 

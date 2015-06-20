@@ -2,17 +2,16 @@ package filesource;
 
 import static java.lang.System.arraycopy;
 
-import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.lang.reflect.Field;
 
+import setting.AccessSetting;
+import setting.AccessSetting;
+import setting.SettingException;
 import datasource.DataSourceException;
 import datasource.DataSourceWriter;
-import datasource.locator.DataSourceLocationException;
-import datasource.locator.DataSourceLocator;
-import datasource.locator.DataSourceLocatorFactory;
 
 public class FileStreamWriter implements DataSourceWriter {
 
@@ -34,10 +33,10 @@ public class FileStreamWriter implements DataSourceWriter {
 		}
 	}
 
-	private void retreiveFileName() throws DataSourceLocationException {
+	private void retreiveFileName() throws SettingException {
 		if (fileName.isEmpty()) {
 			DataSourceLocatorFactory factory = new DataSourceLocatorFactory();
-			DataSourceLocator locator = factory.getDataSourceLocator();
+			AccessSetting locator = factory.getDataSourceLocator();
 			String location = locator.getLocation();
 			fileName = location + "db-write2.db";
 		}
@@ -82,42 +81,6 @@ public class FileStreamWriter implements DataSourceWriter {
 		}
 	}
 
-	public static void main(String[] args) {
-
-		String start = "8000";
-		int next = Integer.parseInt(start, 16);
-		short deleted = (short) next;
-
-		File databaseFile = new File("C:/db/deleteFile.db");
-		try (RandomAccessFile randomAccessFile = new RandomAccessFile(databaseFile, "rw")) {
-			randomAccessFile.writeShort(deleted);
-		} catch (IOException e) {
-			System.out.println(e.getSuppressed());
-			System.out.println(e.getMessage());
-		}
-
-		short isDeleted = -1;
-		String third = "-1";
-		File databaseFile2 = new File("C:/db/deleteFile.db");
-		try (DataInputStream randomAccessFile2 = new DataInputStream(new FileInputStream(databaseFile2))) {
-
-			isDeleted = randomAccessFile2.readShort();
-			third = String.format("%04X", isDeleted);
-
-		} catch (IOException e) {
-			System.out.println(e.getSuppressed());
-			System.out.println(e.getMessage());
-		}
-
-		System.out.println("next " + next);
-		System.out.println("deleted " + deleted);
-		System.out.println("isDeleted " + isDeleted);
-		System.out.println("third " + third);
-
-		// System.out.println(Integer.toBinaryString(Integer.parseInt(s)));
-		// System.out.println(Integer.toHexString(randomAccessFile2.readShort()));
-	}
-
 	@Override
 	public void writeShort(short value) throws DataSourceException {
 		try {
@@ -125,6 +88,22 @@ public class FileStreamWriter implements DataSourceWriter {
 		} catch (IOException e) {
 			throw new DataSourceException(e.getMessage());
 		}
+	}
 
+	public static void main(String[] args) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		Dog dog = new Dog();
+
+		Field field = Dog.class.getDeclaredField("numberOfTimesPlayedfetch");
+		field.setAccessible(true);
+		field.set(dog, "test");
+		System.out.println(dog.getNumberOfTimesPlayedFetch());
+	}
+}
+
+class Dog {
+	private String numberOfTimesPlayedfetch = "initial value";
+
+	public String getNumberOfTimesPlayedFetch() {
+		return numberOfTimesPlayedfetch;
 	}
 }

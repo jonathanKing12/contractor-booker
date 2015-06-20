@@ -1,7 +1,7 @@
 package client.view.settings;
 
 import javax.swing.JDialog;
-import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import client.view.ViewMerger;
@@ -9,22 +9,22 @@ import client.view.ViewMerger;
 public class SettingsDialogBox extends JDialog {
 
 	private JTabbedPane tabbedPane;
-	private ViewMerger merger;
+	private SettingsTab settingsTab;
 
-	public SettingsDialogBox(JFrame parentFrame) {
-		super(parentFrame, "settings");
-		addChooseFolderTabbedJPanel();
+	public SettingsDialogBox(SettingsTab settingsTab) {
+		this.setTitle("settings");
+		this.settingsTab = settingsTab;
+
+		addSettingsTab();
 		this.pack();
 		this.setModal(true);
-		this.setLocationRelativeTo(parentFrame);
-		ViewMerger.getInstance().addSettingsDialogBox(this);
 
+		ViewMerger.getInstance().addSettingsDialogBox(this);
 	}
 
-	private void addChooseFolderTabbedJPanel() {
+	private void addSettingsTab() {
 		tabbedPane = new JTabbedPane();
-		SelectFileTabbedPanel selectFilePanel = new SelectFileTabbedPanel();
-		tabbedPane.add(selectFilePanel, selectFilePanel.getTtile());
+		tabbedPane.add((JPanel) settingsTab, settingsTab.getTtile());
 		this.add(tabbedPane);
 	}
 

@@ -1,18 +1,17 @@
-package transport.network;
+package transport.local;
 
-import java.io.IOException;
 import java.util.List;
 
 import transport.contractor.Contractor;
 import transport.contractor.ContractorException;
 import transport.contractor.ContractorFacadeWrapper;
 
-public class LocalDelegator implements Delegator, ConfigurableDelegator {
+public class LocalDelegator implements Delegator {
 
 	private ContractorFacadeWrapper contractorFacade;
 
-	public LocalDelegator() throws IOException {
-		// contractorFacade = new ContractorWrapper(new ContractorFacade());
+	public LocalDelegator() {
+		contractorFacade = new ContractorFacadeWrapper();
 	}
 
 	@Override

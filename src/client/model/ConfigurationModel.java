@@ -3,8 +3,8 @@ package client.model;
 import java.io.IOException;
 
 import transport.contractor.ContractorException;
-import transport.network.ConfigurableDelegator;
-import transport.network.LocalDelegator;
+import transport.local.ConfigurableDelegator;
+import transport.local.LocalDelegator;
 
 public class ConfigurationModel implements ConfigurableModel {
 

@@ -1,46 +1,36 @@
 package client.view.settings;
 
+import static java.lang.Boolean.FALSE;
 import static javax.swing.JFileChooser.APPROVE_OPTION;
 import static javax.swing.JFileChooser.DIRECTORIES_ONLY;
 
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
-import client.controller.ConfigurableController;
+public class DirectoryPanel extends JPanel implements ActionListener {
 
-public class SelectFileTabbedPanel extends JPanel implements ActionListener {
-
-	private String panelTitle;
-	private JLabel message;
 	private JButton browse;
-	private JTextField textField;
-	private ConfigurableController controller;
 	private JFileChooser fileChooser;
+	private TextHolder textHolder;
+	private String directory;
 
-	SelectFileTabbedPanel() {
-		panelTitle = "choose location";
+	DirectoryPanel() {
+		textHolder = new TextHolder("select location", FALSE);
 		fileChooser = getFileChooser();
-		message = new JLabel("select location");
-		// controller = new ConfigurationController();
 
-		setUpTextField();
 		setUpBrowseButton();
+		this.setLayout(new FlowLayout());
 		addComponents();
 	}
 
-	public String getTtile() {
-		return panelTitle;
-	}
-
-	public void setDataSourceLocation(String fileName) {
-		textField.setText(fileName);
-		controller.setFileName(fileName);
+	public void setDirectory(String directory) {
+		this.directory = directory;
+		textHolder.setText(directory);
 	}
 
 	@Override
@@ -48,9 +38,13 @@ public class SelectFileTabbedPanel extends JPanel implements ActionListener {
 		int response = fileChooser.showDialog(this, "choose database file");
 
 		if (isApproved(response)) {
-			String dataSourceLocation = getNewDataSoureLocation();
-			setDataSourceLocation(dataSourceLocation);
+			String directory = getdirectory();
+			setDirectory(directory);
 		}
+	}
+
+	public String getDirectory() {
+		return directory;
 	}
 
 	private JFileChooser getFileChooser() {
@@ -59,19 +53,13 @@ public class SelectFileTabbedPanel extends JPanel implements ActionListener {
 		return fileChooser;
 	}
 
-	private void setUpTextField() {
-		textField = new JTextField();
-		textField.setEditable(false);
-	}
-
 	private void setUpBrowseButton() {
 		browse = new JButton("browse");
 		browse.addActionListener(this);
 	}
 
 	private void addComponents() {
-		this.add(message);
-		this.add(textField);
+		textHolder.addComponents(this);
 		this.add(browse);
 	}
 
@@ -79,7 +67,7 @@ public class SelectFileTabbedPanel extends JPanel implements ActionListener {
 		return response == APPROVE_OPTION;
 	}
 
-	private String getNewDataSoureLocation() {
+	private String getdirectory() {
 		return fileChooser.getSelectedFile().getAbsolutePath();
 	}
 }

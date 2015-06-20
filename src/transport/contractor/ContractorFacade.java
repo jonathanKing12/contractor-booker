@@ -5,17 +5,17 @@ import static transport.contractor.ContracorUtills.toContractor;
 import java.util.ArrayList;
 import java.util.List;
 
+import setting.AccessSetting;
+import setting.AccessSetting;
+import setting.SettingException;
 import suncertify.db.Data;
 import suncertify.db.record.RecordNotFoundException;
-import datasource.locator.DataSourceLocationException;
-import datasource.locator.DataSourceLocator;
-import datasource.locator.DataSourceLocatorFactory;
 import filesource.FileStreamFactory;
 
 public class ContractorFacade {
 
 	private Data data;
-	private DataSourceLocator dataSourceLocator;
+	private AccessSetting dataSourceLocator;
 
 	public ContractorFacade() {
 		data = new Data(new FileStreamFactory());
@@ -49,11 +49,11 @@ public class ContractorFacade {
 		}
 	}
 
-	void setLocation(String location) throws DataSourceLocationException {
+	void setLocation(String location) throws SettingException {
 		dataSourceLocator.setLocation(location);
 	}
 
-	String getLocation() throws DataSourceLocationException {
+	String getLocation() throws SettingException {
 		return dataSourceLocator.getLocation();
 	}
 
@@ -90,7 +90,7 @@ public class ContractorFacade {
 		return (property.isEmpty()) ? null : property;
 	}
 
-	private DataSourceLocator getDataSourceLocator() {
+	private AccessSetting getDataSourceLocator() {
 		DataSourceLocatorFactory factory = new DataSourceLocatorFactory();
 		return factory.getDataSourceLocator();
 	}

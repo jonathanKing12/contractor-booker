@@ -18,7 +18,6 @@ public class RecordWriter {
 
 	public void writeRecord(Record record) throws DataSourceException {
 		int recordNumber = record.getRecordNumber();
-		System.out.println("write record moving to row " + recordNumber);
 		tableWriter.moveToRow(recordNumber);
 		writeRecordFields(record);
 	}

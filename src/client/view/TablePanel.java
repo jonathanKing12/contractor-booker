@@ -3,7 +3,7 @@ package client.view;
 import static java.awt.Color.cyan;
 import static javax.swing.SwingConstants.CENTER;
 
-import java.awt.Dimension;
+import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -18,23 +18,15 @@ public class TablePanel extends JPanel {
 	private JScrollPane scrollPane;
 	private ViewMerger merger;
 
-	public TablePanel(int perferedWidth, int height) {
+	public TablePanel() {
+		this.setLayout(new BorderLayout());
 		merger = ViewMerger.getInstance();
 		table = getTable();
-
+		// table.setFillsViewportHeight(Boolean.TRUE);
 		scrollPane = new JScrollPane(table);
-
-		this.add(scrollPane);
+		// scrollPane.setf(Boolean.TRUE);
+		this.add(scrollPane, BorderLayout.CENTER);
 		this.setBackground(cyan);
-		setMainScreenSize(scrollPane, perferedWidth, height);
-	}
-
-	private void setMainScreenSize(JScrollPane scrollPane, int width, int height) {
-		int oneEight = width / 8;
-		int fiveEights = oneEight * 7;
-
-		int sevenTenths = (height / 10) * 7;
-		scrollPane.setPreferredSize(new Dimension(fiveEights, sevenTenths - 10));
 	}
 
 	private JTable getTable() {
@@ -58,13 +50,8 @@ public class TablePanel extends JPanel {
 		column.setCellRenderer(renderer);
 	}
 
-	public void resizeTable(int width, int height) {
-		// table.updateUI();
-		System.out.println("yes");
-		// this.updateUI();
-		// scrollPane.se
-		this.setMainScreenSize(scrollPane, width, height);
-		this.updateUI();
-
-	}
+	// public void resizeTable(int width, int height) {
+	// setMainScreenSize(width, height);
+	// updateUI();
+	// }
 }

@@ -5,7 +5,7 @@ import static java.lang.Boolean.FALSE;
 import java.io.IOException;
 
 import transport.contractor.ContractorException;
-import transport.network.LocalDelegator;
+import transport.local.LocalDelegator;
 
 public class ContractorRowModelBooker {
 

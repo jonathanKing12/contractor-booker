@@ -2,26 +2,26 @@ package suncertify.db;
 
 public class RecordLocker {
 
-	private LockCabnit lockCabnit;
+	private LockCabnet lockCabnit;
 
 	RecordLocker() {
-		lockCabnit = new LockCabnit();
+		lockCabnit = new LockCabnet();
 	}
 
 	long lockRecord(int recordNumber) {
-		Lock lock = lockCabnit.getOrCreateLock(recordNumber);
+		Lock lock = lockCabnit.getLock(recordNumber);
 		lock.lock();
 		return lock.getLockCookie();
 	}
 
 	void unlockRecord(int recordNumber, long lockCookie) throws SecurityException {
 		verifyRecordIsLockedWithLockCookie(recordNumber, lockCookie);
-		Lock lock = lockCabnit.getOrCreateLock(recordNumber);
+		Lock lock = lockCabnit.getLock(recordNumber);
 		lock.unlock();
 	}
 
-	void verifyRecordIsLockedWithLockCookie(int recordNumber, long lockCookie) throws SecurityException {
-		Lock lock = lockCabnit.getOrCreateLock(recordNumber);
+	void verifyRecordIsLockedWithLockCookie(int recordNumber, long lockCookie) throws InvalidLockCookieException {
+		Lock lock = lockCabnit.getLock(recordNumber);
 
 		if (!lock.isLockedAndHasLockCookie(lockCookie)) {
 			String message = createInvalidLockCookieMessage(recordNumber, lockCookie);
