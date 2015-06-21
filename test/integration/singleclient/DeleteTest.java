@@ -19,7 +19,7 @@ public class DeleteTest extends BaseTest {
 
 	@BeforeClass
 	public static void backupFile() throws IOException {
-		TestDataUtil.backupFile("delete");
+		TestDataUtil.backupDbFile("delete");
 	}
 
 	@Test
@@ -64,7 +64,7 @@ public class DeleteTest extends BaseTest {
 
 	@AfterClass
 	public static void restorFile() throws IOException {
-		TestDataUtil.restorFile("delete");
+		TestDataUtil.restorDbFile("delete");
 	}
 
 	private Record verifyRecordIsDeleted(int i) throws DataSourceException {

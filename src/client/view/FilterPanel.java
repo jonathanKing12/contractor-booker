@@ -1,5 +1,7 @@
 package client.view;
 
+import static client.view.ViewMerger.VIEW_MERGER_INSTACE;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +13,6 @@ import javax.swing.JTextField;
 
 public class FilterPanel extends JPanel implements ActionListener {
 
-	private ViewMerger merger;
 	private JButton search;
 	private JTextField nameTextField;
 	private JTextField locationTextField;
@@ -19,8 +20,6 @@ public class FilterPanel extends JPanel implements ActionListener {
 	private JLabel locationLabel;
 
 	public FilterPanel() {
-		merger = ViewMerger.getInstance();
-
 		setUpLabels();
 		setUpTextboxes();
 		setUpSearchButton();
@@ -57,6 +56,6 @@ public class FilterPanel extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		merger.search(nameTextField.getText().trim(), locationTextField.getText().trim());
+		VIEW_MERGER_INSTACE.search(nameTextField.getText().trim(), locationTextField.getText().trim());
 	}
 }

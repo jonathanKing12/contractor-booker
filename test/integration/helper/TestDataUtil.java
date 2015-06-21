@@ -6,29 +6,45 @@ import java.nio.file.Files;
 
 public class TestDataUtil {
 
-	public static void backupFile(String fileName) throws IOException {
-		File source = getSourceFile(fileName);
-		File destination = getDestinationFile(fileName);
+	public static void backupDbFile(String fileName) throws IOException {
+		backupFile(fileName, ".db");
+	}
+
+	public static void backupPropertiesFile(String fileName) throws IOException {
+		backupFile(fileName, ".properties");
+	}
+
+	public static void restorDbFile(String fileName) throws IOException {
+		restorFile(fileName, ".db");
+	}
+
+	public static void restorPropertiesFile(String fileName) throws IOException {
+		restorFile(fileName, ".properties");
+	}
+
+	private static void backupFile(String fileName, String extendsion) throws IOException {
+		File source = getSourceFile(fileName + extendsion);
+		File destination = getDestinationFile(fileName + "_bk" + extendsion);
 		copySoureToDestination(source, destination);
 	}
 
-	public static void restorFile(String fileName) throws IOException {
-		File source = getSourceFile(fileName);
+	private static void restorFile(String fileName, String extension) throws IOException {
+		File source = getSourceFile(fileName + extension);
 		deleteIfExists(source);
 
-		File destination = getDestinationFile(fileName);
+		File destination = getDestinationFile(fileName + "_bk" + extension);
 		copySoureToDestination(destination, source);
 
 		deleteIfExists(destination);
 	}
 
 	private static File getSourceFile(String fileName) {
-		File source = new File("C:/db/" + fileName + ".db");
+		File source = new File("C:/db/" + fileName);
 		return source;
 	}
 
 	private static File getDestinationFile(String fileName) {
-		File destination = new File("C:/db/" + fileName + "_bk.db");
+		File destination = new File("C:/db/" + fileName);
 		return destination;
 	}
 
@@ -39,5 +55,4 @@ public class TestDataUtil {
 	private static void deleteIfExists(File destination) throws IOException {
 		Files.deleteIfExists(destination.toPath());
 	}
-
 }

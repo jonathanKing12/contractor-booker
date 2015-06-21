@@ -28,14 +28,4 @@ public class LocalDelegator implements Delegator {
 	public void updateContractor(Contractor contractor) throws ContractorException {
 		contractorFacade.bookContractor(contractor);
 	}
-
-	@Override
-	public void setLocation(String location) throws ContractorException {
-		contractorFacade.setLocation(location);
-	}
-
-	@Override
-	public String getLocation() throws ContractorException {
-		return contractorFacade.getLocation();
-	}
 }

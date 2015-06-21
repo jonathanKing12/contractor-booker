@@ -8,9 +8,9 @@ import java.io.IOException;
 
 import client.view.settings.SettingsDialogBox;
 
-public class ClientMainScreen extends MainScreen {
+public class ClientMainWindow extends MainWindow {
 
-	public ClientMainScreen(SettingsDialogBox settings) throws IOException {
+	public ClientMainWindow(SettingsDialogBox settings) throws IOException {
 		super(settings);
 
 		add(new FilterPanel(), NORTH);

@@ -13,8 +13,4 @@ public interface RemoteServiceInterface extends Remote {
 	List<Contractor> getContractors(String name, String location) throws RemoteException;
 
 	Contractor getContractor(int contractorId) throws RemoteException;
-
-	void setLocation(String location) throws RemoteException;
-
-	String getLocation() throws RemoteException;
 }

@@ -19,7 +19,7 @@ public class LockTest extends BaseTest {
 
 	@BeforeClass
 	public static void backupFile() throws IOException {
-		TestDataUtil.backupFile(FILE_NAME);
+		TestDataUtil.backupDbFile(FILE_NAME);
 	}
 
 	@Test
@@ -71,7 +71,7 @@ public class LockTest extends BaseTest {
 
 	@AfterClass
 	public static void restorFile() throws IOException {
-		TestDataUtil.restorFile(FILE_NAME);
+		TestDataUtil.restorDbFile(FILE_NAME);
 	}
 
 	@Override

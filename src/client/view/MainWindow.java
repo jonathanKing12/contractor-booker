@@ -1,14 +1,16 @@
 package client.view;
 
+import static client.view.ViewMerger.VIEW_MERGER_INSTACE;
+
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 
 import client.view.settings.SettingsDialogBox;
 
-public class MainScreen extends JFrame {
+public class MainWindow extends JFrame {
 
-	MainScreen(SettingsDialogBox settings) {
+	MainWindow(SettingsDialogBox settings) {
 		settings.setLocationRelativeTo(this);
 
 		addMenuBar();
@@ -17,7 +19,7 @@ public class MainScreen extends JFrame {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout());
 
-		ViewMerger.getInstance().setUpConnectionToClient(this);
+		VIEW_MERGER_INSTACE.setUpForClientUse(this);
 	}
 
 	private void setMainScreenSize() {

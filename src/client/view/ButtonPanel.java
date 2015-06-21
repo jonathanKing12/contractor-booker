@@ -1,6 +1,7 @@
 package client.view;
 
 import static client.view.Validator.isCustomerIdValid;
+import static client.view.ViewMerger.VIEW_MERGER_INSTACE;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -13,7 +14,6 @@ import javax.swing.JPanel;
 public class ButtonPanel extends JPanel implements ActionListener {
 
 	private JButton bookContractor;
-	private ViewMerger merger;
 
 	public ButtonPanel() {
 		this.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -23,8 +23,7 @@ public class ButtonPanel extends JPanel implements ActionListener {
 	}
 
 	private void setUpMerger() {
-		merger = ViewMerger.getInstance();
-		merger.addButtonPanel(this);
+		VIEW_MERGER_INSTACE.addButtonPanel(this);
 	}
 
 	private void setpBookButton() {
@@ -48,7 +47,7 @@ public class ButtonPanel extends JPanel implements ActionListener {
 	}
 
 	private String displayMessageBoxToGetCustomerId() {
-		return merger.displayInputDialogBox("enter customer ID");
+		return VIEW_MERGER_INSTACE.displayInputDialogBox("enter customer ID");
 	}
 
 	private void proceedToBookContractor() {
@@ -63,12 +62,12 @@ public class ButtonPanel extends JPanel implements ActionListener {
 			return;
 		}
 
-		merger.bookSelectedContractorWithCustomer(customerId);
+		VIEW_MERGER_INSTACE.bookSelectedContractorWithCustomer(customerId);
 	}
 
 	private void informUserAndProceedToBookContractorAgain(String customerId) {
 		String errorMessage = getErrorMessage(customerId);
-		merger.displayMessageBox(errorMessage, "Invalid customer ID");
+		VIEW_MERGER_INSTACE.displayErrorMessage(errorMessage, "Invalid customer ID");
 		proceedToBookContractor();
 	}
 

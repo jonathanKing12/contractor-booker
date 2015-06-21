@@ -7,14 +7,14 @@ import javax.swing.JTable;
 import transport.contractor.ContractorException;
 import client.model.BookableModel;
 import client.model.ContractorModel;
-import client.view.BookableView;
+import client.view.View;
 
 public class ContractorController implements BookableController {
 
 	private BookableModel model;
-	private BookableView view;
+	private View view;
 
-	public ContractorController(BookableView view) {
+	public ContractorController(View view) {
 		this.view = view;
 		model = new ContractorModel(this);
 	}

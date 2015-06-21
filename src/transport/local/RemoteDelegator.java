@@ -46,24 +46,6 @@ public class RemoteDelegator implements Delegator {
 		}
 	}
 
-	@Override
-	public void setLocation(String location) throws ContractorException {
-		try {
-			remoteSerivce.setLocation(location);
-		} catch (RemoteException e) {
-			throw new ContractorException(e.getMessage());
-		}
-	}
-
-	@Override
-	public String getLocation() throws ContractorException {
-		try {
-			return remoteSerivce.getLocation();
-		} catch (RemoteException e) {
-			throw new ContractorException(e.getMessage());
-		}
-	}
-
 	private void getRemoteService() throws NotBoundException, RemoteException, MalformedURLException {
 		FactoryInterface factory = (FactoryInterface) Naming.lookup("factory");
 		remoteSerivce = factory.getRemoteService();

@@ -2,7 +2,6 @@ package transport.contractor;
 
 import java.util.List;
 
-import setting.SettingException;
 import suncertify.db.InvalidLockCookieException;
 import suncertify.db.record.RecordNotFoundException;
 
@@ -34,22 +33,6 @@ public class ContractorFacadeWrapper {
 		try {
 			contractorFacade.bookContractor(contractor);
 		} catch (RecordNotFoundException e) {
-			throw new ContractorException(e.getMessage());
-		}
-	}
-
-	public String getLocation() throws ContractorException {
-		try {
-			return contractorFacade.getLocation();
-		} catch (SettingException e) {
-			throw new ContractorException(e.getMessage());
-		}
-	}
-
-	public void setLocation(String location) throws ContractorException {
-		try {
-			contractorFacade.setLocation(location);
-		} catch (SettingException e) {
 			throw new ContractorException(e.getMessage());
 		}
 	}

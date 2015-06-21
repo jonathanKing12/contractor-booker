@@ -1,7 +1,8 @@
 package client.view.settings;
 
-import static setting.SettingType.DIRECTORY;
-import static setting.SettingType.PORT_NUMBER;
+import static client.view.ViewMerger.VIEW_MERGER_INSTACE;
+import static settings.SettingType.DIRECTORY;
+import static settings.SettingType.PORT_NUMBER;
 
 import java.awt.GridLayout;
 import java.util.HashMap;
@@ -9,8 +10,7 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
-import setting.SettingType;
-import client.view.ViewMerger;
+import settings.SettingType;
 
 public class PortNumberDirectorySettingsTab extends JPanel implements SettingsTab {
 
@@ -35,16 +35,12 @@ public class PortNumberDirectorySettingsTab extends JPanel implements SettingsTa
 
 	@Override
 	public void saveSettings() {
-
 		Map<SettingType, String> settings = new HashMap<>();
-
 		String portNumber = portNumberPanel.getPortNumber();
 		settings.put(PORT_NUMBER, portNumber);
 
 		String directory = directoryPanel.getDirectory();
 		settings.put(DIRECTORY, directory);
-
-		ViewMerger merger = ViewMerger.getInstance();
-		merger.saveSettings(settings);
+		VIEW_MERGER_INSTACE.saveSettingsToController(settings);
 	}
 }

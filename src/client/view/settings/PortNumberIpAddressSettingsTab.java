@@ -1,7 +1,8 @@
 package client.view.settings;
 
-import static setting.SettingType.IP_ADDRESS;
-import static setting.SettingType.PORT_NUMBER;
+import static client.view.ViewMerger.VIEW_MERGER_INSTACE;
+import static settings.SettingType.IP_ADDRESS;
+import static settings.SettingType.PORT_NUMBER;
 
 import java.awt.GridLayout;
 import java.util.HashMap;
@@ -9,8 +10,7 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
-import setting.SettingType;
-import client.view.ViewMerger;
+import settings.SettingType;
 
 public class PortNumberIpAddressSettingsTab extends JPanel implements SettingsTab {
 
@@ -35,16 +35,28 @@ public class PortNumberIpAddressSettingsTab extends JPanel implements SettingsTa
 
 	@Override
 	public void saveSettings() {
-
 		Map<SettingType, String> settings = new HashMap<>();
 
 		String portNumber = portNumberSettingPanel.getPortNumber();
-		settings.put(PORT_NUMBER, portNumber);
+		if (!portNumber.isEmpty()) {
+			settings.put(PORT_NUMBER, portNumber);
+		}
 
 		String ipAddress = ipAddressPanel.getIpAddress();
-		settings.put(IP_ADDRESS, ipAddress);
+		if (!ipAddress.isEmpty()) {
+			settings.put(IP_ADDRESS, ipAddress);
+		}
 
-		ViewMerger merger = ViewMerger.getInstance();
-		merger.saveSettings(settings);
+		VIEW_MERGER_INSTACE.saveSettingsToController(settings);
+	}
+
+	@Override
+	public void loadSettings() {
+		Map<SettingType, String> settings = VIEW_MERGER_INSTACE.loadSettingsFromController();
+		String portNumber = settings.get(PORT_NUMBER);
+		portNumberSettingPanel.setPortNumber(portNumber);
+
+		String ipAddress = settings.get(IP_ADDRESS);
+		ipAddressPanel.setIpAddress(ipAddress);
 	}
 }

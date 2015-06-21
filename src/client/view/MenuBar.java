@@ -1,5 +1,7 @@
 package client.view;
 
+import static client.view.ViewMerger.VIEW_MERGER_INSTACE;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,14 +11,11 @@ import javax.swing.JMenuItem;
 
 public class MenuBar extends JMenuBar {
 
-	ViewMerger merger;
-
 	private JMenuItem settings;
 	private JMenuItem exit;
 	private JMenu file;
 
 	public MenuBar() {
-		merger = ViewMerger.getInstance();
 		setUpFileMenu();
 		addActionListeners();
 		this.add(file);
@@ -39,7 +38,7 @@ public class MenuBar extends JMenuBar {
 		ActionListener listener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				merger.displaySettngsDialogBox();
+				VIEW_MERGER_INSTACE.displaySettngsDialogBox();
 			}
 		};
 		return listener;

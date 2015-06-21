@@ -2,7 +2,7 @@ package client.controller;
 
 import java.util.Map;
 
-import setting.SettingType;
+import settings.SettingType;
 
 public interface SettingsController {
 

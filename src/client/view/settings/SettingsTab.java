@@ -5,4 +5,6 @@ public interface SettingsTab {
 	void saveSettings();
 
 	String getTtile();
+
+	void loadSettings();
 }

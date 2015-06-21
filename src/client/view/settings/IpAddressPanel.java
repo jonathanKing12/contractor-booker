@@ -2,6 +2,8 @@ package client.view.settings;
 
 import javax.swing.JPanel;
 
+import client.view.TextHolder;
+
 public class IpAddressPanel extends JPanel {
 
 	private TextHolder textHolder;

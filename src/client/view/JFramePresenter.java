@@ -24,7 +24,7 @@ public class JFramePresenter {
 		frame.setLocation(xPosition, yPosition);
 	}
 
-	Dimension getScreenSize(JFrame frame) {
+	private Dimension getScreenSize(JFrame frame) {
 		Toolkit toolkit = getDefaultToolkit();
 		return toolkit.getScreenSize();
 	}

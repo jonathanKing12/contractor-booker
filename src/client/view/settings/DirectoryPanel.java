@@ -12,6 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
+import client.view.TextHolder;
+
 public class DirectoryPanel extends JPanel implements ActionListener {
 
 	private JButton browse;
@@ -26,6 +28,7 @@ public class DirectoryPanel extends JPanel implements ActionListener {
 		setUpBrowseButton();
 		this.setLayout(new FlowLayout());
 		addComponents();
+
 	}
 
 	public void setDirectory(String directory) {

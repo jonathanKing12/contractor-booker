@@ -4,7 +4,7 @@ import static java.lang.Boolean.TRUE;
 
 import java.io.IOException;
 
-import client.view.settings.DirectoryTab;
+import client.view.settings.PortNumberIpAddressSettingsTab;
 import client.view.settings.SettingsDialogBox;
 import client.view.settings.SettingsDialogBoxBuilder;
 
@@ -15,13 +15,13 @@ public class Main {
 	}
 
 	public Main() throws IOException {
-		MainScreen mainScreen = new ClientMainScreen(createSettingsDialogBox());
+		MainWindow mainScreen = new ClientMainWindow(createSettingsDialogBox());
 		mainScreen.setVisible(TRUE);
 	}
 
 	private SettingsDialogBox createSettingsDialogBox() {
 		SettingsDialogBoxBuilder builder = new SettingsDialogBoxBuilder();
-		builder.addSettingsTab(new DirectoryTab());
+		builder.addSettingsTab(new PortNumberIpAddressSettingsTab());
 		return builder.build();
 	}
 }

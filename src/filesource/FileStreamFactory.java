@@ -13,7 +13,7 @@ public class FileStreamFactory implements DataSourceFactory {
 
 	@Override
 	public DataSourceWriter getDatoSourceWritter() {
-		return new FileStreamWriter("C:/db/db-write2.db");
+		return new FileStreamWriter();
 	}
 
 }

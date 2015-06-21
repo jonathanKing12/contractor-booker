@@ -1,45 +1,44 @@
 package filesource;
 
 import static java.lang.System.arraycopy;
+import static settings.SettingType.DIRECTORY;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.lang.reflect.Field;
+import java.util.Map;
 
-import setting.AccessSetting;
-import setting.AccessSetting;
-import setting.SettingException;
+import settings.AccessDataSourceSetting;
+import settings.AccessSettings;
+import settings.SettingException;
+import settings.SettingType;
 import datasource.DataSourceException;
 import datasource.DataSourceWriter;
 
 public class FileStreamWriter implements DataSourceWriter {
 
 	private RandomAccessFile randomAccessFile;
-	private String fileName;
-
-	public FileStreamWriter(String fileName) {
-		this.fileName = fileName;
-	}
 
 	@Override
 	public void open() throws DataSourceException {
-		retreiveFileName();
 		try {
-			File databaseFile = new File(fileName);
-			randomAccessFile = new RandomAccessFile(databaseFile, "rw");
-		} catch (IOException e) {
+			randomAccessFile = createRandomAccessFile();
+		} catch (FileNotFoundException | SettingException e) {
 			throw new DataSourceException(e.getMessage());
 		}
 	}
 
-	private void retreiveFileName() throws SettingException {
-		if (fileName.isEmpty()) {
-			DataSourceLocatorFactory factory = new DataSourceLocatorFactory();
-			AccessSetting locator = factory.getDataSourceLocator();
-			String location = locator.getLocation();
-			fileName = location + "db-write2.db";
-		}
+	private RandomAccessFile createRandomAccessFile() throws FileNotFoundException {
+		String fileName = getFileName();
+		File file = new File(fileName);
+		return new RandomAccessFile(file, "rw");
+	}
+
+	private String getFileName() throws SettingException {
+		AccessSettings accessSettings = new AccessDataSourceSetting();
+		Map<SettingType, String> settings = accessSettings.getSettings();
+		return settings.get(DIRECTORY);
 	}
 
 	@Override
@@ -88,22 +87,5 @@ public class FileStreamWriter implements DataSourceWriter {
 		} catch (IOException e) {
 			throw new DataSourceException(e.getMessage());
 		}
-	}
-
-	public static void main(String[] args) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-		Dog dog = new Dog();
-
-		Field field = Dog.class.getDeclaredField("numberOfTimesPlayedfetch");
-		field.setAccessible(true);
-		field.set(dog, "test");
-		System.out.println(dog.getNumberOfTimesPlayedFetch());
-	}
-}
-
-class Dog {
-	private String numberOfTimesPlayedfetch = "initial value";
-
-	public String getNumberOfTimesPlayedFetch() {
-		return numberOfTimesPlayedfetch;
 	}
 }

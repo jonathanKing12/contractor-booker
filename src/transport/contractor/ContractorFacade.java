@@ -5,9 +5,6 @@ import static transport.contractor.ContracorUtills.toContractor;
 import java.util.ArrayList;
 import java.util.List;
 
-import setting.AccessSetting;
-import setting.AccessSetting;
-import setting.SettingException;
 import suncertify.db.Data;
 import suncertify.db.record.RecordNotFoundException;
 import filesource.FileStreamFactory;
@@ -15,11 +12,9 @@ import filesource.FileStreamFactory;
 public class ContractorFacade {
 
 	private Data data;
-	private AccessSetting dataSourceLocator;
 
 	public ContractorFacade() {
 		data = new Data(new FileStreamFactory());
-		dataSourceLocator = getDataSourceLocator();
 	}
 
 	Contractor getContractor(int contractorId) throws RecordNotFoundException {
@@ -47,14 +42,6 @@ public class ContractorFacade {
 		} finally {
 			unlockContractor(contractor, lockCookie);
 		}
-	}
-
-	void setLocation(String location) throws SettingException {
-		dataSourceLocator.setLocation(location);
-	}
-
-	String getLocation() throws SettingException {
-		return dataSourceLocator.getLocation();
 	}
 
 	private long lockContractor(Contractor contractor) throws RecordNotFoundException, SecurityException {
@@ -87,11 +74,6 @@ public class ContractorFacade {
 	}
 
 	private String getSearchCritea(String property) {
-		return (property.isEmpty()) ? null : property;
-	}
-
-	private AccessSetting getDataSourceLocator() {
-		DataSourceLocatorFactory factory = new DataSourceLocatorFactory();
-		return factory.getDataSourceLocator();
+		return (property.trim().isEmpty()) ? null : property;
 	}
 }

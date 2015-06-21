@@ -42,23 +42,4 @@ public class RemoteService extends UnicastRemoteObject implements RemoteServiceI
 			throw new RemoteException(e.getMessage());
 		}
 	}
-
-	@Override
-	public void setLocation(String location) throws RemoteException {
-		try {
-			contractorFacade.setLocation(location);
-		} catch (ContractorException e) {
-			throw new RemoteException(e.getMessage());
-		}
-
-	}
-
-	@Override
-	public String getLocation() throws RemoteException {
-		try {
-			return contractorFacade.getLocation();
-		} catch (ContractorException e) {
-			throw new RemoteException(e.getMessage());
-		}
-	}
 }

@@ -1,4 +1,4 @@
-package setting;
+package settings;
 
 public class SettingException extends RuntimeException {
 

@@ -1,5 +1,6 @@
 package client.view;
 
+import static client.view.ViewMerger.VIEW_MERGER_INSTACE;
 import static java.awt.Color.cyan;
 import static javax.swing.SwingConstants.CENTER;
 
@@ -16,21 +17,17 @@ public class TablePanel extends JPanel {
 
 	private JTable table;
 	private JScrollPane scrollPane;
-	private ViewMerger merger;
 
 	public TablePanel() {
 		this.setLayout(new BorderLayout());
-		merger = ViewMerger.getInstance();
 		table = getTable();
-		// table.setFillsViewportHeight(Boolean.TRUE);
 		scrollPane = new JScrollPane(table);
-		// scrollPane.setf(Boolean.TRUE);
 		this.add(scrollPane, BorderLayout.CENTER);
 		this.setBackground(cyan);
 	}
 
 	private JTable getTable() {
-		JTable table = merger.getJTableWithModel();
+		JTable table = VIEW_MERGER_INSTACE.getJTableWithModel();
 		allignColumnsTextToCentre(table);
 		return table;
 	}
@@ -49,9 +46,4 @@ public class TablePanel extends JPanel {
 		renderer.setHorizontalAlignment(CENTER);
 		column.setCellRenderer(renderer);
 	}
-
-	// public void resizeTable(int width, int height) {
-	// setMainScreenSize(width, height);
-	// updateUI();
-	// }
 }
