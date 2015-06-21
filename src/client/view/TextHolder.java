@@ -25,12 +25,11 @@ public class TextHolder {
 	}
 
 	public void setText(String text) {
-		// text = (text != null) ? text.trim() : text;
 		textField.setText(text);
 	}
 
 	public String getSettings() {
 		String text = textField.getText();
-		return (text.isEmpty()) ? text : text.trim();
+		return text.trim();
 	}
 }
