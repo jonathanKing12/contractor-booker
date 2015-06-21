@@ -53,7 +53,11 @@ public class DataSourceSettingsReader {
 		for (String line : lines) {
 			String[] setting = line.split("=");
 			SettingType settingType = SettingType.valueOf(setting[0]);
-			settings.put(settingType, setting[1]);
+
+			String settingValue = "";
+			if (setting.length == 2)
+				settingValue = setting[1];
+			settings.put(settingType, settingValue);
 		}
 		return settings;
 	}

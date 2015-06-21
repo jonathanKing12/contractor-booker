@@ -1,7 +1,6 @@
 package settings;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
@@ -41,10 +40,5 @@ public class AccessDataSourceSetting implements AccessSettings {
 		Map<SettingType, String> settings = getSettings();
 		settings.putAll(updatedSettings);
 		return settings;
-	}
-
-	public static void main(String[] args) throws IOException {
-		AccessDataSourceSetting test = new AccessDataSourceSetting();
-		System.out.println(test.getSettings());
 	}
 }
