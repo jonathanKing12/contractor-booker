@@ -19,7 +19,7 @@ public class MockedDataSourceFactory implements DataSourceFactory {
 
 	@Override
 	public DataSourceWriter getDatoSourceWritter() {
-		return new MockedDataSourceWriter(fileName);
+		return new MockedDataSourceWriter();
 	}
 
 }

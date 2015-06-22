@@ -1,18 +1,13 @@
 package filesource;
 
 import static java.lang.System.arraycopy;
-import static settings.SettingType.DIRECTORY;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.Map;
 
-import settings.AccessDataSourceSetting;
-import settings.AccessSettings;
 import settings.SettingException;
-import settings.SettingType;
 import datasource.DataSourceException;
 import datasource.DataSourceWriter;
 
@@ -30,15 +25,9 @@ public class FileStreamWriter implements DataSourceWriter {
 	}
 
 	private RandomAccessFile createRandomAccessFile() throws FileNotFoundException {
-		String fileName = getFileName();
-		File file = new File(fileName);
+		DatabaseFinder finder = new DatabaseFinder();
+		File file = finder.getDatabaseFile();
 		return new RandomAccessFile(file, "rw");
-	}
-
-	private String getFileName() throws SettingException {
-		AccessSettings accessSettings = new AccessDataSourceSetting();
-		Map<SettingType, String> settings = accessSettings.getSettings();
-		return settings.get(DIRECTORY);
 	}
 
 	@Override

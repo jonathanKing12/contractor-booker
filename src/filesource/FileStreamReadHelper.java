@@ -17,7 +17,7 @@ public class FileStreamReadHelper {
 		return inputStream.readShort();
 	}
 
-	synchronized void moveForwardInStreamBy(DataInputStream inputStream, int distance) throws IOException {
+	synchronized void moveForwardAccrossStreamBy(DataInputStream inputStream, int distance) throws IOException {
 		inputStream.skipBytes(distance);
 	}
 

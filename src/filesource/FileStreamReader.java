@@ -1,6 +1,7 @@
 package filesource;
 
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,14 +13,9 @@ public class FileStreamReader implements DataSourceReader {
 
 	private static FileStreamReadHelper readHelper;
 	private DataInputStream dataInputStream;
-	private String fileName;
 
 	static {
 		readHelper = new FileStreamReadHelper();
-	}
-
-	public FileStreamReader(String fileName) {
-		this.fileName = fileName;
 	}
 
 	@Override
@@ -64,7 +60,7 @@ public class FileStreamReader implements DataSourceReader {
 	@Override
 	public void moveForwardBy(int distance) throws DataSourceException {
 		try {
-			readHelper.moveForwardInStreamBy(dataInputStream, distance);
+			readHelper.moveForwardAccrossStreamBy(dataInputStream, distance);
 		} catch (IOException e) {
 			throw new DataSourceException(e.getMessage());
 		}
@@ -89,6 +85,8 @@ public class FileStreamReader implements DataSourceReader {
 	}
 
 	private DataInputStream createDataInputStream() throws FileNotFoundException {
-		return new DataInputStream(new FileInputStream(fileName));
+		DatabaseFinder finder = new DatabaseFinder();
+		File file = finder.getDatabaseFile();
+		return new DataInputStream(new FileInputStream(file));
 	}
 }

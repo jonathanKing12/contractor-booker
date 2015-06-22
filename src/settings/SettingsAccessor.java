@@ -2,7 +2,7 @@ package settings;
 
 import java.util.Map;
 
-public interface AccessSettings {
+public interface SettingsAccessor {
 
 	void setSettings(Map<SettingType, String> settings) throws SettingException;
 

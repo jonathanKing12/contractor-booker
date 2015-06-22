@@ -1,11 +1,5 @@
 package mockedcontent;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.lang.reflect.Field;
-
 import datasource.DataSourceException;
 import datasource.DataSourceWriter;
 import filesource.FileStreamWriter;
@@ -13,23 +7,14 @@ import filesource.FileStreamWriter;
 public class MockedDataSourceWriter implements DataSourceWriter {
 
 	private FileStreamWriter fileStreamWriter;
-	private String fileName;
 
-	public MockedDataSourceWriter(String fileName) {
-		this.fileName = fileName;
-		fileStreamWriter = new FileStreamWriter(fileName);
+	public MockedDataSourceWriter() {
+		fileStreamWriter = new FileStreamWriter();
 	}
 
 	@Override
 	public void open() throws DataSourceException {
-		try {
-			Field randomAccessFileField = FileStreamWriter.class.getDeclaredField("randomAccessFile");
-			randomAccessFileField.setAccessible(true);
-			randomAccessFileField.set(fileStreamWriter, getRandomAccessFile());
-
-		} catch (IOException | NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-			throw new DataSourceException(e.getMessage());
-		}
+		fileStreamWriter.open();
 	}
 
 	@Override
@@ -55,9 +40,5 @@ public class MockedDataSourceWriter implements DataSourceWriter {
 	@Override
 	public void writeShort(short value) throws DataSourceException {
 		fileStreamWriter.writeShort(value);
-	}
-
-	private RandomAccessFile getRandomAccessFile() throws FileNotFoundException {
-		return new RandomAccessFile(new File(fileName), "rw");
 	}
 }

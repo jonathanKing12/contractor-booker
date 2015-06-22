@@ -55,7 +55,6 @@ public class DataSourceSettingReaderTest {
 			reader = createReader("I do not exist");
 			reader.getSettings();
 		} catch (SettingException e) {
-			System.out.println(e.getMessage());
 			throw e;
 		}
 	}

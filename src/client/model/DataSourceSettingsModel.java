@@ -2,16 +2,16 @@ package client.model;
 
 import java.util.Map;
 
-import settings.AccessDataSourceSetting;
-import settings.AccessSettings;
+import settings.DataSourceSettingAccessor;
+import settings.SettingsAccessor;
 import settings.SettingType;
 
 public class DataSourceSettingsModel implements SettingsModel {
 
-	private AccessSettings accessSettings;
+	private SettingsAccessor accessSettings;
 
 	public DataSourceSettingsModel() {
-		accessSettings = new AccessDataSourceSetting();
+		accessSettings = new DataSourceSettingAccessor();
 	}
 
 	@Override
