@@ -8,7 +8,6 @@ import java.util.List;
 
 import transport.contractor.Contractor;
 import transport.contractor.ContractorException;
-import transport.remote.FactoryInterface;
 import transport.remote.RemoteServiceInterface;
 
 public class RemoteDelegator implements Delegator {
@@ -46,17 +45,24 @@ public class RemoteDelegator implements Delegator {
 		}
 	}
 
-	private void getRemoteService() throws NotBoundException, RemoteException, MalformedURLException {
-		FactoryInterface factory = (FactoryInterface) Naming.lookup("factory");
-		remoteSerivce = factory.getRemoteService();
+	void getRemoteService() throws NotBoundException, RemoteException, MalformedURLException {
+		remoteSerivce = (RemoteServiceInterface) Naming.lookup("//localhost:1236/service");
+		// remoteSerivce = factory.getRemoteService();
+		System.out.println(remoteSerivce == null);
 	}
 
-	// public static void main(String[] args) throws NotBoundException, ContractorException {
-	// Delegator delegator = new RemoteDelegator();
-	// Contractor r = delegator.getContractor(27);
-	// r.setOwner("33333");
-	// delegator.updateContractor(r);
-	//
-	// Contractor u = delegator.getContractor(27);
-	// }
+	public static void main(String[] args) throws NotBoundException, ContractorException, RemoteException, MalformedURLException {
+		RemoteDelegator delegator = new RemoteDelegator();
+		Contractor r = delegator.getContractor(24);
+		// r = delegator.getContractor(24);
+		// r = delegator.getContractor(24);
+		// r = delegator.getContractor(24);
+		// r.setOwner("33333");
+		System.out.println(r.getContractorId());
+		System.out.println("done");
+		delegator.getRemoteService();
+		System.out.println(r.getContractorId());
+		System.out.println("exit");
+		// Contractor u = delegator.getContractor(27);
+	}
 }

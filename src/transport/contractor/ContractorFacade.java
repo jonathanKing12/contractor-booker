@@ -1,7 +1,5 @@
 package transport.contractor;
 
-import static transport.contractor.ContracorUtills.toContractor;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +16,9 @@ public class ContractorFacade {
 	}
 
 	Contractor getContractor(int contractorId) throws RecordNotFoundException {
-		String[] contractorDetails = data.read(contractorId);
-		return toContractor(contractorId, contractorDetails);
+		return new Contractor(new ContractorBuilder().addContractorId(23));
+		// String[] contractorDetails = data.read(contractorId);
+		// return toContractor(contractorId, contractorDetails);
 	}
 
 	List<Contractor> getContractors(String name, String location) throws RecordNotFoundException {

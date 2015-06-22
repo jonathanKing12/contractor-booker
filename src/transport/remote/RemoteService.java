@@ -1,26 +1,26 @@
 package transport.remote;
 
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
 import transport.contractor.Contractor;
 import transport.contractor.ContractorException;
 import transport.contractor.ContractorFacadeWrapper;
 
-public class RemoteService extends UnicastRemoteObject implements RemoteServiceInterface {
+public class RemoteService implements RemoteServiceInterface {
 
 	private ContractorFacadeWrapper contractorFacade;
 
-	public RemoteService() throws RemoteException {
+	public RemoteService() {
 		contractorFacade = new ContractorFacadeWrapper();
 	}
 
 	@Override
 	public Contractor getContractor(int contractorId) throws RemoteException {
 		try {
+			Thread.sleep(8000);
 			return contractorFacade.getContractor(contractorId);
-		} catch (ContractorException e) {
+		} catch (ContractorException | InterruptedException e) {
 			throw new RemoteException(e.getMessage());
 		}
 	}

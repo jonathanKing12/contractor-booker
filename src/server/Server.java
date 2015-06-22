@@ -1,31 +1,34 @@
 package server;
 
-import static java.rmi.Naming.rebind;
 import static java.rmi.registry.LocateRegistry.createRegistry;
+import static java.rmi.server.UnicastRemoteObject.exportObject;
 
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
+import java.rmi.registry.Registry;
 
 import transport.remote.RemoteService;
+import transport.remote.RemoteServiceInterface;
+
 
 public class Server {
 
-    private static int port = 1234;
-    private boolean registed;
+	private static int port = 1236;
 
-    public void register() throws RemoteException, MalformedURLException {
-        if (registed) {
-            return;
-        }
+	public static void register() throws RemoteException, MalformedURLException, InterruptedException {
 
-        registed = true;
-        createRegistry(port);
-        //FactoryInterface factory = new Factory();
-        System.out.println("factory created");
-        rebind("factory", new RemoteService());
-    }
+		RemoteServiceInterface service = new RemoteService();
+		RemoteServiceInterface serviceStub = (RemoteServiceInterface) exportObject(service, port);
+		Registry registry = createRegistry(port);
+		// Registry r=LocateRegistry.g
+		registry.rebind("service", serviceStub);
+		Thread.sleep(8000);
+		// UnicastRemoteObject.unexportObject(service, Boolean.FALSE);
+	}
 
-    public static void main(String[] args) throws RemoteException, MalformedURLException {
-        new Server().register();
-    }
+	public static void main(String[] args) throws RemoteException, MalformedURLException, InterruptedException {
+		new Server().register();
+	}
+	// registry.rebind("//localhost:" + port + "/factory", serviceStub)
+>>>>>>> 0abf2ed... added server code
 }
