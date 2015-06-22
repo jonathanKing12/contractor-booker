@@ -43,4 +43,10 @@ public class PortNumberDirectorySettingsTab extends JPanel implements SettingsTa
 		settings.put(DIRECTORY, directory);
 		VIEW_MERGER_INSTACE.saveSettingsToController(settings);
 	}
+
+	
+	@Override
+	public void loadSettings() {
+		
+	}
 }

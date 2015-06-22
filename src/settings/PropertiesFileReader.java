@@ -10,20 +10,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DataSourceSettingsReader {
+public class PropertiesFileReader {
 
 	private File settingsFile;
 
-	DataSourceSettingsReader(File settingsFile) {
+	PropertiesFileReader(File settingsFile) {
 		this.settingsFile = settingsFile;
 	}
+	
+	Map<SettingType, String> convertToSettings(List<String> lines) {
+		Map<SettingType, String> settings = new HashMap<>();
 
-	Map<SettingType, String> getSettings() throws SettingException {
-		List<String> lines = readLines();
-		return convertToSettings(lines);
+		for (String line : lines) {
+			String[] setting = line.split("=");
+			SettingType settingType = SettingType.valueOf(setting[0]);
+
+			String settingValue = "";
+			if (setting.length == 2)
+				settingValue = setting[1];
+			settings.put(settingType, settingValue);
+		}
+		return settings;
 	}
 
-	private List<String> readLines() throws SettingException {
+	 List<String> readLines() throws SettingException {
 
 		try (BufferedReader reader = getBufferedReader()) {
 			return readLines(reader);
@@ -45,21 +55,6 @@ public class DataSourceSettingsReader {
 			lines.add(line);
 		}
 		return lines;
-	}
-
-	private Map<SettingType, String> convertToSettings(List<String> lines) {
-		Map<SettingType, String> settings = new HashMap<>();
-
-		for (String line : lines) {
-			String[] setting = line.split("=");
-			SettingType settingType = SettingType.valueOf(setting[0]);
-
-			String settingValue = "";
-			if (setting.length == 2)
-				settingValue = setting[1];
-			settings.put(settingType, settingValue);
-		}
-		return settings;
 	}
 
 	private String createErrorMessage(IOException e) {

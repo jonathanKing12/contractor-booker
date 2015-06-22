@@ -17,7 +17,7 @@ public class MockedDataSourceWriter implements DataSourceWriter {
 
 	public MockedDataSourceWriter(String fileName) {
 		this.fileName = fileName;
-		fileStreamWriter = new FileStreamWriter(fileName);
+		fileStreamWriter = new FileStreamWriter();
 	}
 
 	@Override

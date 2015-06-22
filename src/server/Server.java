@@ -6,20 +6,26 @@ import static java.rmi.registry.LocateRegistry.createRegistry;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 
-import transport.remote.Factory;
-import transport.remote.FactoryInterface;
+import transport.remote.RemoteService;
 
 public class Server {
 
-	private static int port = 1099;
+    private static int port = 1234;
+    private boolean registed;
 
-	public static void register() throws RemoteException, MalformedURLException {
-		createRegistry(port);
-		FactoryInterface factory = new Factory();
-		rebind("factory", factory);
-	}
+    public void register() throws RemoteException, MalformedURLException {
+        if (registed) {
+            return;
+        }
 
-	public static void main(String[] args) throws RemoteException, MalformedURLException {
-		new Server().register();
-	}
+        registed = true;
+        createRegistry(port);
+        //FactoryInterface factory = new Factory();
+        System.out.println("factory created");
+        rebind("factory", new RemoteService());
+    }
+
+    public static void main(String[] args) throws RemoteException, MalformedURLException {
+        new Server().register();
+    }
 }

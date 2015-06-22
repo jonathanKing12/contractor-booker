@@ -14,7 +14,7 @@ import org.junit.Test;
 public class DataSourceSettingReaderTest {
 
 	private File settingsFile;
-	private DataSourceSettingsReader reader;
+	private PropertiesFileReader reader;
 
 	@Test
 	public void shouldReadNoProperties() {
@@ -60,9 +60,9 @@ public class DataSourceSettingReaderTest {
 		}
 	}
 
-	private DataSourceSettingsReader createReader(String fileName) {
+	private PropertiesFileReader createReader(String fileName) {
 		settingsFile = new File("C:/db/" + fileName + ".properties");
-		return new DataSourceSettingsReader(settingsFile);
+		return new PropertiesFileReader(settingsFile);
 	}
 
 	private void assertMapsAreEqual(Map<SettingType, String> expected, Map<SettingType, String> actual) {
