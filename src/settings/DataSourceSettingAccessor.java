@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
-public class AccessDataSourceSetting implements AccessSettings {
+public class DataSourceSettingAccessor implements SettingsAccessor {
 
 	private static final String propertiesFileName = "suncertify.properties";
 	private static final String CURRENT_WORKING_DIRECTORY = ".";
@@ -14,7 +14,7 @@ public class AccessDataSourceSetting implements AccessSettings {
 	private PropertiesFileWriter propertiesFileWriter;
 	private File propertiesFile;
 
-	public AccessDataSourceSetting() {
+	public DataSourceSettingAccessor() {
 		propertiesFile = getPropertiesFile();
 		propertiesFileReader = new PropertiesFileReader(propertiesFile);
 		propertiesFileWriter = new PropertiesFileWriter(propertiesFile);

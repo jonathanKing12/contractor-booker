@@ -8,12 +8,11 @@ public class FileStreamFactory implements DataSourceFactory {
 
 	@Override
 	public DataSourceReader getDatoSourceReader() {
-		return new FileStreamReader("C:/db/db-write2.db");
+		return new FileStreamReader();
 	}
 
 	@Override
 	public DataSourceWriter getDatoSourceWritter() {
 		return new FileStreamWriter();
 	}
-
 }

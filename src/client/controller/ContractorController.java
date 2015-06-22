@@ -28,8 +28,8 @@ public class ContractorController implements BookableController {
 	public void search(String name, String location) {
 		try {
 			model.search(name, location);
-		} catch (IOException | ContractorException exception) {
-			System.out.println("eror at reading contractor " + exception.getMessage());
+		} catch (IOException | ContractorException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -38,7 +38,6 @@ public class ContractorController implements BookableController {
 		try {
 			model.bookSelectedContractorWithCustomer(customerId);
 		} catch (IOException | ContractorException e) {
-			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 	}

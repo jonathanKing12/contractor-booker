@@ -117,9 +117,6 @@ public class RecordLockerTest {
 			uniquCookies.add(lockCookie);
 		}
 
-		System.out.println("all " + allCookies.size());
-		System.out.println("unique " + uniquCookies.size());
-
 		assertEquals(allCookies.size(), uniquCookies.size());
 	}
 }

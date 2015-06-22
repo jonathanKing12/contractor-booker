@@ -76,7 +76,6 @@ public class Data implements DB {
 	public long lock(int recNo) throws RecordNotFoundException {
 		long lockCookie = recordLocker.lockRecord(recNo);
 		try {
-			System.out.println("lock locked");
 			verifyRecordExist(recNo);
 			return lockCookie;
 		} catch (RecordNotFoundException e) {

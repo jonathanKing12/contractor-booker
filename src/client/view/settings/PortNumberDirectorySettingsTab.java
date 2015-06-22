@@ -44,9 +44,9 @@ public class PortNumberDirectorySettingsTab extends JPanel implements SettingsTa
 		VIEW_MERGER_INSTACE.saveSettingsToController(settings);
 	}
 
-	
 	@Override
 	public void loadSettings() {
-		
+		// TODO Auto-generated method stub
+
 	}
 }
