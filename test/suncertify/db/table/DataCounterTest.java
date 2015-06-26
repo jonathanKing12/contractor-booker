@@ -11,8 +11,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import datasource.DataSourceException;
-import datasource.DataSourceReader;
+import suncertify.db.datasource.DataSourceException;
+import suncertify.db.datasource.DataSourceReader;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DataCounterTest {

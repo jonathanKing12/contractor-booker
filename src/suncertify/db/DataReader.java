@@ -11,6 +11,8 @@ import static java.lang.Boolean.FALSE;
 import java.util.ArrayList;
 import java.util.List;
 
+import suncertify.db.datasource.DataSourceException;
+import suncertify.db.datasource.DataSourceFactory;
 import suncertify.db.matcher.RecordLocationMatcher;
 import suncertify.db.matcher.RecordMatcher;
 import suncertify.db.matcher.RecordNameMatcher;
@@ -21,8 +23,6 @@ import suncertify.db.matcher.RecordSpecialtiesMatcher;
 import suncertify.db.record.Record;
 import suncertify.db.record.RecordNotFoundException;
 import suncertify.db.record.RecordReader;
-import datasource.DataSourceException;
-import datasource.DataSourceFactory;
 
 public class DataReader {
 

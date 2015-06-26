@@ -2,9 +2,9 @@ package suncertify.db;
 
 import java.util.Arrays;
 
+import suncertify.db.datasource.DataSourceException;
+import suncertify.db.datasource.DataSourceFactory;
 import suncertify.db.record.RecordNotFoundException;
-import datasource.DataSourceException;
-import datasource.DataSourceFactory;
 
 public class DataAccess {
 

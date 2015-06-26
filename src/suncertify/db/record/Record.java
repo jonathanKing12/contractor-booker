@@ -11,24 +11,20 @@ public class Record {
 	private int recordNumber;
 	private boolean isDeleted;
 
-	public Record(RecordBuilder builder) {
-		name = builder.getName();
-		location = builder.getLocation();
-		specialties = builder.getSpecialties();
-		size = builder.getSize();
-		rate = builder.getRate();
-		owner = builder.getOwner();
-		recordNumber = builder.getRecordNumber();
-		isDeleted = builder.getDeletedFlag();
-	}
-
-	@Override
-	public String toString() {
-		return "name " + name + " location " + location + " specialities " + specialties + "rate " + rate + " size " + size;
+	public Record(int recordNumber, String name, String location, String specialties, String size, String rate, String owner, boolean isDeleted) {
+		this.name = name;
+		this.size = size;
+		this.rate = rate;
+		this.owner = owner;
+		this.location = location;
+		this.isDeleted = isDeleted;
+		this.specialties = specialties;
+		this.recordNumber = recordNumber;
 	}
 
 	public String[] toArray() {
-		return RecordUtils.toArray(this);
+		RecordParser parser = new RecordParser();
+		return parser.toArray(this);
 	}
 
 	public boolean isDeleted() {
@@ -48,7 +44,7 @@ public class Record {
 	}
 
 	public boolean getDeletedFlag() {
-		return isDeleted;// deletedFlag;
+		return isDeleted;
 	}
 
 	public String getSpecialties() {
@@ -71,7 +67,7 @@ public class Record {
 		this.recordNumber = recordNumber;
 	}
 
-	public void setDeleted(Boolean isDeleted) {
+	public void setDeleted(boolean isDeleted) {
 		this.isDeleted = isDeleted;
 	}
 }

@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.mockito.stubbing.OngoingStubbing;
 
-import datasource.DataSourceException;
-import datasource.DataSourceReader;
+import suncertify.db.datasource.DataSourceException;
+import suncertify.db.datasource.DataSourceReader;
 
 public class SetUpHeaderMock {
 

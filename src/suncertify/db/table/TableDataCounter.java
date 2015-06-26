@@ -5,8 +5,8 @@ import static java.lang.Boolean.TRUE;
 
 import java.util.HashMap;
 
-import datasource.DataSourceException;
-import datasource.DataSourceReader;
+import suncertify.db.datasource.DataSourceException;
+import suncertify.db.datasource.DataSourceReader;
 
 /**
  * Keeps track of the amount of data that has been read from the table

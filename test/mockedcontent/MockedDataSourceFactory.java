@@ -1,8 +1,8 @@
 package mockedcontent;
 
-import datasource.DataSourceFactory;
-import datasource.DataSourceReader;
-import datasource.DataSourceWriter;
+import suncertify.db.datasource.DataSourceFactory;
+import suncertify.db.datasource.DataSourceReader;
+import suncertify.db.datasource.DataSourceWriter;
 
 public class MockedDataSourceFactory implements DataSourceFactory {
 

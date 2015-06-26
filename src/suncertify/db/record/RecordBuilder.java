@@ -7,7 +7,7 @@ public class RecordBuilder {
 	private String size;
 	private String rate;
 	private String owner;
-	private boolean deletedFlag;
+	private boolean isDeleted;
 	private int recordNumber;
 
 	public RecordBuilder addName(String name) {
@@ -45,44 +45,12 @@ public class RecordBuilder {
 		return this;
 	}
 
-	public RecordBuilder addDeletedFlag(boolean deletedFlag) {
-		this.deletedFlag = deletedFlag;
+	public RecordBuilder addDeletedFlag(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 		return this;
 	}
 
 	public Record build() {
-		return new Record(this);
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getLocation() {
-		return location;
-	}
-
-	public String getSpecialties() {
-		return specialties;
-	}
-
-	public String getSize() {
-		return size;
-	}
-
-	public String getRate() {
-		return rate;
-	}
-
-	public String getOwner() {
-		return owner;
-	}
-
-	public int getRecordNumber() {
-		return recordNumber;
-	}
-
-	public boolean getDeletedFlag() {
-		return deletedFlag;
+		return new Record(recordNumber, name, location, specialties, size, rate, owner, isDeleted);
 	}
 }

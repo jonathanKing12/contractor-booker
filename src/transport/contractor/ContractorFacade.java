@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import suncertify.db.Data;
+import suncertify.db.filesource.FileStreamFactory;
 import suncertify.db.record.RecordNotFoundException;
-import filesource.FileStreamFactory;
 
 public class ContractorFacade {
 
@@ -16,9 +16,9 @@ public class ContractorFacade {
 	}
 
 	Contractor getContractor(int contractorId) throws RecordNotFoundException {
-		return new Contractor(new ContractorBuilder().addContractorId(23));
-		// String[] contractorDetails = data.read(contractorId);
-		// return toContractor(contractorId, contractorDetails);
+		String[] contractorDetails = data.read(contractorId);
+		ContracorParser parser = new ContracorParser();
+		return parser.toContractor(contractorId, contractorDetails);
 	}
 
 	List<Contractor> getContractors(String name, String location) throws RecordNotFoundException {
@@ -35,7 +35,8 @@ public class ContractorFacade {
 		long lockCookie = lockContractor(contractor);
 		try {
 			if (isContractorBooked(contractor)) {
-				throw new ContractorException();
+				String errorMessage = createErrorMessage(contractor);
+				throw new ContractorException(errorMessage);
 			}
 			bookContractor(contractor, lockCookie);
 		} finally {
@@ -73,6 +74,11 @@ public class ContractorFacade {
 	}
 
 	private String getSearchCritea(String property) {
-		return (property.trim().isEmpty()) ? null : property;
+		return (property.isEmpty()) ? null : property;
+	}
+
+	private String createErrorMessage(Contractor contractor) {
+		int contractorId = contractor.getContractorId();
+		return String.format("contractor %d is already booked", contractorId);
 	}
 }

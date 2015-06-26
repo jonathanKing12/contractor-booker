@@ -6,7 +6,7 @@ import org.junit.Before;
 
 import suncertify.db.DB;
 import suncertify.db.Data;
-import datasource.DataSourceFactory;
+import suncertify.db.datasource.DataSourceFactory;
 
 public abstract class BaseTest {
 

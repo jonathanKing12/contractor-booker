@@ -21,9 +21,9 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.OngoingStubbing;
 
-import datasource.DataSourceException;
-import datasource.DataSourceFactory;
-import datasource.DataSourceReader;
+import suncertify.db.datasource.DataSourceException;
+import suncertify.db.datasource.DataSourceFactory;
+import suncertify.db.datasource.DataSourceReader;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TableReaderTest {

@@ -1,34 +1,46 @@
 package server;
 
+import static java.lang.Boolean.FALSE;
 import static java.rmi.registry.LocateRegistry.createRegistry;
 import static java.rmi.server.UnicastRemoteObject.exportObject;
+import static java.rmi.server.UnicastRemoteObject.unexportObject;
 
-import java.net.MalformedURLException;
+import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 
-import transport.remote.RemoteService;
-import transport.remote.RemoteServiceInterface;
-
+import transport.remote.BookableService;
+import transport.remote.ContractorService;
 
 public class Server {
 
-	private static int port = 1236;
+	private int port = 1236;
+	private BookableService service;
+	Registry registry;
 
-	public static void register() throws RemoteException, MalformedURLException, InterruptedException {
-
-		RemoteServiceInterface service = new RemoteService();
-		RemoteServiceInterface serviceStub = (RemoteServiceInterface) exportObject(service, port);
-		Registry registry = createRegistry(port);
-		// Registry r=LocateRegistry.g
-		registry.rebind("service", serviceStub);
-		Thread.sleep(8000);
-		// UnicastRemoteObject.unexportObject(service, Boolean.FALSE);
+	public Server() {
+		service = new ContractorService();
 	}
 
-	public static void main(String[] args) throws RemoteException, MalformedURLException, InterruptedException {
-		new Server().register();
+	public void enable() {
+		try {
+			BookableService serviceStub = (BookableService) exportObject(service, port);
+			registry = createRegistry(port);
+			registry.rebind("service", serviceStub);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+
 	}
-	// registry.rebind("//localhost:" + port + "/factory", serviceStub)
->>>>>>> 0abf2ed... added server code
+
+	public void disable() {
+		try {
+			while (!unexportObject(service, FALSE)) {
+			}
+			while (!unexportObject(registry, FALSE)) {
+			}
+		} catch (NoSuchObjectException e) {
+			e.printStackTrace();
+		}
+	}
 }

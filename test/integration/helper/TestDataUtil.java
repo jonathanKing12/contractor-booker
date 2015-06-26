@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
-import settings.DataSourceSettingAccessor;
+import settings.SettingsAccessor;
 import settings.SettingType;
 
 public class TestDataUtil {
@@ -14,7 +14,7 @@ public class TestDataUtil {
 	public static void backupDbFile(String fileName) throws IOException {
 		Map<SettingType, String> settings = new HashMap<>();
 		settings.put(SettingType.DIRECTORY, fileName + ".db");
-		new DataSourceSettingAccessor().setSettings(settings);
+		new SettingsAccessor().setSettings(settings);
 		backupFile(fileName, ".db");
 	}
 

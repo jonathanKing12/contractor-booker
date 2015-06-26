@@ -1,7 +1,7 @@
 package suncertify.db;
 
+import suncertify.db.datasource.DataSourceFactory;
 import suncertify.db.record.RecordNotFoundException;
-import datasource.DataSourceFactory;
 
 public class Data implements DB {
 
@@ -79,8 +79,6 @@ public class Data implements DB {
 			verifyRecordExist(recNo);
 			return lockCookie;
 		} catch (RecordNotFoundException e) {
-			// If this request happens again (request2), and the record still doesn't exist and
-			// isn't unlocked, then request2 won't be informed that it doesn't exist and hang
 			unlock(recNo, lockCookie);
 			throw e;
 		}

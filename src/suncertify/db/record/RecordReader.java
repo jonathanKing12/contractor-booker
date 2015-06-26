@@ -1,8 +1,8 @@
 package suncertify.db.record;
 
+import suncertify.db.datasource.DataSourceException;
+import suncertify.db.datasource.DataSourceFactory;
 import suncertify.db.table.TableReader;
-import datasource.DataSourceException;
-import datasource.DataSourceFactory;
 
 public class RecordReader {
 

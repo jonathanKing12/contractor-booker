@@ -12,18 +12,19 @@ public class Contractor implements Serializable {
 	private String owner;
 	private int contractorId;
 
-	public Contractor(ContractorBuilder builder) {
-		name = builder.getName();
-		location = builder.getLocation();
-		specialties = builder.getSpecialties();
-		size = builder.getSize();
-		rate = builder.getRate();
-		owner = builder.getOwner();
-		contractorId = builder.getContractorId();
+	public Contractor(int contractorId, String name, String location, String specialties, String size, String rate, String owner) {
+		this.name = name;
+		this.size = size;
+		this.rate = rate;
+		this.owner = owner;
+		this.location = location;
+		this.specialties = specialties;
+		this.contractorId = contractorId;
 	}
 
 	public String[] toArray() {
-		return ContracorUtills.toArray(this);
+		ContracorParser parser = new ContracorParser();
+		return parser.toArray(this);
 	}
 
 	public String getName() {

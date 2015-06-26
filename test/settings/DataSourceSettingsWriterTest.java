@@ -23,12 +23,12 @@ import org.junit.Test;
 
 public class DataSourceSettingsWriterTest {
 
-	private PropertiesFileWriter writer;
+	private SettingsParser writer;
 
 	@Before
 	public void setUp() throws IOException {
 		TestDataUtil.backupPropertiesFile("writeproperties");
-		writer = new PropertiesFileWriter(new File("C:/db/writeproperties.properties"));
+		writer = new SettingsParser(new File("C:/db/writeproperties.properties"));
 	}
 
 	@Test

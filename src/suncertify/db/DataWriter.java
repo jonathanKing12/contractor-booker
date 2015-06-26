@@ -1,11 +1,11 @@
 package suncertify.db;
 
 import static java.lang.Boolean.TRUE;
-import static suncertify.db.record.RecordUtils.createRecord;
+import suncertify.db.datasource.DataSourceException;
+import suncertify.db.datasource.DataSourceFactory;
 import suncertify.db.record.Record;
+import suncertify.db.record.RecordParser;
 import suncertify.db.record.RecordWriter;
-import datasource.DataSourceException;
-import datasource.DataSourceFactory;
 
 public class DataWriter {
 
@@ -15,15 +15,20 @@ public class DataWriter {
 		recordWriter = new RecordWriter(factory);
 	}
 
-	void write(int recordNumber, String[] recordData) throws DataSourceException {
-		Record record = createRecord(recordNumber, recordData);
+	void write(int recordNumber, String[] recordDetails) throws DataSourceException {
+		Record record = createRecord(recordNumber, recordDetails);
 		writeRecord(record);
 	}
 
-	public void deleteRecord(int recordNumber, String[] recordData) throws DataSourceException {
-		Record record = createRecord(recordNumber, recordData);
+	void deleteRecord(int recordNumber, String[] recordDetails) throws DataSourceException {
+		Record record = createRecord(recordNumber, recordDetails);
 		record.setDeleted(TRUE);
 		writeRecord(record);
+	}
+
+	private Record createRecord(int recordNumber, String[] recordDetails) {
+		RecordParser parser = new RecordParser();
+		return parser.createRecord(recordNumber, recordDetails);
 	}
 
 	private void writeRecord(Record record) throws DataSourceException {

@@ -1,8 +1,8 @@
 package suncertify.db.table;
 
-import datasource.DataSourceException;
-import datasource.DataSourceFactory;
-import datasource.DataSourceReader;
+import suncertify.db.datasource.DataSourceException;
+import suncertify.db.datasource.DataSourceFactory;
+import suncertify.db.datasource.DataSourceReader;
 
 public class TableReader {
 

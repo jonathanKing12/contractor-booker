@@ -1,8 +1,8 @@
 package suncertify.db.table;
 
-import datasource.DataSourceException;
-import datasource.DataSourceFactory;
-import datasource.DataSourceWriter;
+import suncertify.db.datasource.DataSourceException;
+import suncertify.db.datasource.DataSourceFactory;
+import suncertify.db.datasource.DataSourceWriter;
 
 public class TableWriter {
 

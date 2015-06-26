@@ -1,7 +1,7 @@
 package constants;
 
 public class Constants {
-	public static final int INDEX_COUNT = 6;
+	public static final int CONTRACTOR_DETAILS_COUNT = 6;
 	public static final int NAME_INDEX = 0;
 	public static final int LOCATION_INDEX = 1;
 	public static final int SPECIALTIES_INDEX = 2;

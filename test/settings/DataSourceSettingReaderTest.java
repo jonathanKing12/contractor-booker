@@ -14,19 +14,19 @@ import org.junit.Test;
 public class DataSourceSettingReaderTest {
 
 	private File settingsFile;
-	private PropertiesFileReader reader;
+	private PropertiesReadWriteStream reader;
 
 	@Test
 	public void shouldReadNoProperties() {
 		reader = createReader("zeroProperties");
-		Map<SettingType, String> settings = reader.getSettings();
+		Map<SettingType, String> settings = reader.getText();
 		assertTrue(settings.isEmpty());
 	}
 
 	@Test
 	public void shouldReadOneProperties() {
 		reader = createReader("oneProperty");
-		Map<SettingType, String> actualSettings = reader.getSettings();
+		Map<SettingType, String> actualSettings = reader.getText();
 		assertTrue(actualSettings.size() == 1);
 
 		Map<SettingType, String> expectedSettings = new HashMap<>();
@@ -39,7 +39,7 @@ public class DataSourceSettingReaderTest {
 	public void shouldReadAllProperties() {
 		reader = createReader("allProperties");
 
-		Map<SettingType, String> actualSettings = reader.getSettings();
+		Map<SettingType, String> actualSettings = reader.getText();
 		assertTrue(actualSettings.size() == 3);
 
 		Map<SettingType, String> expectedSettings = new HashMap<>();
@@ -53,15 +53,15 @@ public class DataSourceSettingReaderTest {
 	public void shouldFail() {
 		try {
 			reader = createReader("I do not exist");
-			reader.getSettings();
+			reader.getText();
 		} catch (SettingException e) {
 			throw e;
 		}
 	}
 
-	private PropertiesFileReader createReader(String fileName) {
+	private PropertiesReadWriteStream createReader(String fileName) {
 		settingsFile = new File("C:/db/" + fileName + ".properties");
-		return new PropertiesFileReader(settingsFile);
+		return new PropertiesReadWriteStream(settingsFile);
 	}
 
 	private void assertMapsAreEqual(Map<SettingType, String> expected, Map<SettingType, String> actual) {

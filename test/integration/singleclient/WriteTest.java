@@ -14,10 +14,10 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import suncertify.db.datasource.DataSourceException;
 import suncertify.db.record.Record;
 import suncertify.db.record.RecordNotFoundException;
 import suncertify.db.record.RecordReader;
-import datasource.DataSourceException;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class WriteTest extends BaseTest {

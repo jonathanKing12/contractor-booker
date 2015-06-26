@@ -1,8 +1,8 @@
 package mockedcontent;
 
-import datasource.DataSourceException;
-import datasource.DataSourceWriter;
-import filesource.FileStreamWriter;
+import suncertify.db.datasource.DataSourceException;
+import suncertify.db.datasource.DataSourceWriter;
+import suncertify.db.filesource.FileStreamWriter;
 
 public class MockedDataSourceWriter implements DataSourceWriter {
 

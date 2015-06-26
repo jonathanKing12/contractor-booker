@@ -15,10 +15,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import datasource.DataSourceException;
-import datasource.DataSourceFactory;
-import datasource.DataSourceReader;
-import datasource.DataSourceWriter;
+import suncertify.db.datasource.DataSourceException;
+import suncertify.db.datasource.DataSourceFactory;
+import suncertify.db.datasource.DataSourceReader;
+import suncertify.db.datasource.DataSourceWriter;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TableWriterTest {

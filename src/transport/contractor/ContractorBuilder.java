@@ -2,16 +2,12 @@ package transport.contractor;
 
 public class ContractorBuilder {
 
-	public ContractorBuilder() {
-	}
-
 	private String name;
 	private String location;
 	private String specialties;
 	private String size;
 	private String rate;
 	private String owner;
-	private String deletedFlag;
 	private int contractorId;
 
 	public ContractorBuilder addName(String name) {
@@ -49,45 +45,7 @@ public class ContractorBuilder {
 		return this;
 	}
 
-	public ContractorBuilder addDeletedFlag(String deletedFlag) {
-		this.deletedFlag = deletedFlag;
-		return this;
-	}
-
 	public Contractor build() {
-		return new Contractor(this);
+		return new Contractor(contractorId, name, location, specialties, rate, size, owner);
 	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getLocation() {
-		return location;
-	}
-
-	public String getSpecialties() {
-		return specialties;
-	}
-
-	public String getSize() {
-		return size;
-	}
-
-	public String getRate() {
-		return rate;
-	}
-
-	public String getOwner() {
-		return owner;
-	}
-
-	public int getContractorId() {
-		return contractorId;
-	}
-
-	public String getDeletedFlag() {
-		return deletedFlag;
-	}
-
 }
