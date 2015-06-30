@@ -1,5 +1,6 @@
 package ui.view.settings.tabs;
 
+import static java.lang.Boolean.FALSE;
 import static settings.SettingType.DIRECTORY;
 import static settings.SettingType.PORT_NUMBER;
 
@@ -12,12 +13,12 @@ import javax.swing.Box;
 import javax.swing.JPanel;
 
 import settings.SettingType;
-import ui.view.TextHolder;
-import ui.view.TextHolderBoxLayout;
-import ui.view.TextHolderFactory;
 import ui.view.api.SettableTab;
 import ui.view.mergers.SettableMerger;
 import ui.view.settings.DirectorySelectionHandler;
+import ui.view.textholder.TextHolder;
+import ui.view.textholder.TextHolderBoxLayout;
+import ui.view.textholder.TextHolderBuilder;
 
 public class PortNumberAndDirectoryTab extends JPanel implements SettableTab {
 
@@ -26,12 +27,9 @@ public class PortNumberAndDirectoryTab extends JPanel implements SettableTab {
 	private TextHolder directoryHolder;
 	private Set<SettingType> settingTypes;
 
-	// private JButton browseButton;
-
 	public PortNumberAndDirectoryTab() {
 		title = "Database connection";
 		setUpTextHolders();
-		// setUpBrowseButton();
 		addComponents();
 		createSettingsTypes();
 	}
@@ -71,9 +69,20 @@ public class PortNumberAndDirectoryTab extends JPanel implements SettableTab {
 	}
 
 	private void setUpTextHolders() {
-		TextHolderFactory factory = new TextHolderFactory();
-		portNumberHolder = factory.createServerPortNumberTextHolder();
-		directoryHolder = factory.createDirectoryTextHolder();
+		portNumberHolder = createPortNumbeHolder();
+		directoryHolder = createDirectoryholder();
+	}
+
+	private TextHolder createDirectoryholder() {
+		TextHolderBuilder builder = new TextHolderBuilder();
+		return builder.addLabel("select folder database is in:").addIsEditable(FALSE)
+				.addNumberOfColumns(35).build();
+	}
+
+	private TextHolder createPortNumbeHolder() {
+		TextHolderBuilder builder = new TextHolderBuilder();
+		return builder.addLabel("Enter port number to receive clients requests:")
+				.addNumberOfColumns(5).build();
 	}
 
 	private void sendSettingsToController(Map<SettingType, String> settings) {

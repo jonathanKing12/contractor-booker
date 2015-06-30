@@ -1,4 +1,4 @@
-package ui.view;
+package ui.view.textholder;
 
 import static java.lang.Boolean.TRUE;
 

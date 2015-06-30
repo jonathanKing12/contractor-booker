@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import ui.view.mergers.ParentTracker;
+import ui.view.ParentTracker;
 
 public class OkayApplyAndCancelButtonsPanel extends JPanel {
 

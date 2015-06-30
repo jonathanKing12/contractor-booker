@@ -10,22 +10,21 @@ import ui.view.api.BookableView;
 
 public class BookableMerger implements BookableView {
 
-	private static BookableMerger bookableMerger;
+	private static BookableMerger INSTANCE;
 	private ButtonPanel buttonPanel;
 	private BookableController bookableController;
-	private MessageBoxPresenter messageBoxPresenter;
+
+	static {
+		INSTANCE = new BookableMerger();
+	}
 
 	private BookableMerger() {
 		ControllerFactory factory = new ControllerFactory();
 		bookableController = factory.getContractorController(this);
-		messageBoxPresenter = MessageBoxPresenter.getInstance();
 	}
 
 	public static BookableMerger getInstance() {
-		if (bookableMerger == null) {
-			bookableMerger = new BookableMerger();
-		}
-		return bookableMerger;
+		return INSTANCE;
 	}
 
 	public void addButtonPanel(ButtonPanel buttonPanel) {
@@ -51,6 +50,7 @@ public class BookableMerger implements BookableView {
 
 	@Override
 	public void displayErrorMessage(String errorMessage, String title) {
-		messageBoxPresenter.displayErrorMessageBox(errorMessage, title);
+		MessageBoxPresenter presenter = new MessageBoxPresenter();
+		presenter.displayErrorMessageBox(errorMessage, title);
 	}
 }

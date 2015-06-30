@@ -10,8 +10,8 @@ import javax.swing.UIManager;
 
 import settings.SettingType;
 import ui.view.MenuBar;
+import ui.view.ParentTracker;
 import ui.view.mergers.SettableMerger;
-import ui.view.mergers.ParentTracker;
 import ui.view.settings.SettingsDialog;
 
 public class MainWindow extends JFrame {

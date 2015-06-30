@@ -1,4 +1,4 @@
-package ui.view;
+package ui.view.textholder;
 
 import static java.awt.FlowLayout.LEFT;
 import static javax.swing.BoxLayout.X_AXIS;

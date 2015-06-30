@@ -6,22 +6,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 import java.awt.Component;
 
-import ui.view.mergers.ParentTracker;
-
 public class MessageBoxPresenter {
-
-	private static MessageBoxPresenter messageBoxPresenter;
-
-	static {
-		messageBoxPresenter = new MessageBoxPresenter();
-	}
-
-	private MessageBoxPresenter() {
-	}
-
-	public static MessageBoxPresenter getInstance() {
-		return messageBoxPresenter;
-	}
 
 	public String displayInputDialog(String message) {
 		Component parent = getParent();

@@ -1,4 +1,4 @@
-package ui.view;
+package ui.view.textholder;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;

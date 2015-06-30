@@ -13,8 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import settings.SettingType;
+import ui.view.ParentTracker;
 import ui.view.api.SettableTab;
-import ui.view.mergers.ParentTracker;
 
 public class SettingsDialog extends JDialog {
 

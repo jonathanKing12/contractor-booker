@@ -9,8 +9,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
-import ui.view.mergers.ParentTracker;
-
 public class MenuBar extends JMenuBar {
 
 	private JMenuItem settings;

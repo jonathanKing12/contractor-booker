@@ -7,25 +7,25 @@ import settings.SettingType;
 import ui.controller.ControllerFactory;
 import ui.controller.api.SettableController;
 import ui.view.MessageBoxPresenter;
+import ui.view.ParentTracker;
 import ui.view.api.SettableView;
 
 public class SettableMerger implements SettableView {
 
-	private static SettableMerger settableMerger;
+	private static SettableMerger INSTANCE;
 	private SettableController settingsController;
-	private MessageBoxPresenter messageBoxPresenter;
+
+	static {
+		INSTANCE = new SettableMerger();
+	}
 
 	private SettableMerger() {
 		ControllerFactory factory = new ControllerFactory();
 		settingsController = factory.getClientSettingsController(this);
-		messageBoxPresenter = MessageBoxPresenter.getInstance();
 	}
 
 	public static SettableMerger getInstance() {
-		if (settableMerger == null) {
-			settableMerger = new SettableMerger();
-		}
-		return settableMerger;
+		return INSTANCE;
 	}
 
 	public Map<SettingType, String> getSettings() {
@@ -40,18 +40,14 @@ public class SettableMerger implements SettableView {
 		return settingsController.getSettings();
 	}
 
-	// @Override
-	// public void requestForSettingsTobeSet() {
-	// ViewMerger.getInstance().displaySettngsDialogBox();
-	// }
-
 	public void displaySettingsDialogIfControllerHasNotSettingsOfTypes(Set<SettingType> settings) {
 		settingsController.displaySettingsDialogIfNoSettingsTypesExist(settings);
 	}
 
 	@Override
 	public void displayErrorMessage(String errorMessage, String title) {
-		messageBoxPresenter.displayErrorMessageBox(errorMessage, title);
+		MessageBoxPresenter presenter = new MessageBoxPresenter();
+		presenter.displayErrorMessageBox(errorMessage, title);
 	}
 
 	@Override

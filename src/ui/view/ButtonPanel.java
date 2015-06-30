@@ -48,7 +48,7 @@ public class ButtonPanel extends JPanel implements ActionListener {
 	}
 
 	private String displayMessageBoxToGetCustomerId() {
-		MessageBoxPresenter presenter = MessageBoxPresenter.getInstance();
+		MessageBoxPresenter presenter = new MessageBoxPresenter();
 		return presenter.displayInputDialog("enter customer ID");
 	}
 
@@ -79,7 +79,7 @@ public class ButtonPanel extends JPanel implements ActionListener {
 	}
 
 	private void displayErrorMessage(String errorMessage) {
-		MessageBoxPresenter presenter = MessageBoxPresenter.getInstance();
+		MessageBoxPresenter presenter = new MessageBoxPresenter();
 		presenter.displayErrorMessageBox(errorMessage, ERROR_TITLE);
 	}
 

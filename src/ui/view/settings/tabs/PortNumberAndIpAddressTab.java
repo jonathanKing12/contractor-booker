@@ -11,11 +11,11 @@ import java.util.Set;
 import javax.swing.JPanel;
 
 import settings.SettingType;
-import ui.view.TextHolder;
-import ui.view.TextHolderBoxLayout;
-import ui.view.TextHolderFactory;
 import ui.view.api.SettableTab;
 import ui.view.mergers.SettableMerger;
+import ui.view.textholder.TextHolder;
+import ui.view.textholder.TextHolderBoxLayout;
+import ui.view.textholder.TextHolderBuilder;
 
 public class PortNumberAndIpAddressTab extends JPanel implements SettableTab {
 
@@ -63,9 +63,19 @@ public class PortNumberAndIpAddressTab extends JPanel implements SettableTab {
 	}
 
 	private void setUpTextHolders() {
-		TextHolderFactory factory = new TextHolderFactory();
-		portNumberHolder = factory.createClientPortNumberTextHolder();
-		ipAddressHolder = factory.createIpAddressTextHolder();
+		portNumberHolder = createPortNumbeHolder();
+		ipAddressHolder = createIpAddressTextHolder();
+	}
+
+	public TextHolder createIpAddressTextHolder() {
+		TextHolderBuilder builder = new TextHolderBuilder();
+		return builder.addLabel("Enter server's IP address:").addNumberOfColumns(10).build();
+	}
+
+	private TextHolder createPortNumbeHolder() {
+		TextHolderBuilder builder = new TextHolderBuilder();
+		return builder.addLabel("Enter port number to listen to server:").addNumberOfColumns(5)
+				.build();
 	}
 
 	private void addComponents() {

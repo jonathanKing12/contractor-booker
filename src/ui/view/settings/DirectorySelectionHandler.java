@@ -12,8 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 
-import ui.view.TextHolder;
-import ui.view.mergers.ParentTracker;
+import ui.view.ParentTracker;
+import ui.view.textholder.TextHolder;
 
 public class DirectorySelectionHandler implements ActionListener {
 

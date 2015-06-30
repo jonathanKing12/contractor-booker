@@ -6,26 +6,25 @@ import ui.view.MessageBoxPresenter;
 
 public class ServerMerger {
 
-	private static final ServerMerger serverMerger;
-	private MessageBoxPresenter messageBoxPresenter;
+	private static final ServerMerger INSTANE;
 	private ServerSwithController controller;
 
 	static {
-		serverMerger = new ServerMerger();
+		INSTANE = new ServerMerger();
 	}
 
 	private ServerMerger() {
 		ControllerFactory factory = new ControllerFactory();
 		controller = new ServerSwithController(this);
-		messageBoxPresenter = MessageBoxPresenter.getInstance();
 	}
 
 	public static ServerMerger getInstance() {
-		return serverMerger;
+		return INSTANE;
 	}
 
 	public void displayErrorMessage(String errorMessage, String title) {
-		messageBoxPresenter.displayErrorMessageBox(errorMessage, title);
+		MessageBoxPresenter presenter = new MessageBoxPresenter();
+		presenter.displayErrorMessageBox(errorMessage, title);
 	}
 
 	public void enable() {

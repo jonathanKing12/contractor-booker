@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import ui.view.mergers.BookableMerger;
+import ui.view.textholder.TextHolder;
+import ui.view.textholder.TextHolderBuilder;
 
 public class FilterPanel extends JPanel implements ActionListener {
 

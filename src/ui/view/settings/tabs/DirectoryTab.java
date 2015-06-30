@@ -1,5 +1,6 @@
 package ui.view.settings.tabs;
 
+import static java.lang.Boolean.FALSE;
 import static settings.SettingType.DIRECTORY;
 
 import java.util.HashMap;
@@ -10,11 +11,11 @@ import java.util.Set;
 import javax.swing.JPanel;
 
 import settings.SettingType;
-import ui.view.TextHolder;
-import ui.view.TextHolderFactory;
 import ui.view.api.SettableTab;
 import ui.view.mergers.SettableMerger;
 import ui.view.settings.DirectorySelectionHandler;
+import ui.view.textholder.TextHolder;
+import ui.view.textholder.TextHolderBuilder;
 
 public class DirectoryTab extends JPanel implements SettableTab {
 
@@ -37,9 +38,14 @@ public class DirectoryTab extends JPanel implements SettableTab {
 	}
 
 	private void setUpDirectoryHolder() {
-		TextHolderFactory factory = new TextHolderFactory();
-		directoryHolder = factory.createDirectoryTextHolder();
+		createDirectoryholder();
 		directorySelectionHandler = new DirectorySelectionHandler(directoryHolder);
+	}
+
+	private void createDirectoryholder() {
+		TextHolderBuilder builder = new TextHolderBuilder();
+		directoryHolder = builder.addLabel("select folder database is in:").addIsEditable(FALSE)
+				.addNumberOfColumns(35).build();
 	}
 
 	private void createSettingType() {

@@ -1,7 +1,7 @@
 package main;
 
 import runmode.RunModeHelper;
-import ui.view.mergers.ParentTracker;
+import ui.view.ParentTracker;
 import ui.view.settings.SettingsDialog;
 import ui.view.settings.SettingsDialogFactory;
 import ui.view.windows.ClientMainWindow;

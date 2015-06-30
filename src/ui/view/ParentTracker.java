@@ -1,4 +1,4 @@
-package ui.view.mergers;
+package ui.view;
 
 import java.awt.Component;
 
@@ -7,20 +7,20 @@ import ui.view.windows.MainWindow;
 
 public class ParentTracker {
 
-	private static ParentTracker viewMerger;
+	private static ParentTracker INSTANCE;
 	private Component parent;
 	private MainWindow mainWindow;
 	private SettingsDialog settingsDialogBox;
 
 	static {
-		viewMerger = new ParentTracker();
+		INSTANCE = new ParentTracker();
 	}
 
 	private ParentTracker() {
 	}
 
 	public static ParentTracker getInstance() {
-		return viewMerger;
+		return INSTANCE;
 	}
 
 	public void addSettingsDialogBox(SettingsDialog settingsDialogBox) {
