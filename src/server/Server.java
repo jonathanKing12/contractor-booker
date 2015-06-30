@@ -9,38 +9,39 @@ import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 
-import transport.remote.BookableService;
-import transport.remote.ContractorService;
+import settings.SettableAccessor;
+import settings.SettingType;
+import settings.SettingsAccessor;
 
 public class Server {
 
-	private int port = 1236;
 	private BookableService service;
-	Registry registry;
+	private Registry registry;
 
 	public Server() {
 		service = new ContractorService();
 	}
 
-	public void enable() {
+	public void enable() throws SererException {
 		try {
-			BookableService serviceStub = (BookableService) exportObject(service, port);
-			registry = createRegistry(port);
+			SettableAccessor sett = new SettingsAccessor();
+			int portNumber = Integer.parseInt(sett.getSettings().get(SettingType.PORT_NUMBER));
+			BookableService serviceStub = (BookableService) exportObject(service, portNumber);
+			registry = createRegistry(portNumber);
 			registry.rebind("service", serviceStub);
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			throw new SererException("error when disabling server");
 		}
-
 	}
 
-	public void disable() {
+	public void disable() throws SererException {
 		try {
 			while (!unexportObject(service, FALSE)) {
 			}
 			while (!unexportObject(registry, FALSE)) {
 			}
 		} catch (NoSuchObjectException e) {
-			e.printStackTrace();
+			throw new SererException("error when disabling server");
 		}
 	}
 }

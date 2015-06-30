@@ -46,6 +46,6 @@ public class ContractorBuilder {
 	}
 
 	public Contractor build() {
-		return new Contractor(contractorId, name, location, specialties, rate, size, owner);
+		return new Contractor(contractorId, name, location, specialties, size, rate, owner);
 	}
 }

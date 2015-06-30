@@ -78,6 +78,6 @@ public class DataCounterTest {
 	public void test() throws DataSourceException {
 		dataCounter.setAmountOfDataRead(DATA_SOURCE_SIZE);
 		dataCounter.incrementBy(20);
-		assertEquals(120, dataCounter.getSizeOfDataThatsBeenRead());
+		assertEquals(120, dataCounter.getAmountOfDataThatsBeenRead());
 	}
 }

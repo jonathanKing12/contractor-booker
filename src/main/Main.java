@@ -1,31 +1,47 @@
 package main;
 
-import gui.view.mergers.ViewMerger;
-import gui.view.settings.SettingsDialogBox;
-import gui.view.settings.SettingsDialogBoxBuilder;
-import gui.view.settings.tabs.PortNumberAndDirectoryTab;
-import gui.view.windows.ClientMainWindow;
-import gui.view.windows.MainWindow;
-
-import java.io.IOException;
+import runmode.RunModeHelper;
+import ui.view.mergers.ParentTracker;
+import ui.view.settings.SettingsDialog;
+import ui.view.settings.SettingsDialogFactory;
+import ui.view.windows.ClientMainWindow;
+import ui.view.windows.MainWindow;
+import ui.view.windows.ServerMainWindow;
 
 public class Main {
 
-	public static void main(String[] args) throws IOException {
-		new Main();
+	public static void main(String[] args) {
+		new Main(args);
 	}
 
-	public Main() throws IOException {
-		MainWindow mainScreen = new ClientMainWindow(createSettingsDialogBox());
-		ViewMerger.VIEW_MERGER_INSTACE.displayMainWindow();
-		// MainWindow mainScreen = new ServerMainWindow(createSettingsDialogBox());
+	public Main(String[] args) {
+		RunModeHelper helper = RunModeHelper.getInstance();
+		helper.setRunMode(args);
 
+		SettingsDialog settingsDialog = getSettingsDialog(helper);
+		createMainWindow(helper, settingsDialog);
+
+		ParentTracker.getInstance().displayMainWindow();
 	}
 
-	private SettingsDialogBox createSettingsDialogBox() {
-		SettingsDialogBoxBuilder builder = new SettingsDialogBoxBuilder();
-		builder.addSettingsTab(new PortNumberAndDirectoryTab());
-		// builder.addSettingsTab(new DirectoryTab());
-		return builder.build();
+	private SettingsDialog getSettingsDialog(RunModeHelper helper) {
+		SettingsDialogFactory factory = new SettingsDialogFactory();
+
+		if (helper.isRunningInNetworkMode()) {
+			return factory.createNetworkSettingsDialog();
+		}
+
+		if (helper.isRunningInAloneMode()) {
+			return factory.createStandaloneSettingsDialog();
+		}
+
+		return factory.createServerSettingsDialog();
+	}
+
+	private MainWindow createMainWindow(RunModeHelper helper, SettingsDialog settingsDialog) {
+		if (helper.isRunningInServerMode()) {
+			return new ServerMainWindow(settingsDialog);
+		}
+		return new ClientMainWindow(settingsDialog);
 	}
 }

@@ -9,6 +9,10 @@ import suncertify.db.datasource.DataSourceException;
 import suncertify.db.datasource.DataSourceFactory;
 import suncertify.db.datasource.DataSourceReader;
 
+/**
+ * Stores the header of the data source.
+ *
+ */
 class TableHeader {
 
 	private int startingPositionOfFirstCell;
@@ -17,6 +21,11 @@ class TableHeader {
 	private boolean alreadyBeenRead;
 	private DataSourceReader dataSourceReader;
 
+	/**
+	 * Create a table header
+	 * 
+	 * @param - a {@link DataSourceFactory}
+	 */
 	TableHeader(DataSourceFactory factory) {
 		dataSourceReader = factory.getDatoSourceReader();
 	}
@@ -67,7 +76,8 @@ class TableHeader {
 		return columns.size();
 	}
 
-	private List<TableColumn> readColumnHeaders(DataSourceReader dataInputStream) throws DataSourceException {
+	private List<TableColumn> readColumnHeaders(DataSourceReader dataInputStream)
+			throws DataSourceException {
 		int totalNumberofColumns = dataInputStream.readShort();
 		final List<TableColumn> columns = new ArrayList<>(totalNumberofColumns);
 
@@ -80,7 +90,8 @@ class TableHeader {
 		return columns;
 	}
 
-	private TableColumn readColumnHeader(final int columnIndex, DataSourceReader dataInputStream) throws DataSourceException {
+	private TableColumn readColumnHeader(final int columnIndex, DataSourceReader dataInputStream)
+			throws DataSourceException {
 		final int sizeOfColumnName = dataInputStream.readShort();
 		dataInputStream.moveForwardBy(sizeOfColumnName);
 		final int sizeOfColumnValue = dataInputStream.readShort();

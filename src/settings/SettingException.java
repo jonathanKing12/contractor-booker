@@ -9,5 +9,4 @@ public class SettingException extends RuntimeException {
 	public SettingException(String message) {
 		super(message);
 	}
-
 }
