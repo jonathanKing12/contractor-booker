@@ -1,10 +1,27 @@
 package ui.view.api;
 
+import java.util.Map;
+import java.util.Set;
+
+import settings.SettingType;
+
 public interface SettableView {
 
-	// void requestForSettingsTobeSet();
+    void displayErrorMessage(String errorMessage, String title);
 
-	void displaySettingsDialogBox();
+    /**
+     * @return
+     */
+    Map<SettingType, String> loadSettings();
 
-	void displayErrorMessage(String errorMessage, String title);
+    /**
+     * @param settings
+     * @return
+     */
+    boolean isAllSettingsMissing(Set<SettingType> settings);
+
+    /**
+     * @param settings
+     */
+    void saveSettings(Map<SettingType, String> settings);
 }

@@ -10,14 +10,14 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import ui.view.mergers.BookableMerger;
-import ui.view.textholder.TextHolder;
-import ui.view.textholder.TextHolderBuilder;
+import ui.view.textwidget.TextWidget;
+import ui.view.textwidget.TextWidgetBuilder;
 
 public class FilterPanel extends JPanel implements ActionListener {
 
 	private JButton search;
-	private TextHolder name;
-	private TextHolder location;
+	private TextWidget name;
+	private TextWidget location;
 
 	public FilterPanel() {
 		setUpTextHolders();
@@ -59,8 +59,8 @@ public class FilterPanel extends JPanel implements ActionListener {
 		location = createTextHolder("Location", 20);
 	}
 
-	private TextHolder createTextHolder(String label, int numberOfColumns) {
-		TextHolderBuilder builder = new TextHolderBuilder();
+	private TextWidget createTextHolder(String label, int numberOfColumns) {
+		TextWidgetBuilder builder = new TextWidgetBuilder();
 		return builder.addLabel(label).addNumberOfColumns(numberOfColumns).build();
 	}
 
@@ -75,7 +75,7 @@ public class FilterPanel extends JPanel implements ActionListener {
 		this.add(search);
 	}
 
-	private void addTextHolder(TextHolder textHolder) {
+	private void addTextHolder(TextWidget textHolder) {
 		textHolder.addMessageLabelToPanel(this);
 		textHolder.addTextFieldToPanel(this);
 	}

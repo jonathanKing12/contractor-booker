@@ -11,5 +11,5 @@ public interface SettableModel {
 
 	Map<SettingType, String> getSettings();
 
-	boolean doesAnyOfSettingsTypesExist(Set<SettingType> settings);
+	boolean isAllSettingsMissing(Set<SettingType> settings);
 }

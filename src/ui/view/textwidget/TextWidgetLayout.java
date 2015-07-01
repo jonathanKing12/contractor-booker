@@ -1,4 +1,4 @@
-package ui.view.textholder;
+package ui.view.textwidget;
 
 import static java.awt.FlowLayout.LEFT;
 import static javax.swing.BoxLayout.X_AXIS;
@@ -10,15 +10,15 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-public class TextHolderBoxLayout {
+public class TextWidgetLayout {
 
-	public JPanel layoutVertically(TextHolder textHolder1, TextHolder textHolder2) {
+	public JPanel layoutVertically(TextWidget textHolder1, TextWidget textHolder2) {
 		Box labelBox = createLabelBox(textHolder1, textHolder2);
 		Box textFieldBox = createtextFieldBox(textHolder1, textHolder2);
 		return createBoxLayoutPanel(labelBox, textFieldBox);
 	}
 
-	private Box createLabelBox(TextHolder textHolder1, TextHolder textHolder2) {
+	private Box createLabelBox(TextWidget textHolder1, TextWidget textHolder2) {
 		JPanel leftBottom = createFlowLayoutPanel();
 		textHolder1.addMessageLabelToPanel(leftBottom);
 
@@ -28,7 +28,7 @@ public class TextHolderBoxLayout {
 		return createBox(leftBottom, leftTop);
 	}
 
-	private Box createtextFieldBox(TextHolder textHolder1, TextHolder textHolder2) {
+	private Box createtextFieldBox(TextWidget textHolder1, TextWidget textHolder2) {
 		JPanel centreTop = createFlowLayoutPanel();
 		textHolder1.addTextFieldToPanel(centreTop);
 

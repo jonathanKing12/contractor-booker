@@ -10,47 +10,52 @@ import ui.view.api.BookableView;
 
 public class BookableMerger implements BookableView {
 
-	private static BookableMerger INSTANCE;
-	private ButtonPanel buttonPanel;
-	private BookableController bookableController;
+    private static BookableMerger INSTANCE;
+    private ButtonPanel buttonPanel;
+    private BookableController controller;
 
-	static {
-		INSTANCE = new BookableMerger();
-	}
+    static {
+        INSTANCE = new BookableMerger();
+    }
 
-	private BookableMerger() {
-		ControllerFactory factory = new ControllerFactory();
-		bookableController = factory.getContractorController(this);
-	}
+    private BookableMerger() {
+        ControllerFactory factory = new ControllerFactory();
+        controller = factory.getContractorController(this);
+    }
 
-	public static BookableMerger getInstance() {
-		return INSTANCE;
-	}
+    public static BookableMerger getInstance() {
+        return INSTANCE;
+    }
 
-	public void addButtonPanel(ButtonPanel buttonPanel) {
-		this.buttonPanel = buttonPanel;
-	}
+    public void addButtonPanel(ButtonPanel buttonPanel) {
+        this.buttonPanel = buttonPanel;
+    }
 
-	public void bookSelectedContractorWithCustomer(String customerId) {
-		bookableController.bookSelectedContractorWithCustomer(customerId);
-	}
+    public void bookSelectedContractorWithCustomer(String customerId) {
+        controller.bookSelectedContractorWithCustomer(customerId);
+    }
 
-	public void search(String name, String location) {
-		bookableController.search(name, location);
-	}
+    public void search(String name, String location) {
+        controller.search(name, location);
+    }
 
-	public JTable getJTableWithModel() {
-		return bookableController.getJTableWithModel();
-	}
+    public JTable getJTableWithModel() {
+        return controller.getJTableWithModel();
+    }
 
-	@Override
-	public void enableBookContratorButton(boolean enabled) {
-		buttonPanel.enableBookContratorButton(enabled);
-	}
+    @Override
+    public void enableBookContratorButton(boolean enabled) {
+        buttonPanel.enableBookContratorButton(enabled);
+    }
 
-	@Override
-	public void displayErrorMessage(String errorMessage, String title) {
-		MessageBoxPresenter presenter = new MessageBoxPresenter();
-		presenter.displayErrorMessageBox(errorMessage, title);
-	}
+    @Override
+    public void displayErrorMessage(String errorMessage, String title) {
+        MessageBoxPresenter presenter = new MessageBoxPresenter();
+        presenter.displayErrorMessageBox(errorMessage, title);
+    }
+
+    @Override
+    public void resetContractorSearch() {
+        controller.resetContractorSearch();
+    }
 }

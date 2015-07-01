@@ -1,16 +1,16 @@
 package ui.view.api;
 
-import java.util.Set;
-
-import settings.SettingType;
 
 public interface SettableTab {
 
-	void saveSettings();
+    void saveSettings();
 
-	String getTtile();
+    String getTtile();
 
-	void loadSettings();
+    void loadSettings();
 
-	Set<SettingType> getSettingsTypes();
+    /**
+     * @return
+     */
+    boolean isToBeDisplayed();
 }

@@ -4,11 +4,16 @@ import javax.swing.JTable;
 
 public interface BookableController {
 
-	JTable getJTableWithModel();
+    JTable getJTableWithModel();
 
-	void search(String name, String location);
+    void search(String name, String location);
 
-	void bookSelectedContractorWithCustomer(String customerId);
+    void bookSelectedContractorWithCustomer(String customerId);
 
-	void enableBookContratorButton(boolean modelSelected);
+    void enableBookContratorButton(boolean modelSelected);
+
+    /**
+     * 
+     */
+    void resetContractorSearch();
 }

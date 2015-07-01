@@ -3,100 +3,90 @@ package ui.view.settings.tabs;
 import static settings.SettingType.IP_ADDRESS;
 import static settings.SettingType.PORT_NUMBER;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import javax.swing.JPanel;
 
 import settings.SettingType;
 import ui.view.api.SettableTab;
+import ui.view.api.SettableView;
 import ui.view.mergers.SettableMerger;
-import ui.view.textholder.TextHolder;
-import ui.view.textholder.TextHolderBoxLayout;
-import ui.view.textholder.TextHolderBuilder;
+import ui.view.textwidget.*;
 
 public class PortNumberAndIpAddressTab extends JPanel implements SettableTab {
 
-	private String title;
-	private Set<SettingType> settingTypes;
-	private TextHolder portNumberHolder;
-	private TextHolder ipAddressHolder;
+    private String title;
+    private Set<SettingType> settingTypes;
+    private TextWidget portNumberWidget;
+    private TextWidget ipAddressWidget;
+    private SettableView merger;
 
-	public PortNumberAndIpAddressTab() {
-		title = "Server connection";
-		setUpTextHolders();
-		addComponents();
-		setSettingsTypes();
-	}
+    public PortNumberAndIpAddressTab() {
+        title = "Server connection";
+        merger = new SettableMerger();
 
-	@Override
-	public String getTtile() {
-		return title;
-	}
+        setUpTextWidgets();
+        addComponents();
+        setSettingsTypes();
+    }
 
-	@Override
-	public Set<SettingType> getSettingsTypes() {
-		return settingTypes;
-	}
+    @Override
+    public String getTtile() {
+        return title;
+    }
 
-	@Override
-	public void saveSettings() {
-		Map<SettingType, String> settings = new HashMap<>();
-		String portNumber = portNumberHolder.getText();
-		settings.put(PORT_NUMBER, portNumber);
+    @Override
+    public boolean isToBeDisplayed() {
+        SettableView merger = new SettableMerger();
+        return merger.isAllSettingsMissing(settingTypes);
+    }
 
-		String ipAddress = ipAddressHolder.getText();
-		settings.put(IP_ADDRESS, ipAddress);
-		sendSettingsToController(settings);
-	}
+    @Override
+    public void saveSettings() {
+        Map<SettingType, String> settings = new HashMap<>();
+        String portNumber = portNumberWidget.getText();
+        settings.put(PORT_NUMBER, portNumber);
 
-	@Override
-	public void loadSettings() {
-		Map<SettingType, String> settings = getSettingsFromController();
-		String portNumber = settings.get(PORT_NUMBER);
-		portNumberHolder.setText(portNumber);
+        String ipAddress = ipAddressWidget.getText();
+        settings.put(IP_ADDRESS, ipAddress);
+        merger.saveSettings(settings);
+    }
 
-		String ipAddress = settings.get(IP_ADDRESS);
-		ipAddressHolder.setText(ipAddress);
-	}
+    @Override
+    public void loadSettings() {
+        Map<SettingType, String> settings = merger.loadSettings();
+        String portNumber = settings.get(PORT_NUMBER);
+        portNumberWidget.setText(portNumber);
 
-	private void setUpTextHolders() {
-		portNumberHolder = createPortNumbeHolder();
-		ipAddressHolder = createIpAddressTextHolder();
-	}
+        String ipAddress = settings.get(IP_ADDRESS);
+        ipAddressWidget.setText(ipAddress);
+    }
 
-	public TextHolder createIpAddressTextHolder() {
-		TextHolderBuilder builder = new TextHolderBuilder();
-		return builder.addLabel("Enter server's IP address:").addNumberOfColumns(10).build();
-	}
+    private void setUpTextWidgets() {
+        portNumberWidget = createPortNumberTextWidget();
+        ipAddressWidget = createIpAddressTextWidget();
+    }
 
-	private TextHolder createPortNumbeHolder() {
-		TextHolderBuilder builder = new TextHolderBuilder();
-		return builder.addLabel("Enter port number to listen to server:").addNumberOfColumns(5)
-				.build();
-	}
+    public TextWidget createIpAddressTextWidget() {
+        TextWidgetBuilder builder = new TextWidgetBuilder();
+        return builder.addLabel("Enter server's IP address:").addNumberOfColumns(10).build();
+    }
 
-	private void addComponents() {
-		TextHolderBoxLayout textHolderBoxLayout = new TextHolderBoxLayout();
-		JPanel panel = textHolderBoxLayout.layoutVertically(portNumberHolder, ipAddressHolder);
-		this.add(panel);
-	}
+    private TextWidget createPortNumberTextWidget() {
+        TextWidgetBuilder builder = new TextWidgetBuilder();
+        return builder.addLabel("Enter port number to listen to server:").addNumberOfColumns(5)
+                .build();
+    }
 
-	private void setSettingsTypes() {
-		settingTypes = new HashSet<>();
-		settingTypes.add(PORT_NUMBER);
-		settingTypes.add(IP_ADDRESS);
-	}
+    private void addComponents() {
+        TextWidgetLayout textWidgetLayout = new TextWidgetLayout();
+        JPanel panel = textWidgetLayout.layoutVertically(portNumberWidget, ipAddressWidget);
+        this.add(panel);
+    }
 
-	private void sendSettingsToController(Map<SettingType, String> settings) {
-		SettableMerger merger = SettableMerger.getInstance();
-		merger.saveSettingsToController(settings);
-	}
-
-	private Map<SettingType, String> getSettingsFromController() {
-		SettableMerger merger = SettableMerger.getInstance();
-		return merger.loadSettingsFromController();
-	}
+    private void setSettingsTypes() {
+        settingTypes = new HashSet<>();
+        settingTypes.add(PORT_NUMBER);
+        settingTypes.add(IP_ADDRESS);
+    }
 }

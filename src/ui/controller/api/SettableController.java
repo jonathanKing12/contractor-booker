@@ -7,10 +7,9 @@ import settings.SettingType;
 
 public interface SettableController {
 
-	void saveSettings(Map<SettingType, String> settings);
+    void saveSettings(Map<SettingType, String> settings);
 
-	Map<SettingType, String> getSettings();
+    Map<SettingType, String> getSettings();
 
-	void displaySettingsDialogIfNoSettingsTypesExist(Set<SettingType> settings);
-
+    boolean isAllSettingsMissing(Set<SettingType> settings);
 }

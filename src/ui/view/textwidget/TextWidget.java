@@ -1,15 +1,15 @@
-package ui.view.textholder;
+package ui.view.textwidget;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class TextHolder {
+public class TextWidget {
 
 	private JLabel messageLabel;
 	private JTextField textField;
 
-	public TextHolder(String messageText, boolean isEditable, int numberOfColumns) {
+	public TextWidget(String messageText, boolean isEditable, int numberOfColumns) {
 		messageLabel = new JLabel(messageText);
 		textField = new JTextField(numberOfColumns);
 		textField.setEditable(isEditable);

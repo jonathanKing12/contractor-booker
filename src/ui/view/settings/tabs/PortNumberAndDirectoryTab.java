@@ -4,115 +4,105 @@ import static java.lang.Boolean.FALSE;
 import static settings.SettingType.DIRECTORY;
 import static settings.SettingType.PORT_NUMBER;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import javax.swing.Box;
 import javax.swing.JPanel;
 
 import settings.SettingType;
 import ui.view.api.SettableTab;
+import ui.view.api.SettableView;
 import ui.view.mergers.SettableMerger;
-import ui.view.settings.DirectorySelectionHandler;
-import ui.view.textholder.TextHolder;
-import ui.view.textholder.TextHolderBoxLayout;
-import ui.view.textholder.TextHolderBuilder;
+import ui.view.settings.DirectoryPicker;
+import ui.view.textwidget.*;
 
 public class PortNumberAndDirectoryTab extends JPanel implements SettableTab {
 
-	private String title;
-	private TextHolder portNumberHolder;
-	private TextHolder directoryHolder;
-	private Set<SettingType> settingTypes;
+    private String title;
+    private TextWidget portNumberWidget;
+    private TextWidget directoryWidget;
+    private Set<SettingType> settingTypes;
+    private SettableView merger;
 
-	public PortNumberAndDirectoryTab() {
-		title = "Database connection";
-		setUpTextHolders();
-		addComponents();
-		createSettingsTypes();
-	}
+    public PortNumberAndDirectoryTab() {
+        title = "Database connection";
+        merger = new SettableMerger();
 
-	@Override
-	public String getTtile() {
-		return title;
-	}
+        setUpTextHolders();
+        addComponents();
+        createSettingsTypes();
+    }
 
-	@Override
-	public void saveSettings() {
-		Map<SettingType, String> settings = new HashMap<>();
-		String portNumber = portNumberHolder.getText();
-		settings.put(PORT_NUMBER, portNumber);
+    @Override
+    public String getTtile() {
+        return title;
+    }
 
-		String directory = directoryHolder.getText();
-		settings.put(DIRECTORY, directory);
-		sendSettingsToController(settings);
-	}
+    @Override
+    public boolean isToBeDisplayed() {
+        return merger.isAllSettingsMissing(settingTypes);
+    }
 
-	@Override
-	public void loadSettings() {
-		Map<SettingType, String> settings = getSettingsFromController();
-		directoryHolder.setText(settings.get(DIRECTORY));
-		portNumberHolder.setText(settings.get(PORT_NUMBER));
-	}
+    @Override
+    public void saveSettings() {
+        Map<SettingType, String> settings = new HashMap<>();
+        String portNumber = portNumberWidget.getText();
+        settings.put(PORT_NUMBER, portNumber);
 
-	@Override
-	public Set<SettingType> getSettingsTypes() {
-		return settingTypes;
-	}
+        String directory = directoryWidget.getText();
+        settings.put(DIRECTORY, directory);
+        merger.saveSettings(settings);
+    }
 
-	private void createSettingsTypes() {
-		settingTypes = new HashSet<>();
-		settingTypes.add(PORT_NUMBER);
-		settingTypes.add(DIRECTORY);
-	}
+    @Override
+    public void loadSettings() {
+        Map<SettingType, String> settings = merger.loadSettings();
+        directoryWidget.setText(settings.get(DIRECTORY));
+        portNumberWidget.setText(settings.get(PORT_NUMBER));
+    }
 
-	private void setUpTextHolders() {
-		portNumberHolder = createPortNumbeHolder();
-		directoryHolder = createDirectoryholder();
-	}
+    private void setUpTextHolders() {
+        portNumberWidget = createPortNumberWidget();
+        directoryWidget = createDirectoryWidget();
+    }
 
-	private TextHolder createDirectoryholder() {
-		TextHolderBuilder builder = new TextHolderBuilder();
-		return builder.addLabel("select folder database is in:").addIsEditable(FALSE)
-				.addNumberOfColumns(35).build();
-	}
+    private TextWidget createDirectoryWidget() {
+        TextWidgetBuilder builder = new TextWidgetBuilder();
+        return builder.addLabel("select folder database is in:").addIsEditable(FALSE)
+                .addNumberOfColumns(35).build();
+    }
 
-	private TextHolder createPortNumbeHolder() {
-		TextHolderBuilder builder = new TextHolderBuilder();
-		return builder.addLabel("Enter port number to receive clients requests:")
-				.addNumberOfColumns(5).build();
-	}
+    private TextWidget createPortNumberWidget() {
+        TextWidgetBuilder builder = new TextWidgetBuilder();
+        return builder.addLabel("Enter port number to receive clients requests:")
+                .addNumberOfColumns(5).build();
+    }
 
-	private void sendSettingsToController(Map<SettingType, String> settings) {
-		SettableMerger merger = SettableMerger.getInstance();
-		merger.saveSettingsToController(settings);
-	}
+    private void addComponents() {
+        TextWidgetLayout textWidgetBoxLayout = new TextWidgetLayout();
+        JPanel textWidgetsPanel = textWidgetBoxLayout.layoutVertically(portNumberWidget,
+                directoryWidget);
 
-	private Map<SettingType, String> getSettingsFromController() {
-		SettableMerger merger = SettableMerger.getInstance();
-		return merger.loadSettingsFromController();
-	}
+        Box box = createBrowserButtonBox();
+        textWidgetsPanel.add(box);
+        this.add(textWidgetsPanel);
+    }
 
-	private void addComponents() {
-		TextHolderBoxLayout textHolderBoxLayout = new TextHolderBoxLayout();
-		JPanel panel = textHolderBoxLayout.layoutVertically(portNumberHolder, directoryHolder);
+    private Box createBrowserButtonBox() {
+        Box box = Box.createVerticalBox();
+        box.add(Box.createVerticalGlue());
+        addBrowseButtonToBox(box);
+        return box;
+    }
 
-		Box box = createBoxContainingBrowserButton();
-		panel.add(box);
-		this.add(panel);
-	}
+    private void addBrowseButtonToBox(Box box) {
+        DirectoryPicker directoryPanel = new DirectoryPicker(directoryWidget);
+        directoryPanel.addBrowseButtonToComponent(box);
+    }
 
-	private Box createBoxContainingBrowserButton() {
-		Box box = Box.createVerticalBox();
-		box.add(Box.createVerticalGlue());
-		setUpBrowseButton(box);
-		return box;
-	}
-
-	private void setUpBrowseButton(Box box) {
-		DirectorySelectionHandler directoryPanel = new DirectorySelectionHandler(directoryHolder);
-		directoryPanel.addBrowseButtonToPanel(box);
-	}
+    private void createSettingsTypes() {
+        settingTypes = new HashSet<>();
+        settingTypes.add(PORT_NUMBER);
+        settingTypes.add(DIRECTORY);
+    }
 }
