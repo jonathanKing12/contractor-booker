@@ -1,4 +1,4 @@
-package transport.contractor;
+package transport.contractor.service;
 
 public class ContractorException extends Exception {
 

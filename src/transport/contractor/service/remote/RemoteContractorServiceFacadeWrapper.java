@@ -1,27 +1,18 @@
-package server;
+package transport.contractor.service.remote;
 
 import java.rmi.RemoteException;
 import java.util.List;
 
 import transport.contractor.Contractor;
-import transport.contractor.ContractorException;
-import transport.contractor.ContractorFacadeWrapper;
+import transport.contractor.service.ContractorException;
+import transport.contractor.service.ContractorServiceFacadeWrapper;
 
-public class ContractorService implements BookableService {
+public class RemoteContractorServiceFacadeWrapper implements RemoteContractorService {
 
-	private ContractorFacadeWrapper contractorFacade;
+	private ContractorServiceFacadeWrapper contractorFacade;
 
-	public ContractorService() {
-		contractorFacade = new ContractorFacadeWrapper();
-	}
-
-	@Override
-	public Contractor getContractor(int contractorId) throws RemoteException {
-		try {
-			return contractorFacade.getContractor(contractorId);
-		} catch (ContractorException e) {
-			throw new RemoteException(e.getMessage());
-		}
+	public RemoteContractorServiceFacadeWrapper() {
+		contractorFacade = new ContractorServiceFacadeWrapper();
 	}
 
 	@Override
