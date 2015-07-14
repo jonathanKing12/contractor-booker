@@ -27,8 +27,7 @@ public class ContractorRowParser {
 		String rate = getString(map, RATE);
 		String owner = getString(map, OWNER);
 		int contractorId = getInt(map, CONTRACTOR_ID_KEY);
-		System.out.println("rate " + rate);
-		System.out.println("size " + size);
+
 		ContractorBuilder builder = new ContractorBuilder();
 		Contractor contractor = builder.addName(name).addLocation(location)
 				.addSpecialties(specialties).addSize(size).addRate(rate).addOwner(owner)
@@ -62,5 +61,4 @@ public class ContractorRowParser {
 	private static Boolean getBoolean(Map<String, Object> map) {
 		return (Boolean) map.get(SELECTED.getName());
 	}
-
 }

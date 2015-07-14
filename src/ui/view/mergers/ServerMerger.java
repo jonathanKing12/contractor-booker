@@ -3,11 +3,13 @@ package ui.view.mergers;
 import ui.controller.ControllerFactory;
 import ui.controller.ServerSwithController;
 import ui.view.MessageBoxPresenter;
+import ui.view.server.ControllPanel;
 
 public class ServerMerger {
 
 	private static final ServerMerger INSTANE;
 	private ServerSwithController controller;
+	private ControllPanel controlPanel;
 
 	static {
 		INSTANE = new ServerMerger();
@@ -33,5 +35,18 @@ public class ServerMerger {
 
 	public void disable() {
 		controller.disable();
+	}
+
+	public boolean isOkay() {
+		return controlPanel.disableServer();
+	}
+
+	public void setControlPanel(ControllPanel controlPanel) {
+		this.controlPanel = controlPanel;
+	}
+
+	public void enableAgain() {
+		controlPanel.enableServer();
+
 	}
 }

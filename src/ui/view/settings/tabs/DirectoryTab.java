@@ -3,12 +3,17 @@ package ui.view.settings.tabs;
 import static java.lang.Boolean.FALSE;
 import static settings.SettingType.DIRECTORY;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JPanel;
 
 import settings.SettingType;
-import ui.view.api.*;
+import ui.view.api.BookableView;
+import ui.view.api.SettableTab;
+import ui.view.api.SettableView;
 import ui.view.mergers.BookableMerger;
 import ui.view.mergers.SettableMerger;
 import ui.view.settings.DirectoryPicker;
@@ -17,72 +22,74 @@ import ui.view.textwidget.TextWidgetBuilder;
 
 public class DirectoryTab extends JPanel implements SettableTab {
 
-    private String title;
-    private Set<SettingType> settingTypes;
-    private TextWidget directoryHolder;
-    private DirectoryPicker directorySelectionHandler;
-    private SettableView merger;
+	private String title;
+	private Set<SettingType> settingTypes;
+	private TextWidget directoryHolder;
+	private DirectoryPicker directorySelectionHandler;
+	private SettableView merger;
 
-    public DirectoryTab() {
-        title = "Database location";
-        setUpDirectoryHolder();
-        addComponents();
-        createSettingType();
-        merger = new SettableMerger();
-    }
+	public DirectoryTab() {
+		title = "Database location";
+		setUpDirectoryHolder();
+		addComponents();
+		createSettingType();
+		merger = new SettableMerger();
+	}
 
-    @Override
-    public String getTtile() {
-        return title;
-    }
+	@Override
+	public String getTtile() {
+		return title;
+	}
 
-    @Override
-    public boolean isToBeDisplayed() {
-        return merger.isAllSettingsMissing(settingTypes);
-    }
+	@Override
+	public boolean isToBeDisplayed() {
+		return merger.isAllSettingsMissing(settingTypes);
+	}
 
-    @Override
-    public void saveSettings() {
-        Map<SettingType, String> settings = new HashMap<>();
-        String directory = directoryHolder.getText();
-        settings.put(DIRECTORY, directory);
+	@Override
+	public void saveSettings() {
+		Map<SettingType, String> settings = new HashMap<>();
+		String directory = directoryHolder.getText();
+		settings.put(DIRECTORY, directory);
 
-        merger.saveSettings(settings);
-        resetSearch();
-    }
+		if (resetSearch()) {
+			merger.saveSettings(settings);
+		}
 
-    private void resetSearch() {
-        BookableView merger = BookableMerger.getInstance();
-        merger.resetContractorSearch();
+	}
 
-    }
+	private boolean resetSearch() {
+		BookableView merger = BookableMerger.getInstance();
+		return merger.clearTable();
 
-    @Override
-    public void loadSettings() {
-        Map<SettingType, String> settings = merger.loadSettings();
-        String directory = settings.get(DIRECTORY);
-        directoryHolder.setText(directory);
-    }
+	}
 
-    private void addComponents() {
-        directoryHolder.addMessageLabelToPanel(this);
-        directoryHolder.addTextFieldToPanel(this);
-        directorySelectionHandler.addBrowseButtonToComponent(this);
-    }
+	@Override
+	public void loadSettings() {
+		Map<SettingType, String> settings = merger.loadSettings();
+		String directory = settings.get(DIRECTORY);
+		directoryHolder.setText(directory);
+	}
 
-    private void setUpDirectoryHolder() {
-        createDirectoryholder();
-        directorySelectionHandler = new DirectoryPicker(directoryHolder);
-    }
+	private void addComponents() {
+		directoryHolder.addMessageLabelToPanel(this);
+		directoryHolder.addTextFieldToPanel(this);
+		directorySelectionHandler.addBrowseButtonToComponent(this);
+	}
 
-    private void createDirectoryholder() {
-        TextWidgetBuilder builder = new TextWidgetBuilder();
-        directoryHolder = builder.addLabel("select folder database is in:").addIsEditable(FALSE)
-                .addNumberOfColumns(35).build();
-    }
+	private void setUpDirectoryHolder() {
+		createDirectoryholder();
+		directorySelectionHandler = new DirectoryPicker(directoryHolder);
+	}
 
-    private void createSettingType() {
-        settingTypes = new HashSet<>();
-        settingTypes.add(DIRECTORY);
-    }
+	private void createDirectoryholder() {
+		TextWidgetBuilder builder = new TextWidgetBuilder();
+		directoryHolder = builder.addLabel("select folder database is in:").addIsEditable(FALSE)
+				.addNumberOfColumns(35).build();
+	}
+
+	private void createSettingType() {
+		settingTypes = new HashSet<>();
+		settingTypes.add(DIRECTORY);
+	}
 }

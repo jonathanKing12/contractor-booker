@@ -8,7 +8,6 @@ public class FileStreamFactory implements DataSourceFactory {
 
 	@Override
 	public DataSourceReader getDatoSourceReader() {
-		System.out.println("getDatoSourceReader in FileStreamReader");
 		return new FileStreamReader();
 	}
 

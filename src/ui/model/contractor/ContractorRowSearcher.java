@@ -4,32 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 import transport.contractor.Contractor;
-import transport.contractor.ContractorException;
-import transport.delegaters.Delegator;
+import transport.contractor.service.BusinessContractorService;
+import transport.contractor.service.ContractorException;
 
 public class ContractorRowSearcher {
 
-    private Delegator delegator;
-    private ContractorTable model;
+	private BusinessContractorService delegator;
+	private ContractorTable model;
 
-    public ContractorRowSearcher(ContractorTable tableModel, Delegator delegator) {
-        this.delegator = delegator;
-        this.model = tableModel;
-    }
+	public ContractorRowSearcher(ContractorTable tableModel) {
+		this.delegator = new BusinessContractorService();
+		this.model = tableModel;
+	}
 
-    public void search(String name, String location) throws ContractorException {
+	public void search(String name, String location) throws ContractorException {
 
-        List<Contractor> contractors = delegator.getContractors(name, location);
-        List<ContractorRow> rowModels = new ArrayList<>();
+		List<Contractor> contractors = delegator.getContractors(name, location);
+		List<ContractorRow> rowModels = new ArrayList<>();
 
-        for (Contractor contractor : contractors) {
-            ContractorRow rowModel = new ContractorRow(contractor);
-            rowModels.add(rowModel);
-        }
-        model.setContractorRowModels(rowModels);
-    }
+		for (Contractor contractor : contractors) {
+			ContractorRow rowModel = new ContractorRow(contractor);
+			rowModels.add(rowModel);
+		}
+		model.setContractorRowModels(rowModels);
+	}
 
-    public void reset() {
-        model.clearAll();
-    }
+	public void clearSearch() {
+		model.clearAll();
+	}
 }

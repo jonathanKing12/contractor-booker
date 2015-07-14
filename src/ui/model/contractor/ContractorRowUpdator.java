@@ -77,5 +77,4 @@ public class ContractorRowUpdator implements TableModelListener {
 	private void setEnableTheBookContractorButton(boolean enabled) {
 		controller.enableBookContratorButton(enabled);
 	}
-
 }

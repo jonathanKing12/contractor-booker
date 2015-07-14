@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import javax.swing.table.TableModel;
 
-import transport.contractor.ContractorException;
+import transport.contractor.service.ContractorException;
 
 public interface BookableModel {
 
@@ -15,5 +15,5 @@ public interface BookableModel {
 
     TableModel getTableModel();
 
-    void resetContractorSearch();
+    void clear();
 }
