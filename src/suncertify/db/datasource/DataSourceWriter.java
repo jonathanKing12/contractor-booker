@@ -2,15 +2,57 @@ package suncertify.db.datasource;
 
 public interface DataSourceWriter {
 
-	void open() throws DataSourceException;
+    /**
+     * Opens a connection to the data source
+     * 
+     * @throws DataSourceException
+     *             if a DataSourceException occurs
+     */
+    void open() throws DataSourceException;
 
-	int getLength() throws DataSourceException;
+    /**
+     * Returns the length of the data source
+     * 
+     * @throws DataSourceException
+     *             if a DataSourceException occurs
+     */
+    int getLength() throws DataSourceException;
 
-	void moveForward(int distance) throws DataSourceException;
+    /**
+     * Moves forward in the data source by the specified distance
+     * 
+     * @throws DataSourceException
+     *             if a DataSourceException occurs
+     */
+    void moveForward(int distance) throws DataSourceException;
 
-	void writeString(String columnValue, int columnSize) throws DataSourceException;
+    /**
+     * Writes the specified column value to the data source.
+     * 
+     * @param columnValue
+     *            - the value that is to be written
+     * @param columnSize
+     *            - the size of data in the data source that is to be override by the columnValue
+     * @throws DataSourceException
+     *             if a DataSourceException occurs
+     */
+    void writeString(String columnValue, int columnSize) throws DataSourceException;
 
-	void close() throws DataSourceException;
+    /**
+     * Writes the specified value to the data source.
+     * 
+     * @param value
+     *            - the value that is to be written
+     * @throws DataSourceException
+     *             if a DataSourceException occurs
+     */
+    void writeShort(short value) throws DataSourceException;
 
-	void writeShort(short value) throws DataSourceException;
+    /**
+     * Closes a connection to the data source
+     * 
+     * @throws DataSourceException
+     *             if a DataSourceException occurs
+     */
+    void close() throws DataSourceException;
 }

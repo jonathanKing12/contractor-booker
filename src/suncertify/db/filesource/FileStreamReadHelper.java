@@ -5,23 +5,72 @@ import java.io.IOException;
 
 public class FileStreamReadHelper {
 
-	synchronized int fillByteArrayFromStream(final byte[] data, final DataInputStream inputStream) throws IOException {
-		return inputStream.read(data);
-	}
+    /**
+     * Fills the specified array of bytes from the specified stream
+     * 
+     * @param data
+     *            - the array
+     * @param inputStream
+     *            - the stream t
+     * @throws IOException
+     *             - if an IOException occurs
+     */
+    synchronized void fillByteArrayFromStream(final byte[] data, final DataInputStream inputStream)
+            throws IOException {
+        inputStream.read(data);
+    }
 
-	synchronized int readIntFromStream(DataInputStream inputStream) throws IOException {
-		return inputStream.readInt();
-	}
+    /**
+     * Reads an integer from the specified stream
+     * 
+     * @param inputStream
+     *            - the stream
+     * @return the integer
+     * @throws IOException
+     *             - if an IOException occurs
+     */
+    synchronized int readIntFromStream(DataInputStream inputStream) throws IOException {
+        return inputStream.readInt();
+    }
 
-	synchronized short readShortFromStream(DataInputStream inputStream) throws IOException {
-		return inputStream.readShort();
-	}
+    /**
+     * Reads an short from the specified stream
+     * 
+     * @param inputStream
+     *            - the stream
+     * @return the short
+     * @throws IOException
+     *             - if an IOException occurs
+     */
+    synchronized short readShortFromStream(DataInputStream inputStream) throws IOException {
+        return inputStream.readShort();
+    }
 
-	synchronized void moveForwardAccrossStreamBy(DataInputStream inputStream, int distance) throws IOException {
-		inputStream.skipBytes(distance);
-	}
+    /**
+     * Moves forward in the stream by the specified distance
+     * 
+     * @param inputStream
+     *            - the stream
+     * @param distance
+     *            - the distance
+     * @throws IOException
+     *             - if an IOException occurs
+     */
+    synchronized void moveForwardAccrossStreamBy(int distance, DataInputStream inputStream)
+            throws IOException {
+        inputStream.skipBytes(distance);
+    }
 
-	synchronized int getAvailableBytes(DataInputStream inputStream) throws IOException {
-		return inputStream.available();
-	}
+    /**
+     * Returns an estimate of the amount of bytes that can be read from the specified steam
+     * 
+     * @param inputStream
+     *            - the stream
+     * @return the amount of available bytes
+     * @throws IOException
+     *             - if an IOException occurs
+     */
+    synchronized int getAvailableBytes(DataInputStream inputStream) throws IOException {
+        return inputStream.available();
+    }
 }

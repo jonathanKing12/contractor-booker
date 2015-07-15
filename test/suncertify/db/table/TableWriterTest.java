@@ -104,8 +104,8 @@ public class TableWriterTest {
 
 		MockedUtil.mockShorts(reader, mockedShorts);
 		
-		when(factory.getDatoSourceReader()).thenReturn(reader);
-		when(factory.getDatoSourceWritter()).thenReturn(writer);
+		when(factory.getDataSourceReader()).thenReturn(reader);
+		when(factory.getDataSourceWritter()).thenReturn(writer);
 
 		tableWriter = new TableWriter(factory);
 		tableWriter.open();

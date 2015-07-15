@@ -19,9 +19,9 @@ public class TableWriter {
 	 */
 	public TableWriter(DataSourceFactory factory) {
 		this.header = new TableHeader(factory);
-		this.dataSourceWriter = factory.getDatoSourceWritter();
+		this.dataSourceWriter = factory.getDataSourceWritter();
 		cellPointer = new TableCellPointer();
-		dataCounter = new TableDataCounter(header, factory.getDatoSourceReader());
+		dataCounter = new TableDataCounter(header, factory.getDataSourceReader());
 	}
 
 	/**

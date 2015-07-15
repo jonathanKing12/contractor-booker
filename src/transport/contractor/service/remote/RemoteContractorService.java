@@ -8,7 +8,26 @@ import transport.contractor.Contractor;
 
 public interface RemoteContractorService extends Remote {
 
-	void bookContractor(Contractor contractor) throws RemoteException;
+    /**
+     * Searches for all contractors who's name and location both match the beginning of the specified name and location.
+     * 
+     * @param name
+     *            - the value used to match against the beginning of all contractor names. If null then all contractors will match
+     * @param location
+     *            - the value used to match against the beginning of all contractor locations. If null then all contractors will match
+     * @return a List of contractors who name and location matched the specified values.
+     * @throws RemoteException
+     *             - if the search fails or a remote exception occurs.
+     */
+    List<Contractor> getContractors(String name, String location) throws RemoteException;
 
-	List<Contractor> getContractors(String name, String location) throws RemoteException;
+    /**
+     * Books the specified contractor
+     * 
+     * @param contractor
+     *            - the contractor that is to be booked
+     * @throws RemoteException
+     *             - if the booking has failed or a remote exception occurs.
+     */
+    void bookContractor(Contractor contractor) throws RemoteException;
 }

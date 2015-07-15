@@ -13,12 +13,12 @@ public class MockedDataSourceFactory implements DataSourceFactory {
 	}
 
 	@Override
-	public DataSourceReader getDatoSourceReader() {
+	public DataSourceReader getDataSourceReader() {
 		return new MockedDataSourcceReader(fileName);
 	}
 
 	@Override
-	public DataSourceWriter getDatoSourceWritter() {
+	public DataSourceWriter getDataSourceWritter() {
 		return new MockedDataSourceWriter();
 	}
 

@@ -2,8 +2,18 @@ package suncertify.db.datasource;
 
 public interface DataSourceFactory {
 
-	DataSourceReader getDatoSourceReader();
+    /**
+     * Creates a DataSourceReader instance
+     * 
+     * @return - the DataSourceReader
+     */
+    DataSourceReader getDataSourceReader();
 
-	DataSourceWriter getDatoSourceWritter();
+    /**
+     * Creates a DataSourceWriter instance
+     * 
+     * @return - the DataSourceWriter
+     */
+    DataSourceWriter getDataSourceWritter();
 
 }

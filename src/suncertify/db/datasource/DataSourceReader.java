@@ -2,17 +2,60 @@ package suncertify.db.datasource;
 
 public interface DataSourceReader {
 
-	String readString(int size) throws DataSourceException;
+    /**
+     * Opens a connection to the data source
+     * 
+     * @throws DataSourceException
+     *             if a DataSourceException occurs
+     */
+    void open() throws DataSourceException;
 
-	int readInt() throws DataSourceException;
+    /**
+     * Reads a string of the specified size from a data source
+     * 
+     * @throws DataSourceException
+     *             if a DataSourceException occurs
+     */
+    String readString(int size) throws DataSourceException;
 
-	short readShort() throws DataSourceException;
+    /**
+     * Reads a integer value from a data source
+     * 
+     * @throws DataSourceException
+     *             if a DataSourceException occurs
+     */
+    int readInt() throws DataSourceException;
 
-	void moveForwardBy(int distance) throws DataSourceException;
+    /**
+     * Reads a short value from a data source
+     * 
+     * @throws DataSourceException
+     *             if a DataSourceException occurs
+     */
+    short readShort() throws DataSourceException;
 
-	void close() throws DataSourceException;
+    /**
+     * Moves forward in the data source by the specified distance
+     * 
+     * @throws DataSourceException
+     *             if a DataSourceException occurs
+     */
+    void moveForwardBy(int distance) throws DataSourceException;
 
-	int available() throws DataSourceException;
+    /**
+     * Returns the size of data left to read from the data source
+     * 
+     * @return the size of data
+     * @throws DataSourceException
+     *             if a DataSourceException occurs
+     */
+    int available() throws DataSourceException;
 
-	void open() throws DataSourceException;
+    /**
+     * Closes a connection to the data source
+     * 
+     * @throws DataSourceException
+     *             if a DataSourceException occurs
+     */
+    void close() throws DataSourceException;
 }

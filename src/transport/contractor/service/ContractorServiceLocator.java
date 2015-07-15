@@ -5,17 +5,25 @@ import transport.contractor.service.remote.RemoteContratorSerivceDelegator;
 
 public class ContractorServiceLocator {
 
-	private RunModeHelper helper;
+    private RunModeHelper helper;
 
-	public ContractorServiceLocator() {
-		helper = RunModeHelper.getInstance();
-	}
+    /**
+     * Constructs a BusinessContractorService instance
+     */
+    ContractorServiceLocator() {
+        helper = RunModeHelper.getInstance();
+    }
 
-	public ContractorService getDelegate() {
+    /**
+     * Creates a ContractorService instance
+     * 
+     * @return the ContractorService
+     */
+    ContractorService getContractorService() {
 
-		if (helper.isRunningInAloneMode()) {
-			return new ContractorServiceFacadeWrapper();
-		}
-		return new RemoteContratorSerivceDelegator();
-	}
+        if (helper.isRunningInAloneMode()) {
+            return new ContractorServiceFacadeWrapper();
+        }
+        return new RemoteContratorSerivceDelegator();
+    }
 }

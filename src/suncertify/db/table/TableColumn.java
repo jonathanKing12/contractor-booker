@@ -5,27 +5,37 @@ package suncertify.db.table;
  */
 class TableColumn {
 
-	private int valueSize;
-	private int columnIndex;
+    private int size;
+    private int index;
 
-	/**
-	 * creates a table column of specified size and position
-	 * 
-	 * @param valueSize
-	 *            - the size of the column
-	 * @param columnIndex
-	 *            - the column's position in the table
-	 */
-	TableColumn(int valueSize, int columnIndex) {
-		this.valueSize = valueSize;
-		this.columnIndex = columnIndex;
-	}
+    /**
+     * creates a table column of specified size and position
+     * 
+     * @param valueSize
+     *            - the size of the column
+     * @param columnIndex
+     *            - the column's index in the table
+     */
+    TableColumn(int valueSize, int columnIndex) {
+        this.size = valueSize;
+        this.index = columnIndex;
+    }
 
-	int getIndex() {
-		return columnIndex;
-	}
+    /**
+     * gets the columns index
+     * 
+     * @return the column's index
+     */
+    int getIndex() {
+        return index;
+    }
 
-	int getValueSize() {
-		return valueSize;
-	}
+    /**
+     * gets the size of the column
+     * 
+     * @return the column's size
+     */
+    int getSize() {
+        return size;
+    }
 }

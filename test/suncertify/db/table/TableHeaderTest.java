@@ -42,7 +42,7 @@ public class TableHeaderTest {
 		MockedUtil.mockShorts(reader, mockedShorts);
 		setUpMockedheader(reader);
 
-		when(factory.getDatoSourceReader()).thenReturn(reader);
+		when(factory.getDataSourceReader()).thenReturn(reader);
 		header = new TableHeader(factory);
 		header.readTableHeader();
 

@@ -57,7 +57,7 @@ public class TableReaderTest {
 		
 		setupmock(reader);
 		
-		when(factory.getDatoSourceReader()).thenReturn(reader);
+		when(factory.getDataSourceReader()).thenReturn(reader);
 		tableReader = new TableReader(factory);
 		tableReader.open();
 	}

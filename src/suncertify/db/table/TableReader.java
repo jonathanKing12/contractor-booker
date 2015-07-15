@@ -23,7 +23,7 @@ public class TableReader {
 	public TableReader(DataSourceFactory factory) {
 		header = new TableHeader(factory);
 		cellPointer = new TableCellPointer();
-		dataSourceReader = factory.getDatoSourceReader();
+		dataSourceReader = factory.getDataSourceReader();
 	}
 
 	/**

@@ -1,18 +1,26 @@
 package suncertify.db.filesource;
 
 import suncertify.db.datasource.DataSourceFactory;
-import suncertify.db.datasource.DataSourceReader;
-import suncertify.db.datasource.DataSourceWriter;
 
 public class FileStreamFactory implements DataSourceFactory {
 
-	@Override
-	public DataSourceReader getDatoSourceReader() {
-		return new FileStreamReader();
-	}
+    /**
+     * Creates a FileStreamReader instance
+     * 
+     * @return - the FileStreamReader
+     */
+    @Override
+    public FileStreamReader getDataSourceReader() {
+        return new FileStreamReader();
+    }
 
-	@Override
-	public DataSourceWriter getDatoSourceWritter() {
-		return new FileStreamWriter();
-	}
+    /**
+     * Creates a FileStreamWriter instance
+     * 
+     * @return - the FileStreamWriter
+     */
+    @Override
+    public FileStreamWriter getDataSourceWritter() {
+        return new FileStreamWriter();
+    }
 }
