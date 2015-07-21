@@ -34,7 +34,8 @@ public abstract class RecordMatcher {
     /**
      * Returns {@code true} if the specified record matches this instance's searchCritea. If this instance has a recordMatcher then that
      * recordMatcher's searchCritea must also match the record for {@code true} to be returned. If there is a long chain of RecordMatchers then all
-     * recordMatchers in that chain must match the record for {@code true} to be returned
+     * recordMatchers in that chain must match the record for {@code true} to be returned. All recordMatchers will match the searchCritea if it is
+     * null
      * 
      * @param record
      *            - the record

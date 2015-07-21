@@ -5,14 +5,17 @@ import static java.lang.Thread.currentThread;
 
 import java.lang.reflect.Field;
 
+import suncertify.db.record.lock.LockInterruptException;
+import suncertify.db.record.lock.RecordLock;
+
 public class LockClient implements Runnable {
 
 	private int lockNumber;
 	public long sleepDuration;
 	private boolean isLocked;
-	private Lock lock;
+	private RecordLock lock;
 
-	public LockClient(Lock lock, int lockNumber, long sleepDuration) {
+	public LockClient(RecordLock lock, int lockNumber, long sleepDuration) {
 		this.lock = lock;
 		this.sleepDuration = sleepDuration;
 		this.lockNumber = lockNumber;
@@ -33,9 +36,9 @@ public class LockClient implements Runnable {
 		return isLocked;
 	}
 
-	private void setIsLockLocked(Lock lock) {
+	private void setIsLockLocked(RecordLock lock) {
 		try {
-			Field isLockedField = Lock.class.getDeclaredField("isLocked");
+			Field isLockedField = RecordLock.class.getDeclaredField("isLocked");
 			isLockedField.setAccessible(true);
 			isLocked = isLockedField.getBoolean(lock);
 

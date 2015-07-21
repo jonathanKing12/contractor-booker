@@ -6,6 +6,8 @@ public interface BookableView {
 
     void displayErrorMessage(String errorMessage, String title);
 
-    void resetContractorSearch();
+    void clearSearchResults();
+
+    boolean clearTable();
 
 }

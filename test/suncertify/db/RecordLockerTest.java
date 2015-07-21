@@ -9,13 +9,16 @@ import java.util.TreeSet;
 import org.junit.Before;
 import org.junit.Test;
 
+import suncertify.db.record.lock.InvalidLockCookieException;
+import suncertify.db.record.lock.RecordLockKeeper;
+
 public class RecordLockerTest {
 
-	RecordLocker recordLocker;
+	RecordLockKeeper recordLocker;
 
 	@Before
 	public void setup() {
-		recordLocker = new RecordLocker();
+		recordLocker = new RecordLockKeeper();
 	}
 
 	@Test

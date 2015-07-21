@@ -4,17 +4,31 @@ import suncertify.db.record.Record;
 
 public class RecordLocationMatcher extends RecordMatcher {
 
-	public RecordLocationMatcher(String critea) {
-		super(critea);
-	}
+    /**
+     * Constructs a RecordLocationMatcher instance with the specified searchCritea and recordMatcher
+     * 
+     * @param searchCritea
+     *            - the searchCritea
+     * @param recordMatcher
+     *            - the recordMatcher
+     */
+    public RecordLocationMatcher(String searchCritea, RecordMatcher recordMatcher) {
+        super(searchCritea, recordMatcher);
+    }
 
-	public RecordLocationMatcher(String critea, RecordMatcher recordMatcher) {
-		super(critea, recordMatcher);
-	}
-
-	@Override
-	boolean isRecordFieldMatchingCritea(Record record, String critea) {
-		String name = record.getLocation();
-		return name.toLowerCase().startsWith(critea);
-	}
+    /**
+     * Returns {@code true} if the specified record location starts with the specified searchCritea. The match is performed with all the characters in
+     * record's name converted to lower case using {@link String#toLowerCase()} method
+     * 
+     * @param record
+     *            - the record
+     * @param searchCritea
+     *            - the searchCritea
+     * @return {@code true} if the specified record location starts with the specified searchCritea.
+     */
+    @Override
+    boolean isRecordFieldMatchingCritea(Record record, String searchCritea) {
+        String location = record.getLocation();
+        return location.toLowerCase().startsWith(searchCritea);
+    }
 }

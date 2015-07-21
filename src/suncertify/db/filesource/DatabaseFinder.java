@@ -9,7 +9,7 @@ import settings.*;
 
 public class DatabaseFinder {
 
-    private static final String FILE_NAME = "db-write2.db";
+    private static final String FILE_NAME = "db.db";
 
     /**
      * Gets the database file

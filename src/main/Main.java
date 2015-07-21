@@ -3,45 +3,43 @@ package main;
 import runmode.RunModeHelper;
 import ui.view.ParentTracker;
 import ui.view.settings.SettingsDialog;
-import ui.view.settings.SettingsDialogFactory;
-import ui.view.windows.ClientMainWindow;
-import ui.view.windows.MainWindow;
-import ui.view.windows.ServerMainWindow;
+import ui.view.settings.SettingsDialogCreator;
+import ui.view.windows.*;
 
 public class Main {
 
-	public static void main(String[] args) {
-		new Main(args);
-	}
+    public static void main(String[] args) {
+        new Main(args);
+    }
 
-	public Main(String[] args) {
-		RunModeHelper helper = RunModeHelper.getInstance();
-		helper.setRunMode(args);
+    public Main(String[] args) {
+        RunModeHelper helper = RunModeHelper.getInstance();
+        helper.setRunMode(args);
 
-		SettingsDialog settingsDialog = getSettingsDialog(helper);
-		createMainWindow(helper, settingsDialog);
+        SettingsDialog settingsDialog = getSettingsDialog(helper);
+        createMainWindow(helper, settingsDialog);
 
-		ParentTracker.getInstance().displayMainWindow();
-	}
+        ParentTracker.getInstance().displayMainWindow();
+    }
 
-	private SettingsDialog getSettingsDialog(RunModeHelper helper) {
-		SettingsDialogFactory factory = new SettingsDialogFactory();
+    private SettingsDialog getSettingsDialog(RunModeHelper runModeHelper) {
+        SettingsDialogCreator creator = new SettingsDialogCreator();
 
-		if (helper.isRunningInNetworkMode()) {
-			return factory.createNetworkSettingsDialog();
-		}
+        if (runModeHelper.isRunningInNetworkMode()) {
+            return creator.createNetworkSettingsDialog();
+        }
 
-		if (helper.isRunningInAloneMode()) {
-			return factory.createStandaloneSettingsDialog();
-		}
+        if (runModeHelper.isRunningInAloneMode()) {
+            return creator.createStandaloneSettingsDialog();
+        }
 
-		return factory.createServerSettingsDialog();
-	}
+        return creator.createServerSettingsDialog();
+    }
 
-	private MainWindow createMainWindow(RunModeHelper helper, SettingsDialog settingsDialog) {
-		if (helper.isRunningInServerMode()) {
-			return new ServerMainWindow(settingsDialog);
-		}
-		return new ClientMainWindow(settingsDialog);
-	}
+    private MainWindow createMainWindow(RunModeHelper helper, SettingsDialog settingsDialog) {
+        if (helper.isRunningInServerMode()) {
+            return new ServerMainWindow(settingsDialog);
+        }
+        return new ClientMainWindow(settingsDialog);
+    }
 }

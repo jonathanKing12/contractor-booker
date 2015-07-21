@@ -1,4 +1,4 @@
-package suncertify.db;
+package suncertify.db.access;
 
 import static java.lang.Boolean.TRUE;
 import suncertify.db.datasource.DataSourceException;
@@ -7,11 +7,11 @@ import suncertify.db.record.Record;
 import suncertify.db.record.RecordParser;
 import suncertify.db.record.RecordWriter;
 
-public class DataWriter {
+public class DataAccessWriter {
 
 	private RecordWriter recordWriter;
 
-	DataWriter(DataSourceFactory factory) {
+	DataAccessWriter(DataSourceFactory factory) {
 		recordWriter = new RecordWriter(factory);
 	}
 

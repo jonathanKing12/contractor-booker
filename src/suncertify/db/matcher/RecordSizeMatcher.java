@@ -1,46 +1,36 @@
 package suncertify.db.matcher;
 
-import static java.lang.Boolean.FALSE;
 import static java.lang.Integer.parseInt;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import suncertify.db.record.Record;
 
 public class RecordSizeMatcher extends RecordMatcher {
 
-	private static final String NATURAL_NUMBER_PATTERN = "\\d+";
-	private Pattern natualNumberPattern;
+    /**
+     * Constructs a RecordLocationMatcher instance with the specified searchCritea and recordMatcher
+     * 
+     * @param searchCritea
+     *            - the searchCritea
+     * @param recordMatcher
+     *            - the recordMatcher
+     */
+    public RecordSizeMatcher(String searchCritea, RecordMatcher recordMatcher) {
+        super(searchCritea, recordMatcher);
+    }
 
-	public RecordSizeMatcher(String maxSize) {
-		super(maxSize);
-		natualNumberPattern = Pattern.compile(NATURAL_NUMBER_PATTERN);
-	}
-
-	public RecordSizeMatcher(String maxSize, RecordMatcher recordMatcher) {
-		super(maxSize, recordMatcher);
-		natualNumberPattern = Pattern.compile(NATURAL_NUMBER_PATTERN);
-	}
-
-	@Override
-	boolean isRecordFieldMatchingCritea(Record record, String critea) {
-		if (!isNatualNumber(critea)) {
-			return FALSE;
-		}
-
-		String size = record.getSize();
-		return isSizeSmallerOrEqualToCritea(size, critea);
-	}
-
-	private boolean isNatualNumber(String critea) {
-		Matcher mathcher = natualNumberPattern.matcher(critea);
-		return mathcher.matches();
-	}
-
-	private boolean isSizeSmallerOrEqualToCritea(String sizeString, String criteaString) {
-		int size = parseInt(sizeString);
-		int critea = parseInt(criteaString);
-		return size <= critea;
-	}
+    /**
+     * Returns {@code true} if the specified record size is equal to or less than the specified searchCritea
+     * 
+     * @param record
+     *            - the record
+     * @param searchCritea
+     *            - the searchCritea
+     * @return {@code true} if the specified record size is equal to or less than the specified searchCritea
+     */
+    @Override
+    boolean isRecordFieldMatchingCritea(Record record, String searchCritea) {
+        String sizeString = record.getSize();
+        int size = parseInt(sizeString);
+        int critea = parseInt(searchCritea);
+        return size <= critea;
+    }
 }

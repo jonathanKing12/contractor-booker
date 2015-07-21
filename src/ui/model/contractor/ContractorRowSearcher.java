@@ -9,27 +9,32 @@ import transport.contractor.service.ContractorException;
 
 public class ContractorRowSearcher {
 
-	private BusinessContractorService delegator;
-	private ContractorTable model;
+    private BusinessContractorService delegator;
+    private ContractorTable model;
 
-	public ContractorRowSearcher(ContractorTable tableModel) {
-		this.delegator = new BusinessContractorService();
-		this.model = tableModel;
-	}
+    public ContractorRowSearcher(ContractorTable tableModel) {
+        this.delegator = new BusinessContractorService();
+        this.model = tableModel;
+    }
 
-	public void search(String name, String location) throws ContractorException {
+    public void search(String name, String location) throws ContractorException {
 
-		List<Contractor> contractors = delegator.getContractors(name, location);
-		List<ContractorRow> rowModels = new ArrayList<>();
+        List<Contractor> contractors = delegator.getContractors(name, location);
+        List<ContractorRow> rowModels = convertToContractorRowModels(contractors);
+        model.setContractorRowModels(rowModels);
+    }
 
-		for (Contractor contractor : contractors) {
-			ContractorRow rowModel = new ContractorRow(contractor);
-			rowModels.add(rowModel);
-		}
-		model.setContractorRowModels(rowModels);
-	}
+    public void clear() {
+        model.clear();
+    }
 
-	public void clearSearch() {
-		model.clearAll();
-	}
+    private List<ContractorRow> convertToContractorRowModels(List<Contractor> contractors) {
+        List<ContractorRow> rowModels = new ArrayList<>();
+
+        for (Contractor contractor : contractors) {
+            ContractorRow rowModel = new ContractorRow(contractor);
+            rowModels.add(rowModel);
+        }
+        return rowModels;
+    }
 }

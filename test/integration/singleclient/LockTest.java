@@ -10,8 +10,8 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import suncertify.db.InvalidLockCookieException;
-import suncertify.db.record.RecordNotFoundException;
+import suncertify.db.RecordNotFoundException;
+import suncertify.db.record.lock.InvalidLockCookieException;
 
 public class LockTest extends BaseTest {
 

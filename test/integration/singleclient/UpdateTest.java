@@ -11,7 +11,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import suncertify.db.record.RecordNotFoundException;
+import suncertify.db.RecordNotFoundException;
 
 public class UpdateTest extends BaseTest {
 

@@ -1,5 +1,6 @@
 package suncertify.db.datasource;
 
+
 public interface DataSourceReader {
 
     /**

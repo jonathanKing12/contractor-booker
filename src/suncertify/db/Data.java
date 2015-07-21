@@ -1,45 +1,43 @@
 package suncertify.db;
 
+import suncertify.db.access.DataAccessFacadeWrapper;
+import suncertify.db.access.DataAccessReadWriteLockKeeper;
 import suncertify.db.datasource.DataSourceFactory;
-import suncertify.db.record.RecordNotFoundException;
+import suncertify.db.record.lock.RecordLockKeeper;
 
 public class Data implements DB {
 
-    private static DataAccessLocker dataAccessLocker;
-    private static RecordLocker recordLocker;
-    private DataAccess dataAccess;
-    private static int count;
-
-    static {
-        dataAccessLocker = new DataAccessLocker();
-        recordLocker = new RecordLocker();
-    }
+    private DataAccessReadWriteLockKeeper dataAccessKeeper;
+    private RecordLockKeeper recordKeeper;
+    private DataAccessFacadeWrapper dataAccessWrapper;
 
     public Data(DataSourceFactory factory) {
-        System.out.println("datar " + (++count));
-        dataAccess = new DataAccess(factory);
+        dataAccessWrapper = new DataAccessFacadeWrapper(factory);
+        dataAccessKeeper = new DataAccessReadWriteLockKeeper();
+        recordKeeper = new RecordLockKeeper();
     }
 
     @Override
     public void delete(int recNo, long lockCookie) throws RecordNotFoundException,
             SecurityException {
+
         verifyRecordExistsAndIsLockedWithLockCookie(recNo, lockCookie);
         try {
-            dataAccessLocker.getWriteLock();
-            dataAccess.deleteRecord(recNo);
-            recordLocker.unlockRecord(recNo, lockCookie);
+            dataAccessKeeper.getWriteLock();
+            dataAccessWrapper.deleteRecord(recNo);
+            recordKeeper.unlockRecord(recNo, lockCookie);
         } finally {
-            dataAccessLocker.returnWriteLock();
+            dataAccessKeeper.returnWriteLock();
         }
     }
 
     @Override
     public String[] read(int recNo) throws RecordNotFoundException {
         try {
-            dataAccessLocker.getReadLock();
-            return dataAccess.read(recNo);
+            dataAccessKeeper.getReadLock();
+            return dataAccessWrapper.read(recNo);
         } finally {
-            dataAccessLocker.returnReadLock();
+            dataAccessKeeper.returnReadLock();
         }
     }
 
@@ -49,41 +47,41 @@ public class Data implements DB {
 
         verifyRecordExistsAndIsLockedWithLockCookie(recNo, lockCookie);
         try {
-            dataAccessLocker.getWriteLock();
-            dataAccess.update(recNo, data);
+            dataAccessKeeper.getWriteLock();
+            dataAccessWrapper.update(recNo, data);
         } finally {
-            dataAccessLocker.returnWriteLock();
+            dataAccessKeeper.returnWriteLock();
         }
     }
 
     @Override
     public int[] find(String[] data) {
         try {
-            dataAccessLocker.getReadLock();
-            return dataAccess.find(data);
+            dataAccessKeeper.getReadLock();
+            return dataAccessWrapper.find(data);
         } finally {
-            dataAccessLocker.returnReadLock();
+            dataAccessKeeper.returnReadLock();
         }
     }
 
     @Override
-    public int create(String[] data) {
+    public int create(String[] data) throws DuplicateKeyException {
         try {
-            dataAccessLocker.getWriteLock();
-            return dataAccess.create(data);
+            dataAccessKeeper.getWriteLock();
+            return dataAccessWrapper.create(data);
         } finally {
-            dataAccessLocker.returnWriteLock();
+            dataAccessKeeper.returnWriteLock();
         }
     }
 
     @Override
     public long lock(int recNo) throws RecordNotFoundException {
-        long lockCookie = recordLocker.lockRecord(recNo);
+        long lockCookie = recordKeeper.lockRecord(recNo);
         try {
             verifyRecordExist(recNo);
             return lockCookie;
         } catch (RecordNotFoundException e) {
-            unlock(recNo, lockCookie);
+            recordKeeper.unlockRecord(recNo, lockCookie);
             throw e;
         }
     }
@@ -91,22 +89,22 @@ public class Data implements DB {
     @Override
     public void unlock(int recNo, long lockCookie) throws RecordNotFoundException,
             SecurityException {
-        verifyRecordExist(recNo);
-        recordLocker.unlockRecord(recNo, lockCookie);
+        verifyRecordExistsAndIsLockedWithLockCookie(recNo, lockCookie);
+        recordKeeper.unlockRecord(recNo, lockCookie);
     }
 
     private void verifyRecordExistsAndIsLockedWithLockCookie(int recNo, long lockCookie)
-            throws RecordNotFoundException {
+            throws RecordNotFoundException, SecurityException {
         verifyRecordExist(recNo);
-        recordLocker.verifyRecordIsLockedWithLockCookie(recNo, lockCookie);
+        recordKeeper.verifyRecordIsLockedWithLockCookie(recNo, lockCookie);
     }
 
     private void verifyRecordExist(int recNo) throws RecordNotFoundException {
         try {
-            dataAccessLocker.getReadLock();
-            dataAccess.verifyRecordExist(recNo);
+            dataAccessKeeper.getReadLock();
+            dataAccessWrapper.verifyRecordExist(recNo);
         } finally {
-            dataAccessLocker.returnReadLock();
+            dataAccessKeeper.returnReadLock();
         }
     }
 }

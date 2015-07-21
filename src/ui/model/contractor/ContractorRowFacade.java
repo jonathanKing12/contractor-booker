@@ -39,7 +39,7 @@ public class ContractorRowFacade implements BookableModel {
 	}
 
 	@Override
-	public void clear() {
-		searcher.clearSearch();
+	public void clearSearchResults() {
+		searcher.clear();
 	}
 }

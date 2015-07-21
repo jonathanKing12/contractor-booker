@@ -1,7 +1,7 @@
 package integration.singleclient;
 
 import suncertify.db.DB;
-import suncertify.db.record.RecordNotFoundException;
+import suncertify.db.RecordNotFoundException;
 
 public class LockClient implements Runnable {
 

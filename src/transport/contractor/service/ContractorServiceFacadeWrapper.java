@@ -2,8 +2,8 @@ package transport.contractor.service;
 
 import java.util.List;
 
-import suncertify.db.DataAccessException;
-import suncertify.db.record.RecordNotFoundException;
+import suncertify.db.RecordNotFoundException;
+import suncertify.db.access.DataAccessException;
 import transport.contractor.Contractor;
 
 public class ContractorServiceFacadeWrapper implements ContractorService {

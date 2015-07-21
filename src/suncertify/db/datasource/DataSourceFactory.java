@@ -15,5 +15,4 @@ public interface DataSourceFactory {
      * @return - the DataSourceWriter
      */
     DataSourceWriter getDataSourceWritter();
-
 }

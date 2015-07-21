@@ -10,9 +10,9 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import suncertify.db.RecordNotFoundException;
 import suncertify.db.datasource.DataSourceException;
 import suncertify.db.record.Record;
-import suncertify.db.record.RecordNotFoundException;
 import suncertify.db.record.RecordReader;
 
 public class DeleteTest extends BaseTest {

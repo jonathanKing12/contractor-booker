@@ -1,47 +1,39 @@
 package suncertify.db.matcher;
 
 import static constants.Constants.INDEX_OF_FIRST_DIGIT;
-import static java.lang.Boolean.FALSE;
 import static java.lang.Double.parseDouble;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import suncertify.db.record.Record;
 
 public class RecordRateMatcher extends RecordMatcher {
 
-	private static final String DECIMAL_NUMBER_PATTERN = "\\d+.*\\d+";
-	private Pattern decimalPattern;
+    /**
+     * Constructs a RecordLocationMatcher instance with the specified searchCritea and recordMatcher
+     * 
+     * @param searchCritea
+     *            - the searchCritea
+     * @param recordMatcher
+     *            - the recordMatcher
+     */
+    public RecordRateMatcher(String critea, RecordMatcher recordMatcher) {
+        super(critea, recordMatcher);
+    }
 
-	public RecordRateMatcher(String critea) {
-		super(critea);
-		decimalPattern = Pattern.compile(DECIMAL_NUMBER_PATTERN);
-	}
+    /**
+     * Returns {@code true} if the specified record rate is equal to or less than the specified searchCritea. The match ignores the first character of
+     * the record's rate
+     * 
+     * @param record
+     *            - the record
+     * @param searchCritea
+     *            - the searchCritea
+     * @return {@code true} if the specified record rate is equal to or less than the specified searchCritea
+     */
+    @Override
+    boolean isRecordFieldMatchingCritea(Record record, String searchCritea) {
 
-	public RecordRateMatcher(String critea, RecordMatcher recordMatcher) {
-		super(critea, recordMatcher);
-		decimalPattern = Pattern.compile(DECIMAL_NUMBER_PATTERN);
-	}
-
-	@Override
-	boolean isRecordFieldMatchingCritea(Record record, String critea) {
-		if (!isADecimalNumber(critea)) {
-			return FALSE;
-		}
-
-		String hourlyRate = record.getHourlyRate().substring(INDEX_OF_FIRST_DIGIT);
-		return isHoullyRateSmallerOrEqualToCritea(hourlyRate, critea);
-	}
-
-	private boolean isADecimalNumber(String critea) {
-		Matcher m = decimalPattern.matcher(critea);
-		return m.matches();
-	}
-
-	private boolean isHoullyRateSmallerOrEqualToCritea(String hourlyRateString, String criteaString) {
-		double hourlyRate = parseDouble(hourlyRateString);
-		double critea = parseDouble(criteaString);
-		return hourlyRate <= critea;
-	}
+        String hourlyRateString = record.getHourlyRate().substring(INDEX_OF_FIRST_DIGIT);
+        double hourlyRate = parseDouble(hourlyRateString);
+        double criteaRate = parseDouble(searchCritea);
+        return hourlyRate <= criteaRate;
+    }
 }

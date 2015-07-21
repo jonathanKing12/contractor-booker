@@ -10,13 +10,16 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
+import suncertify.db.record.lock.RecordLock;
+import suncertify.db.record.lock.RecordLockCabnet;
+
 public class LockCabnetTests {
 
-	private LockCabnet lockCabnet;
+	private RecordLockCabnet lockCabnet;
 
 	@Before
 	public void setUp() {
-		lockCabnet = new LockCabnet();
+		lockCabnet = new RecordLockCabnet();
 	}
 
 	@Test
@@ -24,7 +27,7 @@ public class LockCabnetTests {
 		LockCabnetClient client = createLockCabnetClient(1);
 		runClient(client);
 
-		Set<Lock> locks = getCreatedLocks();
+		Set<RecordLock> locks = getCreatedLocks();
 		assertEquals(1, locks.size());
 	}
 
@@ -35,7 +38,7 @@ public class LockCabnetTests {
 		runClient(client1);
 		runClient(client2);
 
-		Set<Lock> locks = getCreatedLocks();
+		Set<RecordLock> locks = getCreatedLocks();
 		assertEquals(2, locks.size());
 	}
 
@@ -46,7 +49,7 @@ public class LockCabnetTests {
 		runClient(client1);
 		runClient(client2);
 
-		Set<Lock> locks = getCreatedLocks();
+		Set<RecordLock> locks = getCreatedLocks();
 		assertEquals(1, locks.size());
 	}
 
@@ -62,7 +65,7 @@ public class LockCabnetTests {
 		for (LockCabnetClient client : clients) {
 			runClient(client);
 		}
-		Set<Lock> locks = getCreatedLocks();
+		Set<RecordLock> locks = getCreatedLocks();
 		assertEquals(3, locks.size());
 	}
 
@@ -76,11 +79,11 @@ public class LockCabnetTests {
 		thread.join();
 	}
 
-	private Set<Lock> getCreatedLocks() {
+	private Set<RecordLock> getCreatedLocks() {
 		try {
-			Field locksField = LockCabnet.class.getDeclaredField("locks");
+			Field locksField = RecordLockCabnet.class.getDeclaredField("locks");
 			locksField.setAccessible(true);
-			return (Set<Lock>) locksField.get(lockCabnet);
+			return (Set<RecordLock>) locksField.get(lockCabnet);
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
 			throw new RuntimeException("error when getting locks " + e.getMessage());
 		}

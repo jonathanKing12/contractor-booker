@@ -10,14 +10,10 @@ import suncertify.db.datasource.DataSourceWriter;
 
 public class FileStreamWriter implements DataSourceWriter {
 
-    /**
-     * 
-     */
-    private static final int DESTINATION_START_INDEX = 0;
-    /**
-     * 
-     */
+    private static final String READ_WRITE_MODE = "rw";
     private static final int SOURCE_START_INDEX = 0;
+    private static final int DESTINATION_START_INDEX = 0;
+
     private RandomAccessFile randomAccessFile;
 
     /**
@@ -80,8 +76,10 @@ public class FileStreamWriter implements DataSourceWriter {
         try {
             byte[] valueBytes = value.getBytes();
             byte[] bytes = new byte[size];
+
             arraycopy(valueBytes, SOURCE_START_INDEX, bytes, DESTINATION_START_INDEX,
                     valueBytes.length);
+
             randomAccessFile.write(bytes);
         } catch (IOException e) {
             throw new DataSourceException(e.getMessage());
@@ -123,6 +121,6 @@ public class FileStreamWriter implements DataSourceWriter {
     private RandomAccessFile createRandomAccessFile() throws FileNotFoundException {
         DatabaseFinder finder = new DatabaseFinder();
         File file = finder.getDatabaseFile();
-        return new RandomAccessFile(file, "rw");
+        return new RandomAccessFile(file, READ_WRITE_MODE);
     }
 }
