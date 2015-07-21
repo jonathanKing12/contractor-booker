@@ -1,11 +1,6 @@
 package suncertify.db;
 
-import static constants.Constants.LOCATION_INDEX;
-import static constants.Constants.NAME_INDEX;
-import static constants.Constants.OWNER_INDEX;
-import static constants.Constants.RATE_INDEX;
 import static constants.Constants.SIZE_INDEX;
-import static constants.Constants.SPECIALTIES_INDEX;
 import static java.lang.Boolean.FALSE;
 
 import java.util.ArrayList;
@@ -89,19 +84,14 @@ public class DataReader {
 	}
 
 	private RecordMatcher createRecordMatcher(String[] data) {
-		String name = data[NAME_INDEX];
-		String location = data[LOCATION_INDEX];
-		String specialties = data[SPECIALTIES_INDEX];
 		String size = data[SIZE_INDEX];
-		String rate = data[RATE_INDEX];
-		String owner = data[OWNER_INDEX];
 
-		RecordMatcher matcher = new RecordNameMatcher(name);
-		matcher = new RecordLocationMatcher(location, matcher);
-		matcher = new RecordSpecialtiesMatcher(specialties, matcher);
+		RecordMatcher matcher = new RecordNameMatcher(data);
+		matcher = new RecordLocationMatcher(data, matcher);
+		matcher = new RecordSpecialtiesMatcher(data, matcher);
 		matcher = new RecordSizeMatcher(size, matcher);
-		matcher = new RecordOwnerMatcher(owner, matcher);
-		return new RecordRateMatcher(rate, matcher);
+		matcher = new RecordOwnerMatcher(data, matcher);
+		return new RecordRateMatcher(data, matcher);
 	}
 
 	private List<Integer> getRecordNumbers(RecordMatcher matcher) throws DataSourceException {

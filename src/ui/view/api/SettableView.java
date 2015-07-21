@@ -7,21 +7,22 @@ import settings.SettingType;
 
 public interface SettableView {
 
-    void displayErrorMessage(String errorMessage, String title);
+	void displayErrorMessage(String errorMessage, String title);
 
-    /**
-     * @return
-     */
-    Map<SettingType, String> loadSettings();
+	/**
+	 * @return
+	 */
+	Map<SettingType, String> loadSettings();
 
-    /**
-     * @param settings
-     * @return
-     */
-    boolean isAllSettingsMissing(Set<SettingType> settings);
+	/**
+	 * @param settings
+	 * @return
+	 */
+	boolean isAllSettingsMissing(Set<SettingType> settings);
 
-    /**
-     * @param settings
-     */
-    void saveSettings(Map<SettingType, String> settings);
+	/**
+	 * @param settings
+	 */
+	void saveSettings(Map<SettingType, String> settings);
+
 }

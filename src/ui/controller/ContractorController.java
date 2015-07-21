@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import javax.swing.JTable;
 
-import transport.contractor.ContractorException;
+import transport.contractor.service.ContractorException;
 import ui.controller.api.BookableController;
 import ui.model.api.BookableModel;
 import ui.model.contractor.ContractorRowFacade;
@@ -49,7 +49,7 @@ public class ContractorController implements BookableController {
     }
 
     @Override
-    public void resetContractorSearch() {
-        model.resetContractorSearch();
+    public void clearRowModels() {
+        model.clear();
     }
 }

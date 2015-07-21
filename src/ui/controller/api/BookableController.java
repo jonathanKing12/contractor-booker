@@ -15,5 +15,5 @@ public interface BookableController {
     /**
      * 
      */
-    void resetContractorSearch();
+    void clearRowModels();
 }
