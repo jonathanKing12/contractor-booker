@@ -57,13 +57,14 @@ public class ContractorServiceFacadeWrapper implements ContractorService {
     }
 
     private String createSearchErrorMessage(String name, String location, Exception e) {
-        String format = " error when searching for contractors who's names and addresses begins with %s and %s \n %s";
-        return String.format(format, name, location, e.getMessage());
+        String messageFormat = " error when searching for contractors who's names and addresses begins with %s and %s";
+        return String.format(messageFormat, name, location);
     }
 
     private String createBookErrorMessage(Contractor contractor, Exception e) {
-        String format = " error when booking contractor with id  %d \n %s";
-        int contractorId = contractor.getContractorId();
-        return String.format(format, contractorId, e.getMessage());
+        String messageFormat = " error when booking contractor  %s at %s";
+        String name = contractor.getName();
+        String location = contractor.getLocation();
+        return String.format(messageFormat, name, location);
     }
 }

@@ -1,24 +1,24 @@
-/*------------------------------------------------------------------------------
- *******************************************************************************
- * COPYRIGHT Ericsson 2012
- *
- * The copyright to the computer program(s) herein is the property of
- * Ericsson Inc. The programs may be used and/or copied only with written
- * permission from Ericsson Inc. or in accordance with the terms and
- * conditions stipulated in the agreement/contract under which the
- * program(s) have been supplied.
- *******************************************************************************
- *----------------------------------------------------------------------------*/
 package suncertify.db;
 
+/**
+ * Occurs when two Records have the same name and location.
+ */
 public class DuplicateKeyException extends Exception {
 
+    /**
+     * Constructs a instance of DuplicateKeyException
+     */
     public DuplicateKeyException() {
         super();
     }
 
+    /**
+     * Constructs a instance of DuplicateKeyException with the specified message
+     * 
+     * @param message
+     *            - the message
+     */
     public DuplicateKeyException(String message) {
         super(message);
     }
-
 }

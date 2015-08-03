@@ -7,15 +7,35 @@ import suncertify.db.RecordNotFoundException;
 import suncertify.db.datasource.DataSourceException;
 import suncertify.db.datasource.DataSourceFactory;
 
+/**
+ * Wraps a dataAccessFacade instance and re-throws DataSourceException as DataAccessException.
+ */
 public class DataAccessFacadeWrapper {
 
     private DataAccessFacade dataAccessFacade;
 
+    /**
+     * Constructs a instance of DataAccessFacadeWrapper with the specified factory
+     * 
+     * @param factory
+     *            - the factory
+     */
     public DataAccessFacadeWrapper(DataSourceFactory factory) {
         dataAccessFacade = new DataAccessFacade(factory);
     }
 
-    public String[] read(int recordNumber) throws RecordNotFoundException {
+    /**
+     * Reads a record from the data source. Returns an array where each element is a record value.
+     * 
+     * @param recordNumber
+     *            - the number of the record that is read.
+     * @return the record data
+     * @throws RecordNotFoundException
+     *             if a RecordNotFoundException occurs
+     * @throws DataAccessException
+     *             if a DataSourceException occurs
+     */
+    public String[] read(int recordNumber) throws RecordNotFoundException, DataAccessException {
         try {
             return dataAccessFacade.read(recordNumber);
         } catch (DataSourceException e) {
@@ -24,7 +44,20 @@ public class DataAccessFacadeWrapper {
         }
     }
 
-    public void update(int recordNumber, String[] data) throws RecordNotFoundException {
+    /**
+     * Modifies the fields of a record. The new value for field n appears in data[n].
+     * 
+     * @param recordNumber
+     *            - the number of the record that is to be updated.
+     * @param data
+     *            - the array where each element contains the new value for the record
+     * @throws RecordNotFoundException
+     *             if the record does not exist or is marked as deleted in the data source
+     * @throws DataAccessException
+     *             if a DataSourceException occurs
+     */
+    public void update(int recordNumber, String[] data) throws RecordNotFoundException,
+            DataAccessException {
         try {
             dataAccessFacade.update(recordNumber, data);
         } catch (DataSourceException e) {

@@ -7,54 +7,83 @@ import static java.lang.Boolean.TRUE;
 
 import java.awt.BorderLayout;
 
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
+import javax.swing.*;
 
-import ui.view.ParentTracker;
-import ui.view.api.SettableTab;
+import ui.view.common.ParentTracker;
+import ui.view.settings.tabs.SettingsTab;
 
 public class SettingsDialog extends JDialog {
 
-	private JTabbedPane tabbedPane;
-	private SettableTab settingsTab;
+    private JTabbedPane tabbedPane;
+    private SettingsTab settingsTab;
+    private SettingsButtonPanel settingsButtonPanel;
 
-	public SettingsDialog(SettableTab settingsTab) {
-		this.setTitle("settings");
-		this.settingsTab = settingsTab;
+    /**
+     * Constructs a instance of SettingsDialog with the specified settingsTab.
+     * 
+     * @param settingsTab
+     *            - the settingsTab
+     */
+    public SettingsDialog(SettingsTab settingsTab) {
+        this.settingsTab = settingsTab;
+        settingsButtonPanel = new SettingsButtonPanel(this);
+        tabbedPane = createTabbedPane();
+        addComponents();
 
-		this.setLayout(new BorderLayout());
-		addSettingsTab();
-		this.add(new OkayApplyAndCancelButtonsPanel(this), SOUTH);
+        this.pack();
+        this.setModal(true);
+        this.setTitle("Settings Dialogue");
+        addToParentTracker();
+    }
 
-		this.pack();
-		this.setModal(true);
-		ParentTracker.getInstance().addSettingsDialogBox(this);
-	}
+    /**
+     * loads this instance settingsTab settings and displays this instance.
+     */
+    public void display() {
+        settingsTab.loadSettings();
+        setVisible(TRUE);
+    }
 
-	public void display() {
-		settingsTab.loadSettings();
-		setVisible(TRUE);
-	}
+    /**
+     * Stops displaying this instance.
+     */
+    public void stopDisplaying() {
+        setVisible(FALSE);
+    }
 
-	public void stopDisplaying() {
-		setVisible(FALSE);
-	}
+    /**
+     * Saves this instance settingsTab settings.
+     */
+    public void saveSettings() {
+        settingsTab.saveSettings();
+    }
 
-	private void addSettingsTab() {
-		tabbedPane = new JTabbedPane();
-		tabbedPane.add((JPanel) settingsTab, settingsTab.getTtile());
-		this.add(tabbedPane, CENTER);
-	}
+    /**
+     * Returns {@code true} if this instance settingsTab is to be displayed.
+     * 
+     * @return {@code true} if this instance settingsTab is to be displayed
+     */
+    public boolean isToBeDisplayed() {
+        return settingsTab.isToBeDisplayed();
+    }
 
-	public void saveSettings() {
-		settingsTab.saveSettings();
-	}
+    private JTabbedPane createTabbedPane() {
+        JPanel tabPanel = (JPanel) settingsTab;
+        String title = settingsTab.getTitle();
 
-	/**
-	 * @return
-	 */
-	public boolean isToBeDisplayed() {
-		return settingsTab.isToBeDisplayed();
-	}
+        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.add(tabPanel, title);
+        return tabbedPane;
+    }
+
+    private void addComponents() {
+        this.setLayout(new BorderLayout());
+        this.add(tabbedPane, CENTER);
+        this.add(settingsButtonPanel, SOUTH);
+    }
+
+    private void addToParentTracker() {
+        ParentTracker parentTracker = ParentTracker.getInstance();
+        parentTracker.setSettingsDialog(this);
+    }
 }

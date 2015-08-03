@@ -7,78 +7,172 @@ import java.util.Map;
 import transport.contractor.Contractor;
 
 public class ContractorRow {
-	private Contractor contractor;
-	private boolean isSelected;
+    private Contractor contractor;
+    private boolean isSelected;
 
-	public ContractorRow(Contractor contractor) {
-		this.contractor = contractor;
-	}
+    /**
+     * Constructs a instance of the ContractorRow with the specified contractor.
+     * 
+     * @param contractor
+     *            - the contractor
+     */
+    public ContractorRow(Contractor contractor) {
+        this.contractor = contractor;
+    }
 
-	public ContractorRow(Contractor contractor, boolean isSelected) {
-		this(contractor);
-		this.isSelected = isSelected;
-	}
+    /**
+     * Constructs a instance of the ContractorRow with the specified contractor and isSelected.
+     * 
+     * @param contractor
+     *            - the contractor
+     * @param isSelected
+     *            - Set to {@code true} if the instance is selected
+     */
+    public ContractorRow(Contractor contractor, boolean isSelected) {
+        this(contractor);
+        this.isSelected = isSelected;
+    }
 
-	public Map<String, Object> toMap() {
-		return ContractorRowParser.toMap(this);
-	}
+    /**
+     * Converts this object to a map.
+     * <p>
+     * Delegates to {@link ContractorRowParser#toMap(ContractorRow)}
+     * </p>
+     * 
+     * @return the map
+     */
+    public Map<String, Object> toMap() {
+        ContractorRowParser parser = new ContractorRowParser();
+        return parser.toMap(this);
+    }
 
-	@Override
-	public int hashCode() {
-		return getContractorRowId();
-	}
+    /**
+     * Returns the hash code value for this object.
+     * 
+     * @return the has code
+     */
+    @Override
+    public int hashCode() {
+        return getContractorRowId();
+    }
 
-	@Override
-	public boolean equals(Object object) {
-		if (!(object instanceof ContractorRow)) {
-			return FALSE;
-		}
+    /**
+     * Returns true if the specified object is a ContractorRow that has the same ID as this object.
+     * <p>
+     * This object being the object that is refereed to by the key work 'this'
+     * </p>
+     * 
+     * @param object
+     *            - the object that is compared against the this object.
+     */
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof ContractorRow)) {
+            return FALSE;
+        }
 
-		ContractorRow rowModel = (ContractorRow) object;
-		return getContractorRowId() == rowModel.getContractorRowId();
-	}
+        ContractorRow rowModel = (ContractorRow) object;
+        return getContractorRowId() == rowModel.getContractorRowId();
+    }
 
-	public boolean isSelected() {
-		return isSelected;
-	}
+    /**
+     * Returns {@code true} if this object is selected.
+     * 
+     * @return {@code true} if this object is selected
+     */
+    public boolean isSelected() {
+        return isSelected;
+    }
 
-	public void setSelected(boolean isSelected) {
-		this.isSelected = isSelected;
-	}
+    /**
+     * Set this object selected state to the specified isSelected.
+     * 
+     * @param isSelected
+     *            {@code true} if this object is selected
+     */
+    public void setSelected(boolean isSelected) {
+        this.isSelected = isSelected;
+    }
 
-	public String getName() {
-		return contractor.getName();
-	}
+    /**
+     * Returns this object's name.
+     * 
+     * @return this object's name
+     */
+    public String getName() {
+        return contractor.getName();
+    }
 
-	public String getLocation() {
-		return contractor.getLocation();
-	}
+    /**
+     * Returns this object's location.
+     * 
+     * @return this object's location
+     */
+    public String getLocation() {
+        return contractor.getLocation();
+    }
 
-	public String getSize() {
-		return contractor.getSize();
-	}
+    /**
+     * Returns this object's size.
+     * 
+     * @return this object's size
+     */
+    public String getSize() {
+        return contractor.getSize();
+    }
 
-	public String getSpecialties() {
-		return contractor.getSpecialties();
-	}
+    /**
+     * Returns this object's specialties.
+     * 
+     * @return this object's specialties
+     */
+    public String getSpecialties() {
+        return contractor.getSpecialties();
+    }
 
-	public String getRate() {
-		return contractor.getRate();
-	}
+    /**
+     * Returns this object's rate.
+     * 
+     * @return this object's rate
+     */
+    public String getRate() {
+        return contractor.getRate();
+    }
 
-	public String getOwner() {
-		return contractor.getOwner();
-	}
+    /**
+     * Returns this object's owner.
+     * 
+     * @return this object's owner
+     */
+    public String getOwner() {
+        return contractor.getOwner();
+    }
 
-	public int getContractorRowId() {
-		return contractor.getContractorId();
-	}
+    /**
+     * Returns this object's ID.
+     * 
+     * @return this object's ID
+     */
+    public int getContractorRowId() {
+        return contractor.getContractorId();
+    }
 
-	public void setCustomerId(String customerId) {
-		contractor.setOwner(customerId);
-	}
+    /**
+     * sets the customer ID of the this object.
+     * 
+     * @param customerId
+     *            - the customer ID
+     */
+    public void setCustomerId(String customerId) {
+        contractor.setOwner(customerId);
+    }
 
-	public Contractor getContractor() {
-		return contractor;
-	}
+    /**
+     * Returns this object's contractor.
+     * 
+     * @return this object's contractor
+     */
+    public Contractor getContractor() {
+        return contractor;
+    }
 }

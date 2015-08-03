@@ -1,29 +1,63 @@
 package main;
 
+import runmode.InvalidRunModeTypeException;
 import runmode.RunModeHelper;
-import ui.view.ParentTracker;
+import ui.view.common.ParentTracker;
+import ui.view.contractor.ContractorWindow;
+import ui.view.server.ServerWindow;
 import ui.view.settings.SettingsDialog;
-import ui.view.settings.SettingsDialogCreator;
-import ui.view.windows.*;
+import ui.view.settings.SettingsDialogFactory;
 
+/**
+ * The Beginning of the application. Creates and Displays the mainWindow.
+ */
 public class Main {
 
+    private static final String EMPTY_ELEMENT = "";
+    private RunModeHelper runModeHelper;
+
+    /**
+     * Creates a Main instance with the first argument in the specified args.
+     * 
+     * @param args
+     *            - the arguments passed into the application when its run.
+     */
     public static void main(String[] args) {
-        new Main(args);
+        String runMode = getFirstElement(args);
+        new Main(runMode);
     }
 
-    public Main(String[] args) {
-        RunModeHelper helper = RunModeHelper.getInstance();
-        helper.setRunMode(args);
+    /**
+     * Constructs a Main instance with the specified runMode.
+     * 
+     * <p>
+     * Creates and Displays the MainWindow that correspond to the specified runMode.
+     * </p>
+     * 
+     * @param runMode
+     *            -the runMode
+     */
+    public Main(String runMode) {
+        setRunMode(runMode);
 
-        SettingsDialog settingsDialog = getSettingsDialog(helper);
-        createMainWindow(helper, settingsDialog);
+        SettingsDialog settingsDialog = getSettingsDialog();
+        createMainWindow(settingsDialog);
 
         ParentTracker.getInstance().displayMainWindow();
     }
 
-    private SettingsDialog getSettingsDialog(RunModeHelper runModeHelper) {
-        SettingsDialogCreator creator = new SettingsDialogCreator();
+    private void setRunMode(String runMode) {
+        runModeHelper = RunModeHelper.getInstance();
+        try {
+            runModeHelper.setRunMode(runMode);
+        } catch (InvalidRunModeTypeException e) {
+            System.err.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
+    private SettingsDialog getSettingsDialog() {
+        SettingsDialogFactory creator = new SettingsDialogFactory();
 
         if (runModeHelper.isRunningInNetworkMode()) {
             return creator.createNetworkSettingsDialog();
@@ -36,10 +70,15 @@ public class Main {
         return creator.createServerSettingsDialog();
     }
 
-    private MainWindow createMainWindow(RunModeHelper helper, SettingsDialog settingsDialog) {
-        if (helper.isRunningInServerMode()) {
-            return new ServerMainWindow(settingsDialog);
+    private void createMainWindow(SettingsDialog settingsDialog) {
+        if (runModeHelper.isRunningInServerMode()) {
+            new ServerWindow(settingsDialog);
+            return;
         }
-        return new ClientMainWindow(settingsDialog);
+        new ContractorWindow(settingsDialog);
+    }
+
+    private static String getFirstElement(String[] args) {
+        return (args.length == 0) ? EMPTY_ELEMENT : args[0];
     }
 }

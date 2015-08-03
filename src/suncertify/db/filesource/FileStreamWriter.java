@@ -4,7 +4,7 @@ import static java.lang.System.arraycopy;
 
 import java.io.*;
 
-import settings.SettingException;
+import settings.SettingsException;
 import suncertify.db.datasource.DataSourceException;
 import suncertify.db.datasource.DataSourceWriter;
 
@@ -26,7 +26,7 @@ public class FileStreamWriter implements DataSourceWriter {
     public void open() throws DataSourceException {
         try {
             randomAccessFile = createRandomAccessFile();
-        } catch (FileNotFoundException | SettingException e) {
+        } catch (FileNotFoundException | SettingsException e) {
             throw new DataSourceException(e.getMessage());
         }
     }
@@ -118,7 +118,9 @@ public class FileStreamWriter implements DataSourceWriter {
         }
     }
 
-    private RandomAccessFile createRandomAccessFile() throws FileNotFoundException {
+    private RandomAccessFile createRandomAccessFile() throws FileNotFoundException,
+            SettingsException {
+
         DatabaseFinder finder = new DatabaseFinder();
         File file = finder.getDatabaseFile();
         return new RandomAccessFile(file, READ_WRITE_MODE);

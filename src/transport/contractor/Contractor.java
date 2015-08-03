@@ -51,7 +51,7 @@ public class Contractor implements Serializable {
     }
 
     /**
-     * gets the contractor's name
+     * Returns the contractor's name
      * 
      * @return contractor name
      */
@@ -60,7 +60,7 @@ public class Contractor implements Serializable {
     }
 
     /**
-     * gets the contractor's location
+     * Returns the contractor's location
      * 
      * @return contractor location
      */
@@ -69,7 +69,7 @@ public class Contractor implements Serializable {
     }
 
     /**
-     * gets the contractor's specialties
+     * Returns the contractor's specialties
      * 
      * @return contractor specialties
      */
@@ -78,7 +78,7 @@ public class Contractor implements Serializable {
     }
 
     /**
-     * gets the contractor's size
+     * Returns the contractor's size
      * 
      * @return contractor size
      */
@@ -87,7 +87,7 @@ public class Contractor implements Serializable {
     }
 
     /**
-     * gets the contractor's rate
+     * Returns the contractor's rate
      * 
      * @return contractor rate
      */
@@ -96,7 +96,7 @@ public class Contractor implements Serializable {
     }
 
     /**
-     * gets the contractor's owner
+     * Returns the contractor's owner
      * 
      * @return contractor owner
      */
@@ -105,7 +105,7 @@ public class Contractor implements Serializable {
     }
 
     /**
-     * gets the contractor's id
+     * Returns the contractor's id
      * 
      * @return contractor id
      */

@@ -32,7 +32,8 @@ public class RecordParser {
         String owner = recordDetails[OWNER_INDEX];
 
         RecordBuilder builder = new RecordBuilder();
-        return builder.addName(name).addLocation(location).addSpecialties(specialties)
+        builder = builder.addName(name).addLocation(location).addSpecialties(specialties)
                 .addSize(size).addRate(rate).addOwner(owner);
+        return builder;
     }
 }

@@ -18,14 +18,14 @@ public class DatabaseFinder {
      * @throws SettingException
      *             if failed to read the database directory
      */
-    File getDatabaseFile() throws SettingException {
+    File getDatabaseFile() throws SettingsException {
         String directoryName = getDirectoryName();
         return new File(createFileName(directoryName));
     }
 
-    private String getDirectoryName() {
-        SettableAccessor settingsAccessor = new SettingsAccessor();
-        Map<SettingType, String> settings = settingsAccessor.getSettings();
+    private String getDirectoryName() throws SettingsException {
+        SettingsService settingsAccessor = new SettingsFacade();
+        Map<SettingType, String> settings = settingsAccessor.loadSettings();
         return settings.get(DIRECTORY);
     }
 

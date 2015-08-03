@@ -3,43 +3,74 @@ package ui.model.contractor;
 import javax.swing.table.TableModel;
 
 import transport.contractor.service.ContractorException;
-import ui.controller.api.BookableController;
-import ui.model.api.BookableModel;
+import ui.controller.api.ContractorController;
 
-public class ContractorRowFacade implements BookableModel {
+public class ContractorRowFacade implements ContractorModel {
 
-	private ContractorTable model;
-	private ContractorRowBooker booker;
-	private ContractorRowUpdator updator;
-	private ContractorRowSearcher searcher;
+    private ContractorTable model;
+    private ContractorRowBooker booker;
+    private ContractorRowUpdator updator;
+    private ContractorRowSearcher searcher;
 
-	public ContractorRowFacade(BookableController controller) {
-		model = new ContractorTable();
+    /**
+     * Constructs a instance of ContractorRowFacade with the specified controller.
+     * 
+     * @param controller
+     *            - the controller
+     */
+    public ContractorRowFacade(ContractorController controller) {
+        model = new ContractorTable();
 
-		searcher = new ContractorRowSearcher(model);
-		booker = new ContractorRowBooker(model);
-		updator = new ContractorRowUpdator(model, controller);
+        searcher = new ContractorRowSearcher(model);
+        booker = new ContractorRowBooker(model);
+        updator = new ContractorRowUpdator(model, controller);
 
-		model.addTableModelListener(updator);
-	}
+        model.addTableModelListener(updator);
+    }
 
-	@Override
-	public TableModel getTableModel() {
-		return model;
-	}
+    /**
+     * gets a ContractorTable
+     * 
+     * @return - the TableModel
+     */
+    @Override
+    public TableModel getTableModel() {
+        return model;
+    }
 
-	@Override
-	public void search(String name, String location) throws ContractorException {
-		searcher.search(name, location);
-	}
+    /**
+     * Searches for all Contractors that have the specified name and location.
+     * 
+     * @param name
+     *            - the name
+     * @param location
+     *            - the location
+     * @throws ContractorException
+     *             if a ContractorException occurs
+     */
+    @Override
+    public void search(String name, String location) throws ContractorException {
+        searcher.search(name, location);
+    }
 
-	@Override
-	public void bookSelectedContractorWithCustomer(String customerId) throws ContractorException {
-		booker.bookSelectedContractorWithCustomer(customerId);
-	}
+    /**
+     * Books the selected contractor to the specified customer.
+     * 
+     * @param customerId
+     *            - the ID of the specified customer
+     * @throws ContractorException
+     *             if a ContractorException occurs
+     */
+    @Override
+    public void bookSelectedContractorWithCustomer(String customerId) throws ContractorException {
+        booker.bookSelectedContractorWithCustomer(customerId);
+    }
 
-	@Override
-	public void clearSearchResults() {
-		searcher.clear();
-	}
+    /**
+     * Clears the results from the last search for Contractors.
+     */
+    @Override
+    public void clearSearchResults() {
+        searcher.clearSearchResults();
+    }
 }

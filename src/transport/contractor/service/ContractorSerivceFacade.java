@@ -107,7 +107,10 @@ public class ContractorSerivceFacade {
     }
 
     private String createErrorMessage(Contractor contractor) {
-        int contractorId = contractor.getContractorId();
-        return String.format("contractor %d is already booked", contractorId);
+        String messageFormat = "contractor %s at %s is already booked";
+        String name = contractor.getName();
+        String location = contractor.getLocation();
+        return String.format(messageFormat, name, location);
     }
+
 }

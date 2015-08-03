@@ -1,5 +1,6 @@
 package transport.contractor.service.remote;
 
+import static constants.Constants.REMOTE_OBJECT_NAME;
 import static settings.SettingType.IP_ADDRESS;
 import static settings.SettingType.PORT_NUMBER;
 
@@ -15,7 +16,7 @@ import transport.contractor.service.ContractorService;
 
 public class RemoteContratorSerivceDelegator implements ContractorService {
 
-    private RemoteContractorService remoteSerivce;
+    private RemoteContractorService remoteContractorSerivce;
 
     /**
      * Searches for all contractors who's name and location both match the beginning of the specified name and location.
@@ -32,9 +33,10 @@ public class RemoteContratorSerivceDelegator implements ContractorService {
     public List<Contractor> getContractors(String name, String location) throws ContractorException {
         connectToRemoteService();
         try {
-            return remoteSerivce.getContractors(name, location);
+            return remoteContractorSerivce.getContractors(name, location);
         } catch (RemoteException e) {
-            throw new ContractorException(e.getMessage());
+            String errorMessage = createGetContractorsErrorMessage(name, location);
+            throw new ContractorException(errorMessage);
         }
     }
 
@@ -49,9 +51,10 @@ public class RemoteContratorSerivceDelegator implements ContractorService {
     @Override
     public void bookContractor(Contractor contractor) throws ContractorException {
         try {
-            remoteSerivce.bookContractor(contractor);
+            remoteContractorSerivce.bookContractor(contractor);
         } catch (RemoteException e) {
-            throw new ContractorException(e.getMessage());
+            String errorMessage = createBookingErrorMessage(contractor);
+            throw new ContractorException(errorMessage);
         }
     }
 
@@ -63,16 +66,16 @@ public class RemoteContratorSerivceDelegator implements ContractorService {
             String portNumber = settings.get(PORT_NUMBER);
 
             String url = createUrl(ipAddress, portNumber);
-            remoteSerivce = (RemoteContractorService) Naming.lookup(url);
+            remoteContractorSerivce = (RemoteContractorService) Naming.lookup(url);
 
-        } catch (MalformedURLException | RemoteException | NotBoundException e) {
+        } catch (MalformedURLException | RemoteException | NotBoundException | SettingsException e) {
             throw new ContractorException("failed to connect to server");
         }
     }
 
-    private Map<SettingType, String> getConnectionSettings() {
-        SettableAccessor settableAccess = new SettingsAccessor();
-        return settableAccess.getSettings();
+    private Map<SettingType, String> getConnectionSettings() throws SettingsException {
+        SettingsService settableAccess = new SettingsFacade();
+        return settableAccess.loadSettings();
     }
 
     private String createUrl(String ipAddress, String portNumber) {
@@ -80,7 +83,23 @@ public class RemoteContratorSerivceDelegator implements ContractorService {
         builder.append(ipAddress);
         builder.append(":");
         builder.append(portNumber);
-        builder.append("/service");
+        builder.append("/");
+        builder.append(REMOTE_OBJECT_NAME);
+        return builder.toString();
+    }
+
+    private String createGetContractorsErrorMessage(String name, String location) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Failed to find contractors that meed the search criteria\n");
+        builder.append("The server could possibly be stopped");
+        return builder.toString();
+    }
+
+    private String createBookingErrorMessage(Contractor contractor) {
+        StringBuilder builder = new StringBuilder("Failed to book contractor ");
+        builder.append(contractor.getName());
+        builder.append("\n Check the server is still running");
+        builder.append("\n or redo another search");
         return builder.toString();
     }
 }

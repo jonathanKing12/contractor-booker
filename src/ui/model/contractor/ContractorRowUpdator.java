@@ -8,73 +8,94 @@ import static javax.swing.event.TableModelEvent.UPDATE;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import ui.controller.api.BookableController;
+import ui.controller.api.ContractorController;
 
 public class ContractorRowUpdator implements TableModelListener {
 
-	private ContractorTable tableModel;
-	private BookableController controller;
+    private ContractorTable contractorTable;
+    private ContractorController contractorController;
 
-	public ContractorRowUpdator(ContractorTable tableModel, BookableController controller) {
-		this.tableModel = tableModel;
-		this.controller = controller;
-	}
+    /**
+     * Constructs a instance of ContractorRowUpdator with the specified contractorTable and contractorController.
+     * 
+     * @param contractorTable
+     *            - the contractorTable
+     * @param contractorController
+     *            - the contractorController
+     */
+    public ContractorRowUpdator(ContractorTable contractorTable,
+            ContractorController contractorController) {
+        this.contractorTable = contractorTable;
+        this.contractorController = contractorController;
+    }
 
-	@Override
-	public void tableChanged(TableModelEvent event) {
-		if (event.getType() == UPDATE) {
+    /**
+     * Updates the ContractorTable and the book contractor button.
+     *
+     * <p>
+     * If the event is an update event. Finds the most recent contratorRow updated, if it is selected unSelect the second most recent updated
+     * contratorRow (if that was selected as well). This means only one contratorRow in the ContractorTable can be selected at a given time. The book
+     * contractor button is enabled if the most recent contratorRow updated is selected.
+     * <p>
+     * 
+     * <p>
+     * If the event is delete event the book contractor button is disabled.
+     */
+    @Override
+    public void tableChanged(TableModelEvent event) {
+        if (event.getType() == UPDATE) {
 
-			boolean setToEnabled = updateModel(event);
-			setEnableTheBookContractorButton(setToEnabled);
-		}
+            boolean setToEnabled = updateModel(event);
+            setEnableTheBookContractorButton(setToEnabled);
+        }
 
-		if (event.getType() == DELETE) {
-			setEnableTheBookContractorButton(FALSE);
-		}
-	}
+        if (event.getType() == DELETE) {
+            setEnableTheBookContractorButton(FALSE);
+        }
+    }
 
-	private boolean updateModel(TableModelEvent event) {
-		boolean enableBookContractorButton = FALSE;
-		ContractorRow recentModel = getMostRecentContractorRowModelUpdated(event);
+    private boolean updateModel(TableModelEvent event) {
+        boolean enableBookContractorButton = FALSE;
+        ContractorRow recentUpdatedModel = getMostRecentContractorRowModelUpdated(event);
 
-		for (ContractorRow contractorRow : tableModel.getAllContractorRowModels()) {
+        for (ContractorRow contractorRow : contractorTable.getAllContractorRowModels()) {
 
-			if (!isSelected(contractorRow)) {
-				continue;
-			}
+            if (!isSelected(contractorRow)) {
+                continue;
+            }
 
-			enableBookContractorButton = TRUE;
+            enableBookContractorButton = TRUE;
 
-			if (isSameModel(recentModel, contractorRow)) {
-				continue;
-			}
+            if (isSameModel(recentUpdatedModel, contractorRow)) {
+                continue;
+            }
 
-			if (isSelected(recentModel)) {
-				deselectModel(contractorRow);
-				break;
-			}
-		}
-		return enableBookContractorButton;
-	}
+            if (isSelected(recentUpdatedModel)) {
+                unSelectModel(contractorRow);
+                break;
+            }
+        }
+        return enableBookContractorButton;
+    }
 
-	private boolean isSelected(ContractorRow rowModel) {
-		return rowModel.isSelected();
-	}
+    private boolean isSelected(ContractorRow rowModel) {
+        return rowModel.isSelected();
+    }
 
-	private ContractorRow getMostRecentContractorRowModelUpdated(TableModelEvent event) {
-		return tableModel.getModel(event.getFirstRow());
-	}
+    private ContractorRow getMostRecentContractorRowModelUpdated(TableModelEvent event) {
+        return contractorTable.getModel(event.getFirstRow());
+    }
 
-	private void deselectModel(ContractorRow previousModel) {
-		previousModel.setSelected(FALSE);
-		tableModel.updateContractorRowModel(previousModel);
-	}
+    private void unSelectModel(ContractorRow contractorRow) {
+        contractorRow.setSelected(FALSE);
+        contractorTable.updateContractorRowModel(contractorRow);
+    }
 
-	private boolean isSameModel(ContractorRow recentModel, ContractorRow previousModel) {
-		return recentModel.equals(previousModel);
-	}
+    private boolean isSameModel(ContractorRow recentModel, ContractorRow contractorRow) {
+        return recentModel.equals(contractorRow);
+    }
 
-	private void setEnableTheBookContractorButton(boolean enabled) {
-		controller.enableBookContratorButton(enabled);
-	}
+    private void setEnableTheBookContractorButton(boolean enabled) {
+        contractorController.enableBookContratorButton(enabled);
+    }
 }

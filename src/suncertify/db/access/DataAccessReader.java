@@ -12,6 +12,9 @@ import suncertify.db.datasource.DataSourceFactory;
 import suncertify.db.matcher.*;
 import suncertify.db.record.*;
 
+/**
+ * Provides read operations to the data source.
+ */
 public class DataAccessReader {
 
     private RecordReader recordReader;

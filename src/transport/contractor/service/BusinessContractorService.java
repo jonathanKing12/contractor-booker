@@ -6,14 +6,14 @@ import transport.contractor.Contractor;
 
 public class BusinessContractorService {
 
-    private ContractorService delegate;
+    private ContractorService contractorService;
 
     /**
      * Constructs a BusinessContractorService instance
      */
     public BusinessContractorService() {
-        ContractorServiceLocator locator = new ContractorServiceLocator();
-        delegate = locator.getContractorService();
+        ContractorServiceLocator locator = ContractorServiceLocator.getInstance();
+        contractorService = locator.getContractorService();
     }
 
     /**
@@ -28,7 +28,7 @@ public class BusinessContractorService {
      *             - if the search fails
      */
     public List<Contractor> getContractors(String name, String location) throws ContractorException {
-        return delegate.getContractors(name, location);
+        return contractorService.getContractors(name, location);
     }
 
     /**
@@ -40,6 +40,6 @@ public class BusinessContractorService {
      *             - if the booking has failed
      */
     public void bookContractor(Contractor contractor) throws ContractorException {
-        delegate.bookContractor(contractor);
+        contractorService.bookContractor(contractor);
     }
 }

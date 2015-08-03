@@ -6,34 +6,48 @@ import transport.contractor.service.ContractorException;
 
 public class ContractorRowBooker {
 
-	private BusinessContractorService delegator;
-	private ContractorTable tableModel;
+    private BusinessContractorService delegator;
+    private ContractorTable contractorTable;
 
-	public ContractorRowBooker(ContractorTable model) {
-		this.delegator = new BusinessContractorService();
-		this.tableModel = model;
-	}
+    /**
+     * Constructs a instance of ContractorRowBooker with the specified contractorTable.
+     * 
+     * @param contractorTable
+     *            - the contractorTable
+     */
+    public ContractorRowBooker(ContractorTable contractorTable) {
+        this.delegator = new BusinessContractorService();
+        this.contractorTable = contractorTable;
+    }
 
-	public void bookSelectedContractorWithCustomer(String customerId) throws ContractorException {
+    /**
+     * Books the selected contractor to the specified customer. If no contractor is selected then no contractor get booked.
+     * 
+     * @param customerId
+     *            - the ID of the specified customer
+     * @throws ContractorException
+     *             if a ContractorException occurs
+     */
+    public void bookSelectedContractorWithCustomer(String customerId) throws ContractorException {
 
-		for (ContractorRow rowModel : tableModel.getAllContractorRowModels()) {
-			if (isSelected(rowModel)) {
-				updateContractorRowModel(customerId, rowModel);
-				break;
-			}
-		}
-	}
+        for (ContractorRow rowModel : contractorTable.getAllContractorRowModels()) {
+            if (isSelected(rowModel)) {
+                updateContractorRowModel(customerId, rowModel);
+                break;
+            }
+        }
+    }
 
-	private boolean isSelected(ContractorRow rowModel) {
-		return rowModel.isSelected();
-	}
+    private boolean isSelected(ContractorRow rowModel) {
+        return rowModel.isSelected();
+    }
 
-	private void updateContractorRowModel(String customerId, ContractorRow rowModel)
-			throws ContractorException {
-		rowModel.setSelected(FALSE);
-		rowModel.setCustomerId(customerId);
+    private void updateContractorRowModel(String customerId, ContractorRow rowModel)
+            throws ContractorException {
+        rowModel.setSelected(FALSE);
+        rowModel.setCustomerId(customerId);
 
-		delegator.bookContractor(rowModel.getContractor());
-		tableModel.updateContractorRowModel(rowModel);
-	}
+        delegator.bookContractor(rowModel.getContractor());
+        contractorTable.updateContractorRowModel(rowModel);
+    }
 }

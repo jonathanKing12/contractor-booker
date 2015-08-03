@@ -2,6 +2,7 @@ package suncertify.db.filesource;
 
 import java.io.*;
 
+import settings.SettingsException;
 import suncertify.db.datasource.DataSourceException;
 import suncertify.db.datasource.DataSourceReader;
 
@@ -24,7 +25,7 @@ public class FileStreamReader implements DataSourceReader {
     public void open() throws DataSourceException {
         try {
             dataInputStream = createDataInputStream();
-        } catch (IOException e) {
+        } catch (IOException | SettingsException e) {
             throw new DataSourceException(e.getMessage());
         }
     }
@@ -123,7 +124,7 @@ public class FileStreamReader implements DataSourceReader {
         }
     }
 
-    private DataInputStream createDataInputStream() throws FileNotFoundException {
+    private DataInputStream createDataInputStream() throws FileNotFoundException, SettingsException {
         DatabaseFinder finder = new DatabaseFinder();
         File file = finder.getDatabaseFile();
         return new DataInputStream(new FileInputStream(file));

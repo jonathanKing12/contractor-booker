@@ -10,22 +10,46 @@ import transport.contractor.service.ContractorException;
 public class ContractorRowSearcher {
 
     private BusinessContractorService delegator;
-    private ContractorTable model;
+    private ContractorTable contractorTable;
 
-    public ContractorRowSearcher(ContractorTable tableModel) {
+    /**
+     * Constructs a instance of ContractorRowSearcher with the specified contractorTable
+     * 
+     * @param contractorTable
+     *            - the contractorTable
+     */
+    public ContractorRowSearcher(ContractorTable contractorTable) {
         this.delegator = new BusinessContractorService();
-        this.model = tableModel;
+        this.contractorTable = contractorTable;
     }
 
+    /**
+     * Searches for all Contractors that have the specified name and location.
+     * 
+     * <p>
+     * Delegates to {@link BusinessContractorService#getContractors(name, location)}. Replaces the contents of this objects's contractorTable instance
+     * with what is returned from that getContractors method
+     * </p>
+     * 
+     * @param name
+     *            - the name
+     * @param location
+     *            - the location
+     * @throws ContractorException
+     *             if a ContractorException occurs
+     */
     public void search(String name, String location) throws ContractorException {
 
         List<Contractor> contractors = delegator.getContractors(name, location);
         List<ContractorRow> rowModels = convertToContractorRowModels(contractors);
-        model.setContractorRowModels(rowModels);
+        contractorTable.setContractorRow(rowModels);
     }
 
-    public void clear() {
-        model.clear();
+    /**
+     * Clears the model
+     */
+    public void clearSearchResults() {
+        contractorTable.clear();
     }
 
     private List<ContractorRow> convertToContractorRowModels(List<Contractor> contractors) {

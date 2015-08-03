@@ -5,19 +5,25 @@ import static java.lang.Boolean.TRUE;
 
 import java.util.*;
 
+/**
+ * Parses the settings to properties and the properties to settings
+ *
+ */
 public class SettingsParser {
 
-    /**
-     * 
-     */
-    private static final int SETTING_TYPE_VALUE = 1;
-    /**
-     * 
-     */
-    private static final int SETTING_TYPE_INDEX = 0;
     private static final String EMPTY_VALUE = "";
+    private static final int SETTING_TYPE_INDEX = 0;
+    private static final int SETTING_VALUE_INDEX = 1;
     private static final String PROPERTY_DELIMETER = "=";
+    private static final int SIZE_OF_NON_EMPTY_SETTING = 2;
 
+    /**
+     * Converts the specified settings into properties
+     * 
+     * @param settings
+     *            - the settings
+     * @return the properties
+     */
     List<String> convertToProperties(Map<SettingType, String> settings) {
         List<String> properties = new ArrayList<>();
 
@@ -28,13 +34,20 @@ public class SettingsParser {
         return properties;
     }
 
+    /**
+     * Converts the specified properties into settings
+     * 
+     * @param properties
+     *            - the properties
+     * @return the settings
+     */
     Map<SettingType, String> convertToSettings(List<String> properties) {
         Map<SettingType, String> settings = new HashMap<>();
 
         for (String property : properties) {
             String[] setting = property.split(PROPERTY_DELIMETER);
 
-            if (!hasSettingType(setting)) {
+            if (!isSettingTypeValid(setting)) {
                 continue;
             }
 
@@ -45,15 +58,21 @@ public class SettingsParser {
         return settings;
     }
 
-    private boolean hasSettingType(String[] setting) {
-        boolean hasSetting = FALSE;
+    private boolean isSettingTypeValid(String[] setting) {
+        boolean isSettingTypeValid = FALSE;
 
-        for (SettingType type : SettingType.values()) {
-            if (type.toString().equals(setting[SETTING_TYPE_INDEX])) {
-                hasSetting = TRUE;
+        for (SettingType settingType : SettingType.values()) {
+            if (isSettingHaveSettingType(setting, settingType)) {
+                isSettingTypeValid = TRUE;
             }
         }
-        return hasSetting;
+        return isSettingTypeValid;
+    }
+
+    private boolean isSettingHaveSettingType(String[] setting, SettingType settingType) {
+        String actualSettingType = setting[SETTING_TYPE_INDEX];
+        String expectedSettingType = settingType.toString();
+        return expectedSettingType.equals(actualSettingType);
     }
 
     private SettingType getSettingType(String[] setting) {
@@ -61,8 +80,8 @@ public class SettingsParser {
     }
 
     private String getSettingValue(String[] setting) {
-        if (setting.length == 2)
-            return setting[SETTING_TYPE_VALUE];
+        if (setting.length == SIZE_OF_NON_EMPTY_SETTING)
+            return setting[SETTING_VALUE_INDEX];
 
         return EMPTY_VALUE;
     }

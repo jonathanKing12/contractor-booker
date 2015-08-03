@@ -10,8 +10,8 @@ import java.io.File;
 
 import javax.swing.*;
 
-import ui.view.ParentTracker;
-import ui.view.textwidget.TextWidget;
+import ui.view.common.ParentTracker;
+import ui.view.common.textwidget.TextWidget;
 
 public class DirectoryPicker implements ActionListener {
 
@@ -19,12 +19,30 @@ public class DirectoryPicker implements ActionListener {
     private JFileChooser fileChooser;
     private TextWidget directoryWidget;
 
+    /**
+     * Constructs a instance of DirectoryPicker
+     * 
+     * @param directoryWidget
+     *            - the directoryWidget
+     */
     public DirectoryPicker(TextWidget directoryWidget) {
         this.directoryWidget = directoryWidget;
         fileChooser = createFileChooser();
         setUpBrowseButton();
     }
 
+    /**
+     * Sets the new database location.
+     * 
+     * <p>
+     * Displays a {@link JFileChooser} for the user to select a folder. If a folder is selected and also the okay button on the JFileChooser, then
+     * that folder location will be set to this instance directoryWidget's text. If a file was selected then the directoryWidget's text will be set to
+     * its folder location.
+     * </p>
+     * 
+     * @param event
+     *            - the event that triggered this action to occur
+     */
     @Override
     public void actionPerformed(ActionEvent event) {
         int response = displayFileChooserAndGetResponse();
@@ -35,6 +53,12 @@ public class DirectoryPicker implements ActionListener {
         }
     }
 
+    /**
+     * Adds this instance browseButton to specified component. The browseButton is a {@link JButton}.
+     * 
+     * @param component
+     *            - the component
+     */
     public void addBrowseButtonToComponent(JComponent component) {
         component.add(browseButton);
     }
@@ -51,7 +75,7 @@ public class DirectoryPicker implements ActionListener {
     }
 
     private int displayFileChooserAndGetResponse() {
-        Component parent = ParentTracker.getInstance().getCurrentParent();
+        Component parent = ParentTracker.getInstance().getParent();
         fileChooser.setSelectedFile(new File(""));
         fileChooser.setCurrentDirectory(new File(directoryWidget.getText()));
         return fileChooser.showDialog(parent, "Select folder");

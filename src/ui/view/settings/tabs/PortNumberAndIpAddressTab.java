@@ -2,107 +2,131 @@ package ui.view.settings.tabs;
 
 import static settings.SettingType.IP_ADDRESS;
 import static settings.SettingType.PORT_NUMBER;
+import static ui.view.settings.SaveSettingsMessageHelper.hasUserGrantedPermissionToEmptyTable;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import javax.swing.JPanel;
 
 import settings.SettingType;
-import ui.view.api.BookableView;
-import ui.view.api.SettableTab;
-import ui.view.api.SettableView;
-import ui.view.mergers.BookableMerger;
-import ui.view.mergers.SettableMerger;
-import ui.view.textwidget.TextWidget;
-import ui.view.textwidget.TextWidgetBuilder;
-import ui.view.textwidget.TextWidgetLayout;
+import ui.view.common.textwidget.*;
+import ui.view.contractor.ContractorMediator;
+import ui.view.settings.SettingsMediator;
 
-public class PortNumberAndIpAddressTab extends JPanel implements SettableTab {
+public class PortNumberAndIpAddressTab extends JPanel implements SettingsTab {
 
-	private String title;
-	private Set<SettingType> settingTypes;
-	private TextWidget portNumberWidget;
-	private TextWidget ipAddressWidget;
-	private SettableView merger;
+    private String title;
+    private Set<SettingType> settingTypes;
+    private TextWidget portNumberWidget;
+    private TextWidget ipAddressWidget;
+    private SettingsMediator settingsMediator;
+    private ContractorMediator contractorMediator;
 
-	public PortNumberAndIpAddressTab() {
-		title = "Server connection";
-		merger = new SettableMerger();
+    /**
+     * Constructs a instance of PortNumberAndIpAddressTab.
+     */
+    public PortNumberAndIpAddressTab() {
+        title = "Server connection";
+        settingsMediator = new SettingsMediator();
+        contractorMediator = ContractorMediator.getInstance();
 
-		setUpTextWidgets();
-		addComponents();
-		setSettingsTypes();
-	}
+        setUpTextWidgets();
+        addComponents();
+        setSettingsTypes();
+    }
 
-	@Override
-	public String getTtile() {
-		return title;
-	}
+    /**
+     * Returns this instance title.
+     * 
+     * @return the title
+     */
+    @Override
+    public String getTitle() {
+        return title;
+    }
 
-	@Override
-	public boolean isToBeDisplayed() {
-		SettableView merger = new SettableMerger();
-		return merger.isAllSettingsMissing(settingTypes);
-	}
+    /**
+     * Returns {@code true} if there is no Port number and IP address saved.
+     * 
+     * @return {@code true} if there is no Port number and IP address saved
+     */
+    @Override
+    public boolean isToBeDisplayed() {
+        return settingsMediator.isAllSettingsNotSaved(settingTypes);
+    }
 
-	@Override
-	public void saveSettings() {
-		Map<SettingType, String> settings = new HashMap<>();
-		String portNumber = portNumberWidget.getText();
-		settings.put(PORT_NUMBER, portNumber);
+    /**
+     * Saves the Port number and IP address settings selected by the user.
+     * 
+     * <p>
+     * If there are contractors currently displaying on screen then the user is asked for their permission for the removal of those contractors in
+     * order for the settings to be saved. If the user does not grant permission for the removal of those contractors from the screen then the
+     * settings are not saved.
+     * </p>
+     */
+    @Override
+    public void saveSettings() {
+        Map<SettingType, String> settings = getSettings();
 
-		String ipAddress = ipAddressWidget.getText();
-		settings.put(IP_ADDRESS, ipAddress);
+        if (contractorMediator.isContractorTableEmpty()) {
+            settingsMediator.saveSettings(settings);
+            return;
+        }
 
-		if (resetSearch()) {
-			merger.saveSettings(settings);
-		}
-	}
+        if (hasUserGrantedPermissionToEmptyTable()) {
+            contractorMediator.emptyTable();
+            settingsMediator.saveSettings(settings);
+        }
+    }
 
-	private boolean resetSearch() {
-		BookableView merger = BookableMerger.getInstance();
-		return merger.clearTable();
+    /**
+     * loads the Port number and IP address settings.
+     */
+    @Override
+    public void loadSettings() {
+        Map<SettingType, String> settings = settingsMediator.loadSettings();
+        String portNumber = settings.get(PORT_NUMBER);
+        portNumberWidget.setText(portNumber);
 
-	}
+        String ipAddress = settings.get(IP_ADDRESS);
+        ipAddressWidget.setText(ipAddress);
+    }
 
-	@Override
-	public void loadSettings() {
-		Map<SettingType, String> settings = merger.loadSettings();
-		String portNumber = settings.get(PORT_NUMBER);
-		portNumberWidget.setText(portNumber);
+    private void setUpTextWidgets() {
+        portNumberWidget = createPortNumberTextWidget();
+        ipAddressWidget = createIpAddressTextWidget();
+    }
 
-		String ipAddress = settings.get(IP_ADDRESS);
-		ipAddressWidget.setText(ipAddress);
-	}
+    private TextWidget createIpAddressTextWidget() {
+        TextWidgetBuilder builder = new TextWidgetBuilder();
+        return builder.addLabel("Enter server's IP address:").addNumberOfColumns(10).build();
+    }
 
-	private void setUpTextWidgets() {
-		portNumberWidget = createPortNumberTextWidget();
-		ipAddressWidget = createIpAddressTextWidget();
-	}
+    private TextWidget createPortNumberTextWidget() {
+        TextWidgetBuilder builder = new TextWidgetBuilder();
+        return builder.addLabel("Enter port number to listen to server:").addNumberOfColumns(5)
+                .build();
+    }
 
-	public TextWidget createIpAddressTextWidget() {
-		TextWidgetBuilder builder = new TextWidgetBuilder();
-		return builder.addLabel("Enter server's IP address:").addNumberOfColumns(10).build();
-	}
+    private void addComponents() {
+        TextWidgetLayout textWidgetLayout = new TextWidgetLayout();
+        JPanel panel = textWidgetLayout.layoutVertically(portNumberWidget, ipAddressWidget);
+        this.add(panel);
+    }
 
-	private TextWidget createPortNumberTextWidget() {
-		TextWidgetBuilder builder = new TextWidgetBuilder();
-		return builder.addLabel("Enter port number to listen to server:").addNumberOfColumns(5)
-				.build();
-	}
+    private void setSettingsTypes() {
+        settingTypes = new HashSet<>();
+        settingTypes.add(PORT_NUMBER);
+        settingTypes.add(IP_ADDRESS);
+    }
 
-	private void addComponents() {
-		TextWidgetLayout textWidgetLayout = new TextWidgetLayout();
-		JPanel panel = textWidgetLayout.layoutVertically(portNumberWidget, ipAddressWidget);
-		this.add(panel);
-	}
+    private Map<SettingType, String> getSettings() {
+        Map<SettingType, String> settings = new HashMap<>();
+        String portNumber = portNumberWidget.getText();
+        settings.put(PORT_NUMBER, portNumber);
 
-	private void setSettingsTypes() {
-		settingTypes = new HashSet<>();
-		settingTypes.add(PORT_NUMBER);
-		settingTypes.add(IP_ADDRESS);
-	}
+        String ipAddress = ipAddressWidget.getText();
+        settings.put(IP_ADDRESS, ipAddress);
+        return settings;
+    }
 }

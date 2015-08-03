@@ -1,16 +1,42 @@
 package ui.controller;
 
-import ui.controller.api.BookableController;
-import ui.view.api.BookableView;
-import ui.view.api.SettableView;
+import ui.controller.api.*;
+import ui.view.common.MessageBoxPresenterView;
+import ui.view.contractor.ContractorMediatorView;
 
 public class ControllerFactory {
 
-	public SettingsController getClientSettingsController(SettableView settingsView) {
-		return new SettingsController(settingsView);
-	}
+    /**
+     * Creates a instance of SettableController with the specified settingsView;
+     * 
+     * @param messageMediatorView
+     *            the messageMediatorView
+     * @return the SettableController instance
+     */
+    public SettableController getSettingsController(MessageBoxPresenterView messageMediatorView) {
+        return new SettingsController(messageMediatorView);
+    }
 
-	public BookableController getContractorController(BookableView contractorViewMerger) {
-		return new ContractorController(contractorViewMerger);
-	}
+    /**
+     * Creates a instance of ContractorController with the specified contractorMediatorView;
+     * 
+     * @param contractorMediatorView
+     *            the contractorMediatorView
+     * @return the ContractorController instance
+     */
+    public ContractorController getContractorController(
+            ContractorMediatorView contractorMediatorView) {
+        return new ContractorTableController(contractorMediatorView);
+    }
+
+    /**
+     * Creates a instance of ServerController with the specified serverView;
+     * 
+     * @param messageMediatorView
+     *            the messageMediatorView
+     * @return the ServerController instance
+     */
+    public ServerController getServerController(MessageBoxPresenterView messageMediatorView) {
+        return new ServerSwithController(messageMediatorView);
+    }
 }
