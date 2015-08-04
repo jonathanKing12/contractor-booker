@@ -4,6 +4,9 @@ import javax.swing.table.TableModel;
 
 import transport.contractor.service.ContractorException;
 
+/**
+ * Represents a Model for handling contractors.
+ */
 public interface ContractorModel {
 
     /**

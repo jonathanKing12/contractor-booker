@@ -6,6 +6,9 @@ import java.util.Map;
 
 import transport.contractor.Contractor;
 
+/**
+ * Represents a Row in the Contractor table.
+ */
 public class ContractorRow {
     private Contractor contractor;
     private boolean isSelected;

@@ -4,6 +4,9 @@ import java.util.List;
 
 import transport.contractor.Contractor;
 
+/**
+ * Used for searching and booking contractors.
+ */
 public interface ContractorService {
 
     /**

@@ -6,6 +6,9 @@ import suncertify.db.RecordNotFoundException;
 import suncertify.db.access.DataAccessException;
 import transport.contractor.Contractor;
 
+/**
+ * Wraps a ContractorSerivceFacade instance and re throws it's exceptions as ContractorExceptions.
+ */
 public class ContractorServiceFacadeWrapper implements ContractorService {
 
     private ContractorSerivceFacade contractorFacade;

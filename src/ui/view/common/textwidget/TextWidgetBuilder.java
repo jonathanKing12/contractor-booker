@@ -2,6 +2,9 @@ package ui.view.common.textwidget;
 
 import static java.lang.Boolean.TRUE;
 
+/**
+ * Builds a TextWidget instance.
+ */
 public class TextWidgetBuilder {
 
     private String labelMessage;

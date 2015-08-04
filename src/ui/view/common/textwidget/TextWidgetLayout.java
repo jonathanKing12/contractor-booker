@@ -8,6 +8,9 @@ import java.awt.FlowLayout;
 
 import javax.swing.*;
 
+/**
+ * Layouts TextWidgets instances inner components on a JPanel instance.
+ */
 public class TextWidgetLayout {
 
     /**

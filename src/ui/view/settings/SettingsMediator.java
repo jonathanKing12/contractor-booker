@@ -8,6 +8,9 @@ import ui.controller.ControllerFactory;
 import ui.controller.api.SettableController;
 import ui.view.common.MessageBoxPresenter;
 
+/**
+ * Mediates Settings operations between various instances in view and the SettableController instance.
+ */
 public class SettingsMediator {
 
     private SettableController controller;

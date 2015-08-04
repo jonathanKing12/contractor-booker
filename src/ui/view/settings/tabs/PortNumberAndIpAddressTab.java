@@ -13,6 +13,9 @@ import ui.view.common.textwidget.*;
 import ui.view.contractor.ContractorMediator;
 import ui.view.settings.SettingsMediator;
 
+/**
+ * A tab in the settings dialog for changing the port number and the IP address.
+ */
 public class PortNumberAndIpAddressTab extends JPanel implements SettingsTab {
 
     private String title;

@@ -1,5 +1,8 @@
 package ui.view.common;
 
+/**
+ * Used for Controllers to display error messages on the view.
+ */
 public interface MessageBoxPresenterView {
 
     /**

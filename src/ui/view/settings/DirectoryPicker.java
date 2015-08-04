@@ -13,6 +13,9 @@ import javax.swing.*;
 import ui.view.common.ParentTracker;
 import ui.view.common.textwidget.TextWidget;
 
+/**
+ * Stores and select the folder of the database.
+ */
 public class DirectoryPicker implements ActionListener {
 
     private JButton browseButton;

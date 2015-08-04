@@ -11,6 +11,9 @@ import javax.swing.JPanel;
 import ui.view.common.MessageBoxPresenter;
 import ui.view.common.UserInputValidator;
 
+/**
+ * Represents the book contractor button.
+ */
 public class ContractorButtonPanel extends JPanel implements ActionListener {
 
     private static final String ERROR_TITLE = "Invalid customer ID";

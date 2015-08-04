@@ -2,6 +2,9 @@ package ui.view.contractor;
 
 import ui.view.common.MessageBoxPresenterView;
 
+/**
+ * Represents a instance of Mediating Contractor operations.
+ */
 public interface ContractorMediatorView extends MessageBoxPresenterView {
 
     /**

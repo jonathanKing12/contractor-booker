@@ -8,18 +8,21 @@ import java.awt.Dimension;
 import ui.view.common.*;
 import ui.view.settings.SettingsDialog;
 
+/**
+ * Represents the Server GUI.
+ */
 public class ServerWindow extends MainWindow {
 
     public ServerWindow(SettingsDialog settings) {
         super(settings);
         this.setLayout(new BorderLayout());
-        this.add(new HeaderPanel("Bodgitt and Scarper, LLC Home Improvement Broker"), NORTH);
+        this.add(new HeaderPanel(), NORTH);
         this.add(new ServerButtonHandler(), BorderLayout.CENTER);
         setSizeAndPosition();
     }
 
     private void setSizeAndPosition() {
-        JFrameHelper presenter = new JFrameHelper();
+        WindowHelper presenter = new WindowHelper();
         int width = presenter.getFractionOfScreenWidth(3, 2);
         int height = presenter.getFractionOfScreenHeight(7, 3);
         this.setPreferredSize(new Dimension(width, height));

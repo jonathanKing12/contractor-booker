@@ -4,6 +4,9 @@ import java.util.List;
 
 import transport.contractor.Contractor;
 
+/**
+ * Delegates requests to a ContrctorService instance.
+ */
 public class BusinessContractorService {
 
     private ContractorService contractorService;

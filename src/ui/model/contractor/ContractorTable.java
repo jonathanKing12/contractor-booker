@@ -8,6 +8,9 @@ import java.util.*;
 
 import javax.swing.table.AbstractTableModel;
 
+/**
+ * Represents the contractor table.
+ */
 public class ContractorTable extends AbstractTableModel {
 
     private List<Map<String, Object>> rows;

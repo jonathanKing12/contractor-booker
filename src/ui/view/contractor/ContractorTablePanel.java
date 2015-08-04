@@ -10,6 +10,9 @@ import java.awt.Color;
 import javax.swing.*;
 import javax.swing.table.*;
 
+/**
+ * Represents the contractor table.
+ */
 public class ContractorTablePanel extends JPanel {
 
     private JTable table;

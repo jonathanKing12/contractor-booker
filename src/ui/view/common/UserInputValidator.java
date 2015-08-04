@@ -1,5 +1,8 @@
 package ui.view.common;
 
+/**
+ * Validates if the user has entered a vaild customer ID.
+ */
 public class UserInputValidator {
 
     private final String EIGH_DIGIT_NUMBER = "\\d\\d\\d\\d\\d\\d\\d\\d";

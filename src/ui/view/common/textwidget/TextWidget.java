@@ -2,6 +2,9 @@ package ui.view.common.textwidget;
 
 import javax.swing.*;
 
+/**
+ * Represents a JTextField and a JLabel instances.
+ */
 public class TextWidget {
 
     private JLabel messageLabel;

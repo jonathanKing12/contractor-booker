@@ -6,6 +6,9 @@ import ui.controller.ControllerFactory;
 import ui.controller.api.ContractorController;
 import ui.view.common.MessageBoxPresenter;
 
+/**
+ * Mediates Contractor operations between various instances in view and the ContractorController instance.
+ */
 public class ContractorMediator implements ContractorMediatorView {
 
     private static ContractorMediator INSTANCE;

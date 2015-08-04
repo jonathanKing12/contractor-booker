@@ -5,6 +5,9 @@ import suncertify.db.datasource.DataSourceException;
 import suncertify.db.datasource.DataSourceFactory;
 import suncertify.db.record.*;
 
+/**
+ * 
+ */
 public class DataAccessWriter {
 
     private RecordWriter recordWriter;

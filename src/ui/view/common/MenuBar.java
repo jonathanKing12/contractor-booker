@@ -4,6 +4,9 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+/**
+ * Represents a MenuBar that has one menu with two menu items.
+ */
 public class MenuBar extends JMenuBar {
 
     private JMenuItem settings;

@@ -10,6 +10,9 @@ import javax.swing.JPanel;
 import ui.view.common.textwidget.TextWidget;
 import ui.view.common.textwidget.TextWidgetBuilder;
 
+/**
+ * Represents the search panel.
+ */
 public class ContractorSearchPanel extends JPanel implements ActionListener {
 
     private static final int SIZE_20 = 20;

@@ -2,6 +2,9 @@ package transport.contractor;
 
 import static constants.Constants.*;
 
+/**
+ * Converts a Contractor instance to an array and vis versa.
+ */
 public class ContracorParser {
 
     /**

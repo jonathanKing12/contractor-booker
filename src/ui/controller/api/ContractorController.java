@@ -2,6 +2,9 @@ package ui.controller.api;
 
 import javax.swing.JTable;
 
+/**
+ * Represents a Controller for handling contractors.
+ */
 public interface ContractorController {
 
     /**

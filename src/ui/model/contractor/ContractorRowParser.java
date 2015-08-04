@@ -9,6 +9,9 @@ import java.util.Map;
 import transport.contractor.Contractor;
 import transport.contractor.ContractorBuilder;
 
+/**
+ * Converts a ContractorRow instance to a map and vise versa.
+ */
 public class ContractorRowParser {
 
     /**

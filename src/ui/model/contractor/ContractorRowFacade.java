@@ -5,6 +5,9 @@ import javax.swing.table.TableModel;
 import transport.contractor.service.ContractorException;
 import ui.controller.api.ContractorController;
 
+/**
+ * Aa facade to searching and booking contractors in the model.
+ */
 public class ContractorRowFacade implements ContractorModel {
 
     private ContractorTable model;

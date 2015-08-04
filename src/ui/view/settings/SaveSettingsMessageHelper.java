@@ -2,6 +2,9 @@ package ui.view.settings;
 
 import ui.view.common.MessageBoxPresenter;
 
+/**
+ * Displays messages to the Screen before the settings are saved.
+ */
 public class SaveSettingsMessageHelper {
 
     private static final String SAVE_SETTINGS_TITLE = "Save Settings";

@@ -3,6 +3,10 @@ package transport.contractor.service;
 import runmode.RunModeHelper;
 import transport.contractor.service.remote.RemoteContratorSerivceDelegator;
 
+/**
+ * Stores a single instance of ContractorService that is to be used by the BusinessContractorService instance. Uses the RunMode helper instance to
+ * determine what ContractorService instance to create and store.
+ */
 public class ContractorServiceLocator {
 
     private static ContractorServiceLocator INSTANCE;

@@ -5,6 +5,9 @@ import java.util.Set;
 
 import settings.SettingType;
 
+/**
+ * Represents a Controller for handling settings.
+ */
 public interface SettableController {
 
     /**

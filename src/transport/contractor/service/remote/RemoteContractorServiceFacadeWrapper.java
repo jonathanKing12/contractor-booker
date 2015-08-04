@@ -7,6 +7,9 @@ import transport.contractor.Contractor;
 import transport.contractor.service.ContractorException;
 import transport.contractor.service.ContractorServiceFacadeWrapper;
 
+/**
+ * Wraps a ContractorServiceFacadeWrapper instance and re throws it's exceptions as RemoteException.
+ */
 public class RemoteContractorServiceFacadeWrapper implements RemoteContractorService {
 
     private ContractorServiceFacadeWrapper contractorFacade;

@@ -8,6 +8,9 @@ import javax.swing.JFrame;
 
 import ui.view.settings.SettingsDialog;
 
+/**
+ * Represents a MainWindow
+ */
 public class MainWindow extends JFrame {
 
     private SettingsDialog settingsDialog;

@@ -4,6 +4,9 @@ import ui.controller.ControllerFactory;
 import ui.controller.api.ServerController;
 import ui.view.common.MessageBoxPresenter;
 
+/**
+ * Mediates Server operations between various instances in view and the ServerController instance.
+ */
 public class ServerMediator {
 
     private static final ServerMediator INSTANE;

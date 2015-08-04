@@ -10,6 +10,9 @@ import javax.swing.JPanel;
 import ui.view.common.*;
 import ui.view.settings.SettingsDialog;
 
+/**
+ * Represents the Client GUI.
+ */
 public class ContractorWindow extends MainWindow {
 
     /**
@@ -35,13 +38,13 @@ public class ContractorWindow extends MainWindow {
 
     private JPanel createNorthPanel() {
         JPanel northPanel = new JPanel(new BorderLayout());
-        northPanel.add(new HeaderPanel("Bodgitt and Scarper, LLC Home Improvement Broker"), NORTH);
+        northPanel.add(new HeaderPanel(), NORTH);
         northPanel.add(new ContractorSearchPanel(), SOUTH);
         return northPanel;
     }
 
     private void setSizeAndPosition() {
-        JFrameHelper presenter = new JFrameHelper();
+        WindowHelper presenter = new WindowHelper();
         int ninetenths = presenter.getFractionOfScreenWidth(10, 9);
         int eighteenTweentieths = presenter.getFractionOfScreenHeight(20, 18);
         this.setPreferredSize(new Dimension(ninetenths, eighteenTweentieths));

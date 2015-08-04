@@ -1,5 +1,8 @@
 package ui.view.server.state;
 
+/**
+ * Keeps track of the current state of the server.
+ */
 public class StateContext {
 
     private State currentState;

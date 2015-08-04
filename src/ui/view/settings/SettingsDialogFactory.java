@@ -2,6 +2,9 @@ package ui.view.settings;
 
 import ui.view.settings.tabs.*;
 
+/**
+ * Creates a SettingsDialog instance.
+ */
 public class SettingsDialogFactory {
 
     /**

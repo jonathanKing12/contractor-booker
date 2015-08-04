@@ -4,6 +4,9 @@ import java.awt.Component;
 
 import ui.view.settings.SettingsDialog;
 
+/**
+ * Keeps track of Component is the active window, either the MainWindow or the SettingsDialog instance
+ */
 public class ParentTracker {
 
     private static ParentTracker INSTANCE;

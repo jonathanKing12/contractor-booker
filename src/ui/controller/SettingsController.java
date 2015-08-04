@@ -11,6 +11,9 @@ import ui.model.settings.SettableModel;
 import ui.model.settings.SettingsModel;
 import ui.view.common.MessageBoxPresenterView;
 
+/**
+ * Forwards request to the SettableModel instance.
+ */
 public class SettingsController implements SettableController {
 
     private static final String SETTINGS_ERROR_TITLE = "Settings Error";

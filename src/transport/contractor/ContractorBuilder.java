@@ -1,5 +1,8 @@
 package transport.contractor;
 
+/**
+ * Builds a Contractor instance.
+ */
 public class ContractorBuilder {
 
     private String name;

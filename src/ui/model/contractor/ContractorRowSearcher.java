@@ -7,6 +7,9 @@ import transport.contractor.Contractor;
 import transport.contractor.service.BusinessContractorService;
 import transport.contractor.service.ContractorException;
 
+/**
+ * Used for Searching for ContractorRow instances.
+ */
 public class ContractorRowSearcher {
 
     private BusinessContractorService delegator;

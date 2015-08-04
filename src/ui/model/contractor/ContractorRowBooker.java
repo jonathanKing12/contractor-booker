@@ -4,6 +4,9 @@ import static java.lang.Boolean.FALSE;
 import transport.contractor.service.BusinessContractorService;
 import transport.contractor.service.ContractorException;
 
+/**
+ * Used for booking ContractorRow instances.
+ */
 public class ContractorRowBooker {
 
     private BusinessContractorService delegator;

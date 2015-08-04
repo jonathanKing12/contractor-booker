@@ -1,5 +1,9 @@
 package transport.contractor.service;
 
+/**
+ * Occurs when retrieving and booking contractors operations fail.
+ *
+ */
 public class ContractorException extends Exception {
 
     /**

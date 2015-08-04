@@ -14,6 +14,9 @@ import transport.contractor.Contractor;
 import transport.contractor.service.ContractorException;
 import transport.contractor.service.ContractorService;
 
+/**
+ * Delegates the searches and booking operations of contractors remotely. Re-throws RemoteExceptions as ContractorExceptions,
+ */
 public class RemoteContratorSerivceDelegator implements ContractorService {
 
     private RemoteContractorService remoteContractorSerivce;

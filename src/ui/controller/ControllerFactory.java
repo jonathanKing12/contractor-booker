@@ -4,6 +4,9 @@ import ui.controller.api.*;
 import ui.view.common.MessageBoxPresenterView;
 import ui.view.contractor.ContractorMediatorView;
 
+/**
+ * Creates three controllers instances.
+ */
 public class ControllerFactory {
 
     /**

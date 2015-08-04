@@ -3,7 +3,7 @@ package transport.contractor;
 import java.io.Serializable;
 
 /**
- * Represents a Contractor
+ * Represents a Contractor.
  *
  */
 public class Contractor implements Serializable {

@@ -6,6 +6,9 @@ import java.util.Set;
 import settings.SettingType;
 import settings.SettingsException;
 
+/**
+ * Represents a Model for handling settings.
+ */
 public interface SettableModel {
 
     /**

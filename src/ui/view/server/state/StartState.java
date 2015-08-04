@@ -6,6 +6,9 @@ import static java.lang.Boolean.TRUE;
 import ui.view.server.ServerButtonHandler;
 import ui.view.server.ServerMediator;
 
+/**
+ * Used to indicate the Server is started.
+ */
 public class StartState implements State {
 
     private ServerButtonHandler serverButtonHandler;

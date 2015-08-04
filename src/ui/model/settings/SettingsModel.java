@@ -8,6 +8,10 @@ import java.util.Set;
 
 import settings.*;
 
+/**
+ * A model for handling settings.
+ *
+ */
 public class SettingsModel implements SettableModel {
 
     private SettingsService settingsService;

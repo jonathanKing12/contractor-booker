@@ -8,6 +8,9 @@ import suncertify.db.filesource.FileStreamFactory;
 import transport.contractor.ContracorParser;
 import transport.contractor.Contractor;
 
+/**
+ * Acts as a facade for the Data instance. Encapsulates the lockings steps and find method of the Data object away from its user.
+ */
 public class ContractorSerivceFacade {
 
     private DB data;

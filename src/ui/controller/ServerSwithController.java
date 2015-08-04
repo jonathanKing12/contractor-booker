@@ -7,6 +7,9 @@ import server.ServerException;
 import ui.controller.api.ServerController;
 import ui.view.common.MessageBoxPresenterView;
 
+/**
+ * Forwards request to the Server instance.
+ */
 public class ServerSwithController implements ServerController {
 
     private static final String SERVER_ERROR_TITLE = "Server error";
@@ -31,6 +34,8 @@ public class ServerSwithController implements ServerController {
      * Delegates the call to {@link Server#start()} if a {@link ServerException} is thrown then
      * {@link MessageBoxPresenterView#displayErrorMessage(message, title)} is invoked.
      * </p>
+     * 
+     * @return {@code true} if the server has successfully started.
      */
     @Override
     public boolean startServer() {
@@ -50,6 +55,8 @@ public class ServerSwithController implements ServerController {
      * Delegates the call to {@link Server#stop()} if a {@link ServerException} is thrown then
      * {@link MessageBoxPresenterView#displayErrorMessage(message, title)} is invoked.
      * </p>
+     * 
+     * @return {@code true} if the server has successfully stopped.
      */
     @Override
     public boolean stopServer() {

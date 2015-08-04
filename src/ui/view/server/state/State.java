@@ -1,5 +1,8 @@
 package ui.view.server.state;
 
+/**
+ * Represents the State of the server.
+ */
 public interface State {
 
     /**

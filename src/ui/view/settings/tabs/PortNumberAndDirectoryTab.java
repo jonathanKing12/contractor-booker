@@ -16,6 +16,9 @@ import ui.view.server.ServerMediator;
 import ui.view.settings.DirectoryPicker;
 import ui.view.settings.SettingsMediator;
 
+/**
+ * A tab in the settings dialog for changing the port number and database folder.
+ */
 public class PortNumberAndDirectoryTab extends JPanel implements SettingsTab {
 
     private String title;

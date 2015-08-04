@@ -15,6 +15,9 @@ import ui.view.contractor.ContractorMediator;
 import ui.view.settings.DirectoryPicker;
 import ui.view.settings.SettingsMediator;
 
+/**
+ * A tab in the settings dialog for changing the database folder.
+ */
 public class DirectoryTab extends JPanel implements SettingsTab {
 
     private String title;

@@ -12,6 +12,9 @@ import javax.swing.*;
 
 import ui.view.server.state.*;
 
+/**
+ * Handles the Server Button for stopping and starting the server.
+ */
 public class ServerButtonHandler extends JPanel {
 
     private StateContext stateContext;

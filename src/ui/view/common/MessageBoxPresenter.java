@@ -4,6 +4,9 @@ import static javax.swing.JOptionPane.*;
 
 import java.awt.Component;
 
+/**
+ * Used for displaying message boxes on top of the currently displayed parent window.
+ */
 public class MessageBoxPresenter implements MessageBoxPresenterView {
 
     private static final int YES_BUTTON_SELECTED = 0;

@@ -5,6 +5,9 @@ import ui.view.server.ServerButtonHandler;
 import ui.view.server.ServerMediator;
 import constants.Constants;
 
+/**
+ * Used to indicate the Server is stopped.
+ */
 public class StopState implements State {
 
     private ServerButtonHandler serverButtonHandler;

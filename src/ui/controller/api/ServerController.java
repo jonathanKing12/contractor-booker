@@ -1,5 +1,8 @@
 package ui.controller.api;
 
+/**
+ * Represents a Controller for handling the Server.
+ */
 public interface ServerController {
 
     /**

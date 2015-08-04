@@ -12,6 +12,9 @@ import javax.swing.*;
 import ui.view.common.ParentTracker;
 import ui.view.settings.tabs.SettingsTab;
 
+/**
+ * Represents the settings dialog.
+ */
 public class SettingsDialog extends JDialog {
 
     private JTabbedPane tabbedPane;

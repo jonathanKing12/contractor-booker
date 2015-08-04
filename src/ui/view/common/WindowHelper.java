@@ -7,8 +7,25 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
-public class JFrameHelper {
+/**
+ * Helps Positioning and centering MainWindows on the screen
+ */
+public class WindowHelper {
 
+    /**
+     * Finds the fraction of screen's width.
+     * 
+     * <p>
+     * Examples: baseFraction of 4 and numberOfFractionUnits of 1 will return one quarter of the screens width. baseFraction of 8 and
+     * numberOfFractionUnits of 2 will return one half of the screens width.
+     * </p>
+     * 
+     * @param baseFraction
+     *            - the baseFraction
+     * @param numberOfFractionUnits
+     *            - the numberOfFractionUnits.
+     * @return the fraction of the screen width
+     */
     public int getFractionOfScreenWidth(int baseFraction, int numberOfFractionUnits) {
         Dimension screenSize = getScreenSize();
         int oneFractionUnit = screenSize.width / baseFraction;
@@ -16,10 +33,18 @@ public class JFrameHelper {
     }
 
     /**
+     * Finds the fraction of screen's height.
+     * 
+     * <p>
+     * Examples: baseFraction of 4 and numberOfFractionUnits of 1 will return one quarter of the screens height. baseFraction of 8 and
+     * numberOfFractionUnits of 2 will return one half of the screens height.
+     * </p>
      * 
      * @param baseFraction
+     *            - the baseFraction
      * @param numberOfFractionUnits
-     * @return
+     *            - the numberOfFractionUnits.
+     * @return the fraction of the screen height
      */
     public int getFractionOfScreenHeight(int baseFraction, int numberOfFractionUnits) {
         Dimension screenSize = getScreenSize();

@@ -10,6 +10,9 @@ import javax.swing.event.TableModelListener;
 
 import ui.controller.api.ContractorController;
 
+/**
+ * Used for selecting and unselecting ContractorRow instances for booking.
+ */
 public class ContractorRowUpdator implements TableModelListener {
 
     private ContractorTable contractorTable;

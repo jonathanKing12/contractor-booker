@@ -1,5 +1,8 @@
 package ui.view.settings.tabs;
 
+/**
+ * Represents a tab in the settings dialog.
+ */
 public interface SettingsTab {
 
     /**

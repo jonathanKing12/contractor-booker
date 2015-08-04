@@ -8,6 +8,9 @@ import ui.model.contractor.ContractorModel;
 import ui.model.contractor.ContractorRowFacade;
 import ui.view.contractor.ContractorMediatorView;
 
+/**
+ * Forwards request between the ContractorModel and the ContractorMediatorView instances.
+ */
 public class ContractorTableController implements ContractorController {
 
     private ContractorModel contractorModel;

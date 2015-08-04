@@ -9,6 +9,9 @@ import javax.swing.JPanel;
 
 import ui.view.common.ParentTracker;
 
+/**
+ * Represents the OK, Apply and Cancel button on the SettingsDialog.
+ */
 public class SettingsButtonPanel extends JPanel {
 
     private JButton okay;
@@ -33,7 +36,7 @@ public class SettingsButtonPanel extends JPanel {
     }
 
     private void createButtons() {
-        okay = new JButton("Okay");
+        okay = new JButton("OK");
         apply = new JButton("Apply");
         cancel = new JButton("Cancel");
     }
